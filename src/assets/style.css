@@ -1,0 +1,21 @@
+body {
+  margin: 0;
+}
+.son_fit_father {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.son_fit {
+  flex: 1;
+}
+
+.bfa {
+  background: #bfa;
+}
+
+.fff {
+  background: #fff;
+}
