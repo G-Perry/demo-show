@@ -53,7 +53,7 @@ export default {
         },
         {
           path: "/",
-          name: "home",
+          name: "homePage",
           label: "标签二",
           icon: "",
           url: "",
@@ -64,14 +64,14 @@ export default {
           children: [
             {
               path: "/",
-              name: "home",
+              name: "homePage",
               label: "标签三  一",
               icon: "",
               url: "",
             },
             {
               path: "/",
-              name: "home",
+              name: "homePage",
               label: "标签三  二",
               icon: "",
               url: "",

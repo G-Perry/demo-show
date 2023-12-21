@@ -12,10 +12,167 @@ body {
   flex: 1;
 }
 
+.footer-pagination {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 36px;
+  box-sizing: border-box;
+  border-top: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  background: #f9f9f9;
+  justify-content: flex-end;
+}
+
+.button {
+  min-width: 90px;
+  height: 30px;
+  padding: 0 16px;
+  margin-right: 10px;
+  border-radius: 3px;
+  border-color: transparent;
+  cursor: pointer;
+}
+
+button[disabled],
+button[disabled] i {
+  color: #a4a7af !important;
+  cursor: not-allowed !important;
+}
+
+.blue_btn {
+  color: #fff;
+  background: #4d8dd9;
+}
+
+.blue_btn:focus {
+  background: #4d8dd9;
+}
+
+.blue_btn:hover {
+  background: #70a3e0;
+}
+
+.blue_btn:active {
+  background: #3d70ad;
+}
+
+.plain-btn {
+  color: #80848f;
+  background: #fff;
+  border: 1px solid #ddd;
+}
+
+.plain-btn:focus {
+  background: #fff;
+}
+
+.plain-btn:hover {
+  background: #edf3fb;
+}
+
+.plain-btn:active {
+  background: #eeeeee;
+}
+
+.line {
+  width: 1px;
+  height: 30%;
+  background: #ddd;
+}
+
+.hover_blue_btn {
+  width: fit-content;
+  height: 32px;
+  padding: 0 12px;
+  background: #fff;
+  border: none;
+  font-size: 12px;
+  box-sizing: border-box;
+  cursor: pointer;
+  margin: 0 12px;
+  transition: all 500ms;
+  border-radius: 3px;
+  /* display: flex;
+  align-items: center; */
+}
+
+.hover_blue_btn:hover:not(button[disabled]) {
+  background: #4d8dd9;
+  color: #fff;
+}
+
+.hover_blue_btn.hover_drop_down .layer {
+  left: -12px;
+  top: 36px;
+}
+
 .bfa {
   background: #bfa;
 }
 
 .fff {
   background: #fff;
+}
+
+.el-form {
+  /* width: 100%; */
+  /* height: fit-content; */
+  box-sizing: border-box;
+  padding: 10px 20px;
+}
+.el-form-item {
+  margin-bottom: 0;
+  width: 150px;
+}
+.el-form-item__label {
+  padding: 0 !important;
+  line-height: 25px;
+  color: #80848f;
+}
+.el-form-item__content {
+  line-height: 25px;
+}
+.el-input__inner {
+  height: 25px;
+  line-height: 25px;
+  border-radius: 0;
+}
+.el-input__inner:hover {
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.08),
+    0 0 8px rgba(77, 141, 217, 0.4);
+  border-color: #4d8dd9 !important;
+}
+.el-input__icon {
+  line-height: 18px !important;
+}
+.el-date-editor .el-range-separator,
+.el-date-editor .el-range__icon {
+  line-height: 18px;
+  font-size: 12px;
+}
+
+.el-date-editor .el-range-input,
+.el-date-editor .el-range-separator,
+.el-date-editor .el-range__icon {
+  font-size: 12px;
+}
+
+.el-table__header .el-table__cell {
+  background: #f9f9f9 !important;
+  font-weight: normal;
+  color: #534e4e;
+}
+.el-table__header .el-table__cell:nth-child(n + 2) {
+  box-sizing: border-box;
+  border-left: 1px solid #eee;
+}
+.el-table .cell {
+  padding: 0;
+}
+.el-table .el-table__cell {
+  padding: 0;
+  height: 36px;
+  line-height: 36px;
 }
