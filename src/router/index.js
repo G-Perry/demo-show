@@ -5,18 +5,23 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    component: () => import("../components/main.vue"),
+    component: () => import("../views/index.vue"),
     redirect: "home",
     children: [
       {
         path: "home",
         name: "homePage",
-        component: () => import("../views/index.vue"),
+        component: () => import("../views/homePage/index.vue"),
       },
       {
         path: "usual",
         name: "usualPage",
         component: () => import("../views/usualPage/index.vue"),
+      },
+      {
+        path: "threeLearning",
+        name: "threeJsDemoPage",
+        component: () => import("../views/threeJsDemo"),
       },
     ],
   },

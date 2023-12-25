@@ -1,31 +1,18 @@
 <template>
-  <el-menu
-    default-active="1-4-1"
-    class="el-menu-vertical-demo"
-    @open="handleOpen"
-    @close="handleClose"
-    :collapse="isCollapse"
-    background-color="#545c64"
-    text-color="#fff"
-    active-text-color="#ffd04b"
-  >
+  <el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
+    :collapse="isCollapse" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
     <h3 v-show="!isCollapse">通用后台管理系统</h3>
-    <el-menu-item
-      v-for="item in noChildren"
-      :key="item.label"
-      :index="item.label"
-      @click="handleMenuClick(item)"
-    >
+    <el-menu-item v-for="item in noChildren" :key="item.label" :index="item.label" @click="handleMenuClick(item)">
       <i :class="item.icon"></i>
-      <span slot="title">{{item.label}}</span>
+      <span slot="title">{{ item.label }}</span>
     </el-menu-item>
     <el-submenu v-for="item in hasChildren" :key="item.label" :index="item.label">
       <template slot="title">
         <i :class="item.icon"></i>
-        <span slot="title">{{item.label}}</span>
+        <span slot="title">{{ item.label }}</span>
       </template>
       <el-menu-item-group v-for="element in item.children" :key="element.label">
-        <el-menu-item :index="element.label" @click="handleMenuClick(element)">{{element.label}}</el-menu-item>
+        <el-menu-item :index="element.label" @click="handleMenuClick(element)">{{ element.label }}</el-menu-item>
       </el-menu-item-group>
     </el-submenu>
   </el-menu>
@@ -52,7 +39,7 @@ export default {
         },
         {
           path: "/",
-          name: "homePage",
+          name: "threeJsDemoPage",
           label: "ThreeJs_demo",
           icon: "",
           url: "",
@@ -114,6 +101,7 @@ export default {
   height: 100vh;
   border: none;
 }
+
 h3 {
   color: #fff;
   margin: 0 10px;
