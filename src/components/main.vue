@@ -4,7 +4,7 @@
       <common-aside></common-aside>
     </section>
     <section class="right_content son_fit_father">
-      <nav></nav>
+      <common-header></common-header>
       <section class="main_content son_fit">
         <router-view />
       </section>
@@ -14,8 +14,9 @@
 
 <script>
 import commonAside from "./commonAside.vue";
+import commonHeader from "./commonHeader.vue";
 export default {
-  components: { commonAside },
+  components: { commonAside, commonHeader },
 };
 </script>
 
@@ -26,18 +27,15 @@ export default {
   display: flex;
 }
 .left_content {
-  flex: 1;
+  /* flex: 1; */
   width: fit-content;
   max-width: 200px;
   background: gray;
 }
 .right_content {
-  flex: 7;
-}
-nav {
-  width: 100%;
-  height: 40px;
-  background: gold;
+  flex: 1;
+  overflow-x: hidden;
+  /* flex: 7; */
 }
 .main_content {
   padding: 10px;

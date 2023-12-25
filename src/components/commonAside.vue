@@ -9,7 +9,7 @@
     text-color="#fff"
     active-text-color="#ffd04b"
   >
-    <h3>通用后台管理系统</h3>
+    <h3 v-show="!isCollapse">通用后台管理系统</h3>
     <el-menu-item
       v-for="item in noChildren"
       :key="item.label"
@@ -35,49 +35,48 @@
 export default {
   data() {
     return {
-      isCollapse: false,
       menuData: [
         {
           path: "/",
           name: "homePage",
           label: "首页",
-          icon: "",
+          icon: "el-icon-s-home",
           url: "",
         },
         {
           path: "/",
           name: "usualPage",
           label: "通用模板页面",
-          icon: "",
+          icon: "el-icon-s-order",
           url: "",
         },
         {
           path: "/",
           name: "homePage",
-          label: "标签二",
+          label: "ThreeJs_demo",
           icon: "",
           url: "",
         },
-        {
-          label: "其他",
-          icon: "",
-          children: [
-            {
-              path: "/",
-              name: "homePage",
-              label: "标签三  一",
-              icon: "",
-              url: "",
-            },
-            {
-              path: "/",
-              name: "homePage",
-              label: "标签三  二",
-              icon: "",
-              url: "",
-            },
-          ],
-        },
+        // {
+        //   label: "其他",
+        //   icon: "",
+        //   children: [
+        //     {
+        //       path: "/",
+        //       name: "homePage",
+        //       label: "标签三  一",
+        //       icon: "",
+        //       url: "",
+        //     },
+        //     {
+        //       path: "/",
+        //       name: "homePage",
+        //       label: "标签三  二",
+        //       icon: "",
+        //       url: "",
+        //     },
+        //   ],
+        // },
       ],
     };
   },
@@ -87,6 +86,10 @@ export default {
     },
     hasChildren() {
       return this.menuData.filter((item) => item.children);
+    },
+
+    isCollapse() {
+      return this.$store.state.tab.isCollapse;
     },
   },
   methods: {
@@ -113,7 +116,7 @@ export default {
 }
 h3 {
   color: #fff;
-  margin: 0;
+  margin: 0 10px;
   text-align: center;
   line-height: 48px;
   font-size: 16px;

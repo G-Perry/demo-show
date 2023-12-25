@@ -48,7 +48,7 @@
         <button class="button blue_btn" style="height: 24px">
           <span>查询</span>
         </button>
-        <button class="button plain-btn" style="height: 24px">
+        <button class="button plain-btn" style="height: 24px" @click="handleTest">
           <span>重置</span>
         </button>
       </div>
@@ -57,6 +57,11 @@
       <button class="hover_blue_btn">
         <i class="el-icon-circle-plus"></i>
         新增
+      </button>
+      <div class="line"></div>
+      <button class="hover_blue_btn" :disabled="single">
+        <i class="el-icon-edit" style="font-weight:600"></i>
+        修改
       </button>
       <div class="line"></div>
       <button class="hover_blue_btn" :disabled="multiple">
@@ -75,9 +80,11 @@
       </button>
     </section>
     <div class="son_fit" style="position: relative;">
-      <el-table :data="tableData" :height="tableHeight">
-        <el-table-column prop="date" label="日期" width="180"></el-table-column>
-        <el-table-column prop="name" label="姓名" width="180"></el-table-column>
+      <el-table :data="tableData" :height="tableHeight" @selection-change="handleSelectionChange">
+        <el-table-column type="selection" width="40" align="center"></el-table-column>
+        <el-table-column type="index" width="50" label="序号" align="center"></el-table-column>
+        <el-table-column prop="date" label="日期"></el-table-column>
+        <el-table-column prop="name" label="姓名"></el-table-column>
         <el-table-column prop="address" label="地址"></el-table-column>
       </el-table>
       <div ref="pagination-bar" class="footer-pagination">
@@ -102,10 +109,33 @@ export default {
     return {
       // 选中数组
       ids: [],
+      // 非单个禁用
+      single: true,
       // 非多个禁用
       multiple: true,
       // 表格数据
-      tableData: [],
+      tableData: [
+        {
+          date: "2016-05-02",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄",
+        },
+        {
+          date: "2016-05-04",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1517 弄",
+        },
+        {
+          date: "2016-05-01",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1519 弄",
+        },
+        {
+          date: "2016-05-03",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1516 弄",
+        },
+      ],
       // 请求参数
       queryParams: {
         condition_one: "",
@@ -164,8 +194,8 @@ export default {
   methods: {
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map((item) => item.id);
-      // this.single = selection.length != 1;
+      // this.ids = selection.map((item) => item.id);
+      this.single = selection.length != 1;
       this.multiple = !selection.length;
     },
     // 处理时间选择器的切换
@@ -192,6 +222,10 @@ export default {
       this.$nextTick(() => {
         this.tableHeight = this.$refs["pagination-bar"].offsetTop;
       });
+    },
+    handleTest() {
+      console.log(this.multiple, "multiple");
+      console.log(this.single, "single");
     },
   },
   mounted() {
