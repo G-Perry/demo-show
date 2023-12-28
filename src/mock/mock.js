@@ -10,3 +10,4 @@ import usualPageApi from "./usualPage";
 //   usualPageApi.getList(data);
 // });
 Mock.mock(/api\/usual\/list/, "get", usualPageApi.getList);
+Mock.mock("/api/usual/list/updateById", "post", usualPageApi.updateStatus);

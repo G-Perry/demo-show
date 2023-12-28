@@ -10,10 +10,16 @@
         label-position="top"
       >
         <el-form-item label="条件一">
-          <el-input v-model="queryParams.condition_one" placeholder="请输入条件一"></el-input>
+          <el-input
+            v-model="queryParams.condition_one"
+            placeholder="请输入条件一"
+          ></el-input>
         </el-form-item>
         <el-form-item label="条件二">
-          <el-select v-model="queryParams.condition_two" placeholder="请选择条件二">
+          <el-select
+            v-model="queryParams.condition_two"
+            placeholder="请选择条件二"
+          >
             <el-option label="AAA" value="shanghai"></el-option>
             <el-option label="BBB" value="beijing"></el-option>
           </el-select>
@@ -48,29 +54,33 @@
         <button class="button blue_btn" style="height: 24px">
           <span>查询</span>
         </button>
-        <button class="button plain-btn" style="height: 24px" @click="handleTest">
+        <button
+          class="button plain-btn"
+          style="height: 24px"
+          @click="handleTest"
+        >
           <span>重置</span>
         </button>
       </div>
     </section>
     <section class="table_up_btns">
-      <button class="hover_blue_btn">
+      <button class="hover_blue_btn" @click="handleAddDialogOpen">
         <i class="el-icon-circle-plus"></i>
         新增
       </button>
       <div class="line"></div>
       <button class="hover_blue_btn" :disabled="single">
-        <i class="el-icon-edit" style="font-weight:600"></i>
+        <i class="el-icon-edit" style="font-weight: 600"></i>
         修改
       </button>
       <div class="line"></div>
       <button class="hover_blue_btn" :disabled="multiple">
-        <i class="el-icon-check" style="font-weight:600"></i>
+        <i class="el-icon-check" style="font-weight: 600"></i>
         启用
       </button>
       <div class="line"></div>
       <button class="hover_blue_btn" :disabled="multiple">
-        <i class="el-icon-close" style="font-weight:600"></i>
+        <i class="el-icon-close" style="font-weight: 600"></i>
         禁用
       </button>
       <div class="line"></div>
@@ -79,39 +89,78 @@
         删除
       </button>
     </section>
-    <div class="son_fit" style="position: relative;">
-      <el-table :data="tableData" :height="tableHeight" @selection-change="handleSelectionChange">
-        <el-table-column type="selection" width="40" align="center"></el-table-column>
+    <div class="son_fit" style="position: relative">
+      <el-table
+        :data="tableData"
+        :height="tableHeight"
+        @selection-change="handleSelectionChange"
+      >
+        <el-table-column
+          type="selection"
+          width="40"
+          align="center"
+        ></el-table-column>
         <!-- <el-table-column type="index" width="50" label="序号" align="center"></el-table-column> -->
-        <el-table-column width="50" label="序号" align="center" prop="index"></el-table-column>
+        <el-table-column
+          width="50"
+          label="序号"
+          align="center"
+          prop="index"
+        ></el-table-column>
         <el-table-column prop="name" width="120" label="姓名"></el-table-column>
         <el-table-column prop="sex" width="120" label="性别">
           <template slot-scope="scope">{{ scope.row.sex | sexMatch }}</template>
         </el-table-column>
         <el-table-column prop="age" width="120" label="年龄"></el-table-column>
-        <el-table-column prop="birth" width="160" label="出生日期"></el-table-column>
-        <el-table-column prop="identityCard" width="220" label="身份证"></el-table-column>
+        <el-table-column
+          prop="birth"
+          width="160"
+          label="出生日期"
+        ></el-table-column>
+        <el-table-column
+          prop="identityCard"
+          width="220"
+          label="身份证"
+        ></el-table-column>
         <el-table-column prop="address" label="地址"></el-table-column>
-        <el-table-column prop="status" width="120" label="状态"></el-table-column>
+        <el-table-column prop="status" width="120" label="状态">
+          <template slot-scope="scope">
+            <!-- <common-button></common-button> -->
+            <el-switch
+              v-model="scope.row.status"
+              :active-value="1"
+              :inactive-value="0"
+              @change="handleStatusSwitchChange(scope.row)"
+            ></el-switch>
+            <!-- <el-switch v-model="scope.row.status | statusMatch"></el-switch> -->
+          </template>
+        </el-table-column>
       </el-table>
       <div ref="pagination-bar" class="footer-pagination">
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="currentPage"
-          :page-sizes="[10, 20,  50, 100]"
+          :page-sizes="[10, 20, 50, 100]"
           :page-size="pageSize"
           layout="total, prev, pager, next, sizes"
           :total="total"
         ></el-pagination>
       </div>
     </div>
+    <add-edit-dialog ref="addEditDialog"></add-edit-dialog>
   </div>
 </template>
 
 <script>
-import { getData } from "@/api/index";
+import { getUserList, updateUserStatusById } from "@/api/index";
+import commonButton from "@/components/commonButton.vue";
+import addEditDialog from "./addEditDialog.vue";
 export default {
+  components: {
+    commonButton,
+    addEditDialog,
+  },
   data() {
     let that = this;
     return {
@@ -184,14 +233,17 @@ export default {
     sexMatch(sexNum) {
       return sexNum == 0 ? "男" : "女";
     },
+    statusMatch(status) {
+      return status == 0 ? true : false;
+    },
   },
   methods: {
     getList() {
       this.loading = true;
       this.tableData = [];
-      getData(this.queryParams).then((res) => {
-        // console.log(res);
+      getUserList(this.queryParams).then((res) => {
         if (res.code == 200) {
+          console.log(res.rows);
           this.tableData = res.rows;
           this.total = res.total;
           this.loading = false;
@@ -231,7 +283,44 @@ export default {
         this.tableHeight = this.$refs["pagination-bar"].offsetTop;
       });
     },
-
+    handleAddDialogOpen() {
+      this.$refs.addEditDialog.dialogTitle = '新增';
+      this.$refs.addEditDialog.dialogVisible = true;
+    },
+    handleStatusSwitchChange(row) {
+      this.$confirm(
+        "此操作将" +
+          (row.status == 0 ? "禁用 " : "启用 ") +
+          row.name +
+          " 的账号, 是否继续?",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+        }
+      )
+        .then(() => {
+          let data = {
+            id: row.id,
+            status: row.status == 0 ? 0 : 1,
+          };
+          updateUserStatusById(data).then((res) => {
+            res.code == 200 && this.getList();
+          });
+          this.$message({
+            type: "success",
+            message: "操作成功",
+          });
+        })
+        .catch(() => {
+          row.status = row.status == 0 ? 1 : 0;
+          this.$message({
+            type: "info",
+            message: "操作已取消",
+          });
+        });
+    },
     handleTest() {
       console.log(this.multiple, "multiple");
       console.log(this.single, "single");
@@ -258,12 +347,14 @@ export default {
   font-weight: 600;
   border-bottom: 1px solid #eee;
 }
+
 .search_bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #eee;
 }
+
 .table_up_btns {
   width: 100%;
   height: 36px;

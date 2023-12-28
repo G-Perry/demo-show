@@ -1,4 +1,5 @@
 import Mock from "mockjs";
+import { findObjectById } from '../utils/handleObjMethods'
 
 // get请求从config.url获取参数，post从config.body中获取参数
 function getParamObj(url) {
@@ -8,11 +9,11 @@ function getParamObj(url) {
   }
   return JSON.parse(
     '{"' +
-      decodeURIComponent(search)
-        .replace(/"/g, '\\"')
-        .replace(/&/g, '","')
-        .replace(/=/g, '":"') +
-      '"}'
+    decodeURIComponent(search)
+      .replace(/"/g, '\\"')
+      .replace(/&/g, '","')
+      .replace(/=/g, '":"') +
+    '"}'
   );
 }
 
@@ -51,6 +52,15 @@ export default {
         queryParams.pageSize * queryParams.pageNum
       ),
       code: 200,
+      msg: ''
     };
   },
+  updateStatus(config) {
+    let queryParams = JSON.parse(config.body);
+    findObjectById(List, queryParams.id).status = queryParams.status;
+    return {
+      code: 200,
+      msg: ''
+    };
+  }
 };
