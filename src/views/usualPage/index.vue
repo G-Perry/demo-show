@@ -82,10 +82,17 @@
     <div class="son_fit" style="position: relative;">
       <el-table :data="tableData" :height="tableHeight" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="40" align="center"></el-table-column>
-        <el-table-column type="index" width="50" label="序号" align="center"></el-table-column>
-        <el-table-column prop="date" label="日期"></el-table-column>
-        <el-table-column prop="name" label="姓名"></el-table-column>
+        <!-- <el-table-column type="index" width="50" label="序号" align="center"></el-table-column> -->
+        <el-table-column width="50" label="序号" align="center" prop="index"></el-table-column>
+        <el-table-column prop="name" width="120" label="姓名"></el-table-column>
+        <el-table-column prop="sex" width="120" label="性别">
+          <template slot-scope="scope">{{ scope.row.sex | sexMatch }}</template>
+        </el-table-column>
+        <el-table-column prop="age" width="120" label="年龄"></el-table-column>
+        <el-table-column prop="birth" width="160" label="出生日期"></el-table-column>
+        <el-table-column prop="identityCard" width="220" label="身份证"></el-table-column>
         <el-table-column prop="address" label="地址"></el-table-column>
+        <el-table-column prop="status" width="120" label="状态"></el-table-column>
       </el-table>
       <div ref="pagination-bar" class="footer-pagination">
         <el-pagination
@@ -103,6 +110,7 @@
 </template>
 
 <script>
+import { getData } from "@/api/index";
 export default {
   data() {
     let that = this;
@@ -114,28 +122,7 @@ export default {
       // 非多个禁用
       multiple: true,
       // 表格数据
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄",
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄",
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄",
-        },
-      ],
+      tableData: [],
       // 请求参数
       queryParams: {
         condition_one: "",
@@ -143,6 +130,8 @@ export default {
         time_range: {
           time_range_type: "last30d",
         },
+        pageNum: 1,
+        pageSize: 20,
       },
       // 表格高度
       tableHeight: 0,
@@ -191,7 +180,24 @@ export default {
       },
     };
   },
+  filters: {
+    sexMatch(sexNum) {
+      return sexNum == 0 ? "男" : "女";
+    },
+  },
   methods: {
+    getList() {
+      this.loading = true;
+      this.tableData = [];
+      getData(this.queryParams).then((res) => {
+        // console.log(res);
+        if (res.code == 200) {
+          this.tableData = res.rows;
+          this.total = res.total;
+          this.loading = false;
+        }
+      });
+    },
     // 多选框选中数据
     handleSelectionChange(selection) {
       // this.ids = selection.map((item) => item.id);
@@ -209,13 +215,15 @@ export default {
     // 初始页currentPage、初始每页数据数pagesize和数据data
     handleSizeChange(pageSize) {
       this.pageSize = pageSize;
-      this.queryParams.limit = pageSize;
-      // this.getList();
+      this.queryParams.pageSize = pageSize;
+      this.currentPage = 1;
+      this.queryParams.pageNum = 1;
+      this.getList();
     },
     handleCurrentChange(currentPage) {
       this.currentPage = currentPage;
-      this.queryParams.page = currentPage;
-      // this.getList();
+      this.queryParams.pageNum = currentPage;
+      this.getList();
     },
     setTableHeight() {
       this.tableHeight = 0;
@@ -223,12 +231,14 @@ export default {
         this.tableHeight = this.$refs["pagination-bar"].offsetTop;
       });
     },
+
     handleTest() {
       console.log(this.multiple, "multiple");
       console.log(this.single, "single");
     },
   },
   mounted() {
+    this.getList();
     this.setTableHeight();
     window.addEventListener("resize", this.setTableHeight);
   },
