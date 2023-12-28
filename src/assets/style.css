@@ -193,6 +193,7 @@ button[disabled] i {
 /* 隐藏浏览器默认的滚动条样式 */
 ::-webkit-scrollbar {
   width: 6px; /* 滚动条宽度 */
+  height: 6px;
 }
 
 /* Track（滚动条背景） */
