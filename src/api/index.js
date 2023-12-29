@@ -20,3 +20,11 @@ export function updateUserStatusById(data) {
   });
 }
 
+export function userAdd(data) {
+  return http.request({
+    url: "/usual/list/userAdd",
+    method: "post",
+    data: data,
+  });
+}
+

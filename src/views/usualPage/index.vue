@@ -10,16 +10,10 @@
         label-position="top"
       >
         <el-form-item label="条件一">
-          <el-input
-            v-model="queryParams.condition_one"
-            placeholder="请输入条件一"
-          ></el-input>
+          <el-input v-model="queryParams.condition_one" placeholder="请输入条件一"></el-input>
         </el-form-item>
         <el-form-item label="条件二">
-          <el-select
-            v-model="queryParams.condition_two"
-            placeholder="请选择条件二"
-          >
+          <el-select v-model="queryParams.condition_two" placeholder="请选择条件二">
             <el-option label="AAA" value="shanghai"></el-option>
             <el-option label="BBB" value="beijing"></el-option>
           </el-select>
@@ -54,11 +48,7 @@
         <button class="button blue_btn" style="height: 24px">
           <span>查询</span>
         </button>
-        <button
-          class="button plain-btn"
-          style="height: 24px"
-          @click="handleTest"
-        >
+        <button class="button plain-btn" style="height: 24px" @click="handleTest">
           <span>重置</span>
         </button>
       </div>
@@ -90,38 +80,18 @@
       </button>
     </section>
     <div class="son_fit" style="position: relative">
-      <el-table
-        :data="tableData"
-        :height="tableHeight"
-        @selection-change="handleSelectionChange"
-      >
-        <el-table-column
-          type="selection"
-          width="40"
-          align="center"
-        ></el-table-column>
+      <el-table :data="tableData" :height="tableHeight" @selection-change="handleSelectionChange">
+        <el-table-column type="selection" width="40" align="center"></el-table-column>
         <!-- <el-table-column type="index" width="50" label="序号" align="center"></el-table-column> -->
-        <el-table-column
-          width="50"
-          label="序号"
-          align="center"
-          prop="index"
-        ></el-table-column>
+        <el-table-column width="50" label="序号" align="center" prop="index"></el-table-column>
         <el-table-column prop="name" width="120" label="姓名"></el-table-column>
         <el-table-column prop="sex" width="120" label="性别">
           <template slot-scope="scope">{{ scope.row.sex | sexMatch }}</template>
         </el-table-column>
         <el-table-column prop="age" width="120" label="年龄"></el-table-column>
-        <el-table-column
-          prop="birth"
-          width="160"
-          label="出生日期"
-        ></el-table-column>
-        <el-table-column
-          prop="identityCard"
-          width="220"
-          label="身份证"
-        ></el-table-column>
+        <el-table-column prop="birth" width="160" label="出生日期"></el-table-column>
+        <el-table-column prop="identityCard" width="220" label="身份证"></el-table-column>
+        <el-table-column prop="phoneNum" width="120" label="电话号码"></el-table-column>
         <el-table-column prop="address" label="地址"></el-table-column>
         <el-table-column prop="status" width="120" label="状态">
           <template slot-scope="scope">
@@ -231,10 +201,7 @@ export default {
   },
   filters: {
     sexMatch(sexNum) {
-      return sexNum == 0 ? "男" : "女";
-    },
-    statusMatch(status) {
-      return status == 0 ? true : false;
+      return sexNum == 1 ? "男" : "女";
     },
   },
   methods: {
@@ -284,8 +251,22 @@ export default {
       });
     },
     handleAddDialogOpen() {
-      this.$refs.addEditDialog.dialogTitle = '新增';
+      this.$refs.addEditDialog.dialogTitle = "新增";
+      this.$refs.addEditDialog.form = {
+        name: "",
+        sex: 1,
+        birth: "",
+        address: "",
+        identityCard: "",
+        phoneNum: "",
+        status: 1,
+      };
+      this.$refs.addEditDialog.address = [];
       this.$refs.addEditDialog.dialogVisible = true;
+      // 再次打开时去除表单校验
+      this.$refs.addEditDialog.$nextTick(() => {
+        this.$refs.addEditDialog.$refs.form.clearValidate();
+      });
     },
     handleStatusSwitchChange(row) {
       this.$confirm(
