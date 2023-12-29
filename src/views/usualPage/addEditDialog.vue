@@ -66,6 +66,9 @@ export default {
       if (!value) {
         callback(new Error("请输入身份证号"));
       } else if (!/^\d{17}[\d|X|x]$/.test(value)) {
+        // 字符串的开头必须是 17 个连续的数字。
+        // 接下来可以是一个数字（0-9）或者是字母 X（大小写不限）。
+        // 字符串的总长度应该是 18。
         callback(new Error("身份证号格式不正确"));
       } else {
         callback();
@@ -126,6 +129,9 @@ export default {
           { required: true, message: "请输入手机号", trigger: "blur" },
           {
             pattern: /^1[3456789]\d{9}$/,
+            // 必须以数字 1 开头。
+            // 第二位是 3、4、5、6、7、8、9 中的一个。
+            // 后面必须是连续的 9 个数字。
             message: "手机号格式不正确",
             trigger: "blur",
           },
