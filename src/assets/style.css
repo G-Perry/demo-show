@@ -87,26 +87,57 @@ button[disabled] i {
   width: fit-content;
   height: 32px;
   padding: 0 12px;
-  background: #fff;
+  background: transparent;
   border: none;
   font-size: 12px;
   box-sizing: border-box;
   cursor: pointer;
   margin: 0 12px;
-  transition: all 500ms;
   border-radius: 3px;
-  /* display: flex;
-  align-items: center; */
+  color: #423d3d;
+}
+
+.hover_blue_btn:focus:not(button[disabled]) {
+  background: transparent;
 }
 
 .hover_blue_btn:hover:not(button[disabled]) {
-  background: #4d8dd9;
+  transition: all 500ms;
+  background: #5195e7;
   color: #fff;
 }
 
-.hover_blue_btn.hover_drop_down .layer {
-  left: -12px;
-  top: 36px;
+.hover_blue_btn:active:not(button[disabled]) {
+  background: #2b6ab8;
+  color: #fff;
+}
+
+.btn_in_table {
+  width: 25px;
+  height: 25px;
+  margin: 0 1px;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background: transparent;
+  cursor: pointer;
+  color: #80848f;
+}
+
+.btn_in_table:focus:not(button[disabled]) {
+  background: transparent;
+}
+
+.btn_in_table:hover:not(button[disabled]) {
+  background: #edf3fb;
+  color: #3d8df0;
+  border-color: #3083e9;
+}
+
+.btn_in_table:active:not(button[disabled]) {
+  background: #dbe8f7;
+  color: #1e76e2;
+  border-color: #17539c;
 }
 
 .dialog_footer {
@@ -238,7 +269,7 @@ button[disabled] i {
   padding: 0;
 }
 
-.el-cascader{
+.el-cascader {
   line-height: 25px;
 }
 

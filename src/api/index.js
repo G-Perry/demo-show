@@ -6,9 +6,16 @@ import http from "@/utils/request";
 
 export function getUserList(data) {
   return http.request({
-    url: "/usual/list",
+    url: "/usual/userList",
     method: "get",
     params: data,
+  });
+}
+
+export function getUserDetailsById(id) {
+  return http.request({
+    url: "/usual/user/" + id,
+    method: "get",
   });
 }
 
@@ -28,3 +35,18 @@ export function userAdd(data) {
   });
 }
 
+export function userEdit(data) {
+  return http.request({
+    url: "/usual/list/userEdit",
+    method: "post",
+    data: data,
+  });
+}
+
+// 删除用户
+export function userDeleteById(id) {
+  return http.request({
+    url: '/usual/userDelete/' + id,
+    method: 'delete'
+  })
+}

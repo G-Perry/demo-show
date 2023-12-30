@@ -10,10 +10,16 @@
         label-position="top"
       >
         <el-form-item label="条件一">
-          <el-input v-model="queryParams.condition_one" placeholder="请输入条件一"></el-input>
+          <el-input
+            v-model="queryParams.condition_one"
+            placeholder="请输入条件一"
+          ></el-input>
         </el-form-item>
         <el-form-item label="条件二">
-          <el-select v-model="queryParams.condition_two" placeholder="请选择条件二">
+          <el-select
+            v-model="queryParams.condition_two"
+            placeholder="请选择条件二"
+          >
             <el-option label="AAA" value="shanghai"></el-option>
             <el-option label="BBB" value="beijing"></el-option>
           </el-select>
@@ -48,7 +54,11 @@
         <button class="button blue_btn" style="height: 24px">
           <span>查询</span>
         </button>
-        <button class="button plain-btn" style="height: 24px" @click="handleTest">
+        <button
+          class="button plain-btn"
+          style="height: 24px"
+          @click="handleTest"
+        >
           <span>重置</span>
         </button>
       </div>
@@ -59,41 +69,78 @@
         新增
       </button>
       <div class="line"></div>
-      <button class="hover_blue_btn" :disabled="single">
+      <button
+        class="hover_blue_btn"
+        :disabled="single"
+        @click="handleEditDialogOpen"
+      >
         <i class="el-icon-edit" style="font-weight: 600"></i>
         修改
       </button>
       <div class="line"></div>
-      <button class="hover_blue_btn" :disabled="multiple">
+      <button
+        class="hover_blue_btn"
+        :disabled="multiple"
+        @click="handleStatusChange('on')"
+      >
         <i class="el-icon-check" style="font-weight: 600"></i>
         启用
       </button>
       <div class="line"></div>
-      <button class="hover_blue_btn" :disabled="multiple">
+      <button
+        class="hover_blue_btn"
+        :disabled="multiple"
+        @click="handleStatusChange('off')"
+      >
         <i class="el-icon-close" style="font-weight: 600"></i>
         禁用
       </button>
       <div class="line"></div>
-      <button class="hover_blue_btn" :disabled="multiple">
+      <button class="hover_blue_btn" :disabled="multiple" @click="handleDelete">
         <i class="el-icon-delete-solid"></i>
         删除
       </button>
     </section>
     <div class="son_fit" style="position: relative">
-      <el-table :data="tableData" :height="tableHeight" @selection-change="handleSelectionChange">
-        <el-table-column type="selection" width="40" align="center"></el-table-column>
+      <el-table
+        :data="tableData"
+        :height="tableHeight"
+        @selection-change="handleSelectionChange"
+      >
+        <el-table-column
+          type="selection"
+          width="40"
+          align="center"
+        ></el-table-column>
         <!-- <el-table-column type="index" width="50" label="序号" align="center"></el-table-column> -->
-        <el-table-column width="50" label="序号" align="center" prop="index"></el-table-column>
-        <el-table-column prop="name" width="120" label="姓名"></el-table-column>
-        <el-table-column prop="sex" width="120" label="性别">
+        <el-table-column
+          width="50"
+          label="序号"
+          align="center"
+          prop="index"
+        ></el-table-column>
+        <el-table-column prop="name" width="100" label="姓名"></el-table-column>
+        <el-table-column prop="sex" width="100" label="性别">
           <template slot-scope="scope">{{ scope.row.sex | sexMatch }}</template>
         </el-table-column>
-        <el-table-column prop="age" width="120" label="年龄"></el-table-column>
-        <el-table-column prop="birth" width="160" label="出生日期"></el-table-column>
-        <el-table-column prop="identityCard" width="220" label="身份证"></el-table-column>
-        <el-table-column prop="phoneNum" width="120" label="电话号码"></el-table-column>
+        <el-table-column prop="age" width="100" label="年龄"></el-table-column>
+        <el-table-column
+          prop="birth"
+          width="150"
+          label="出生日期"
+        ></el-table-column>
+        <el-table-column
+          prop="identityCard"
+          width="220"
+          label="身份证"
+        ></el-table-column>
+        <el-table-column
+          prop="phoneNum"
+          width="150"
+          label="电话号码"
+        ></el-table-column>
         <el-table-column prop="address" label="地址"></el-table-column>
-        <el-table-column prop="status" width="120" label="状态">
+        <el-table-column prop="status" width="90" label="状态">
           <template slot-scope="scope">
             <!-- <common-button></common-button> -->
             <el-switch
@@ -103,6 +150,24 @@
               @change="handleStatusSwitchChange(scope.row)"
             ></el-switch>
             <!-- <el-switch v-model="scope.row.status | statusMatch"></el-switch> -->
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="80" align="center">
+          <template slot-scope="scope">
+            <button
+              class="btn_in_table"
+              title="修改"
+              @click="handleEditDialogOpen(scope.row)"
+            >
+              <i class="el-icon-edit"></i>
+            </button>
+            <button
+              class="btn_in_table"
+              title="删除"
+              @click="handleDelete(scope.row)"
+            >
+              <i class="el-icon-delete"></i>
+            </button>
           </template>
         </el-table-column>
       </el-table>
@@ -123,7 +188,12 @@
 </template>
 
 <script>
-import { getUserList, updateUserStatusById } from "@/api/index";
+import {
+  getUserList,
+  updateUserStatusById,
+  getUserDetailsById,
+  userDeleteById,
+} from "@/api/index";
 import commonButton from "@/components/commonButton.vue";
 import addEditDialog from "./addEditDialog.vue";
 export default {
@@ -219,7 +289,7 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      // this.ids = selection.map((item) => item.id);
+      this.ids = selection.map((item) => item.id);
       this.single = selection.length != 1;
       this.multiple = !selection.length;
     },
@@ -244,11 +314,65 @@ export default {
       this.queryParams.pageNum = currentPage;
       this.getList();
     },
+    // 表格高度自适应
     setTableHeight() {
       this.tableHeight = 0;
       this.$nextTick(() => {
         this.tableHeight = this.$refs["pagination-bar"].offsetTop;
       });
+    },
+    handleStatusChange(sign) {
+      this.$confirm(
+        "此操作将 " + (sign == "off" ? "禁用" : "启用") + " 账号, 是否继续?",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+        }
+      )
+        .then(() => {
+          let data = {
+            id: this.ids,
+            status: sign == "off" ? 0 : 1,
+          };
+          updateUserStatusById(data).then((res) => {
+            res.code == 200 && this.getList();
+          });
+          this.$message({
+            type: "success",
+            message: "操作成功",
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "操作已取消",
+          });
+        });
+    },
+    handleDelete(row) {
+      this.$confirm("此操作将删除账号, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          const id = row.id || this.ids;
+          userDeleteById(id).then((res) => {
+            res.code == 200 && this.getList();
+          });
+          this.$message({
+            type: "success",
+            message: "操作成功",
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "操作已取消",
+          });
+        });
     },
     handleAddDialogOpen() {
       this.$refs.addEditDialog.dialogTitle = "新增";
@@ -268,6 +392,17 @@ export default {
         this.$refs.addEditDialog.$refs.form.clearValidate();
       });
     },
+    handleEditDialogOpen(row) {
+      const id = row.id || this.ids[0];
+      getUserDetailsById(id).then((res) => {
+        if (res.code == 200) {
+          this.$refs.addEditDialog.dialogTitle = "修改";
+          this.$refs.addEditDialog.form = res.row;
+          this.$refs.addEditDialog.address = res.row.address.split(" ");
+          this.$refs.addEditDialog.dialogVisible = true;
+        }
+      });
+    },
     handleStatusSwitchChange(row) {
       this.$confirm(
         "此操作将" +
@@ -283,7 +418,7 @@ export default {
       )
         .then(() => {
           let data = {
-            id: row.id,
+            id: [row.id],
             status: row.status == 0 ? 0 : 1,
           };
           updateUserStatusById(data).then((res) => {

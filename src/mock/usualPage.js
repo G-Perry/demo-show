@@ -9,11 +9,11 @@ function getParamObj(url) {
   }
   return JSON.parse(
     '{"' +
-      decodeURIComponent(search)
-        .replace(/"/g, '\\"')
-        .replace(/&/g, '","')
-        .replace(/=/g, '":"') +
-      '"}'
+    decodeURIComponent(search)
+      .replace(/"/g, '\\"')
+      .replace(/&/g, '","')
+      .replace(/=/g, '":"') +
+    '"}'
   );
 }
 
@@ -31,7 +31,8 @@ for (let i = 0; i < count; i++) {
       index: INDEX,
       id: Mock.Random.guid(),
       name: Mock.Random.cname(),
-      address: Mock.mock("@county(true)"),
+      // address: Mock.mock("@county(true)"),
+      address: Mock.Random.county(true),
       // "age|18-60": 1,
       birth: birth,
       age: thisYear - birth.slice(0, 4),
@@ -46,7 +47,8 @@ for (let i = 0; i < count; i++) {
 }
 
 export default {
-  getList(config) {
+  getUserList(config) {
+    console.log('getUserList');
     let queryParams = getParamObj(config.url);
     return {
       total: List.length,
@@ -58,24 +60,56 @@ export default {
       msg: "",
     };
   },
-  updateStatus(config) {
+  getUserDetailsById(config) {
+    console.log('getUserDetailsById');
+    let id = config.url.split('/').pop()
+    return {
+      row: findObjectById(List, id),
+      code: 200,
+      msg: "",
+    };
+  },
+  updateUserStatusById(config) {
+    console.log('updateUserStatusById');
     let queryParams = JSON.parse(config.body);
-    findObjectById(List, queryParams.id).status = queryParams.status;
+    queryParams.id.forEach(id => {
+      findObjectById(List, id).status = queryParams.status;
+    });
     return {
       code: 200,
       msg: "",
     };
   },
   userAdd(config) {
+    console.log('userAdd');
     INDEX++;
-    let newPerson = JSON.parse(config.body);
-    newPerson.age = thisYear - newPerson.birth.slice(0, 4);
-    newPerson.id = Mock.Random.guid();
-    newPerson.index = INDEX;
-    List.unshift(newPerson);
+    let newUser = JSON.parse(config.body);
+    newUser.age = thisYear - newUser.birth.slice(0, 4);
+    newUser.id = Mock.Random.guid();
+    newUser.index = INDEX;
+    List.unshift(newUser);
     return {
       code: 200,
       msg: "",
     };
   },
+  userEdit(config) {
+    console.log('userAdd');
+    let user = JSON.parse(config.body);
+    Object.assign(findObjectById(List, user.id), user)
+    return {
+      code: 200,
+      msg: "",
+    };
+  },
+  userDeleteById(config) {
+    console.log('userDeleteById');
+    console.log(config);
+    let ids = config.url.split('/').pop().split(',')
+    List = List.filter(item => !ids.includes(item.id));
+    return {
+      code: 200,
+      msg: "",
+    };
+  }
 };

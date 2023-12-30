@@ -30,19 +30,36 @@
           :options="cityData"
           clearable
           separator=" "
-          :props="{ label:'title' , value:'title', children:'children' }"
+          :props="{ label: 'title', value: 'title', children: 'children' }"
           filterable
           @change="handleCascaderChange"
         ></el-cascader>
+        <el-tooltip class="item" placement="right" effect="light">
+          <span slot="content"
+            >如果打开"修改dialog"时显示空白，原因如下：<br />mock模拟生成的籍贯地址数据，与cascader组件所绑定的地址数据层级对应有区别</span
+          >
+          <i
+            class="el-icon-warning-outline"
+            style="margin-left: 10px"
+            v-show="dialogTitle == '修改'"
+          ></i>
+        </el-tooltip>
       </el-form-item>
       <el-form-item label="身份证号" prop="identityCard">
-        <el-input v-model="form.identityCard" placeholder="请输入身份证号"></el-input>
+        <el-input
+          v-model="form.identityCard"
+          placeholder="请输入身份证号"
+        ></el-input>
       </el-form-item>
       <el-form-item label="手机号" prop="phoneNum">
         <el-input v-model="form.phoneNum"></el-input>
       </el-form-item>
       <el-form-item label="状态">
-        <el-switch v-model="form.status" :active-value="1" :inactive-value="0"></el-switch>
+        <el-switch
+          v-model="form.status"
+          :active-value="1"
+          :inactive-value="0"
+        ></el-switch>
       </el-form-item>
     </el-form>
     <div class="dialog_footer">
@@ -58,7 +75,7 @@
 
 <script>
 import cityDataJson from "./cityDataJson";
-import { userAdd, updateUserStatusById } from "@/api/index";
+import { userAdd, userEdit } from "@/api/index";
 export default {
   data() {
     // 自定义的身份证号校验函数
@@ -151,8 +168,6 @@ export default {
     handleDataSubmit() {
       this.$refs["form"].validate((valid) => {
         if (valid) {
-          // this.form.address = this.address.join(" ");
-          console.log(this.form);
           if (this.form.id == undefined) {
             userAdd(this.form).then((res) => {
               if (res.code == 200) {
@@ -166,17 +181,17 @@ export default {
               }
             });
           } else {
-            // addWhiteList(this.form).then((res) => {
-            //   if (res.code == 200) {
-            //     this.$message({
-            //       showClose: true,
-            //       message: "新增成功",
-            //       type: "success",
-            //     });
-            //     this.dialogVisible = false;
-            //     this.getList();
-            //   }
-            // });
+            userEdit(this.form).then((res) => {
+              if (res.code == 200) {
+                this.$message({
+                  showClose: true,
+                  message: "修改成功",
+                  type: "success",
+                });
+                this.dialogVisible = false;
+                this.$parent.getList();
+              }
+            });
           }
         }
       });

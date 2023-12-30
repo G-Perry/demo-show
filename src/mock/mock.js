@@ -9,6 +9,9 @@ import usualPageApi from "./usualPage";
 // Mock.mock(/api\/usual\/list/, "get", (data) => {
 //   usualPageApi.getList(data);
 // });
-Mock.mock(/api\/usual\/list/, "get", usualPageApi.getList);
-Mock.mock("/api/usual/list/updateById", "post", usualPageApi.updateStatus);
+Mock.mock(/api\/usual\/userList/, "get", usualPageApi.getUserList);
+Mock.mock(/api\/usual\/user/, "get", usualPageApi.getUserDetailsById);
+Mock.mock("/api/usual/list/updateById", "post", usualPageApi.updateUserStatusById);
 Mock.mock("/api/usual/list/userAdd", "post", usualPageApi.userAdd);
+Mock.mock("/api/usual/list/userEdit", "post", usualPageApi.userEdit);
+Mock.mock(/api\/usual\/userDelete/, "delete", usualPageApi.userDeleteById);
