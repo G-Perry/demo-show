@@ -119,27 +119,24 @@
           align="center"
           prop="index"
         ></el-table-column>
-        <el-table-column prop="name" width="100" label="姓名"></el-table-column>
-        <el-table-column prop="sex" width="100" label="性别">
+        <el-table-column prop="name" label="姓名"></el-table-column>
+        <el-table-column prop="sex" label="性别">
           <template slot-scope="scope">{{ scope.row.sex | sexMatch }}</template>
         </el-table-column>
-        <el-table-column prop="age" width="100" label="年龄"></el-table-column>
-        <el-table-column
-          prop="birth"
-          width="150"
-          label="出生日期"
-        ></el-table-column>
+        <el-table-column prop="age" label="年龄"></el-table-column>
+        <el-table-column prop="birth" label="出生日期"></el-table-column>
         <el-table-column
           prop="identityCard"
-          width="220"
+          show-overflow-tooltip
           label="身份证"
         ></el-table-column>
+        <el-table-column prop="phoneNum" label="电话号码"></el-table-column>
         <el-table-column
-          prop="phoneNum"
-          width="150"
-          label="电话号码"
+          prop="address"
+          label="地址"
+          min-width="300"
+          show-overflow-tooltip
         ></el-table-column>
-        <el-table-column prop="address" label="地址"></el-table-column>
         <el-table-column prop="status" width="90" label="状态">
           <template slot-scope="scope">
             <!-- <common-button></common-button> -->
@@ -387,10 +384,6 @@ export default {
       };
       this.$refs.addEditDialog.address = [];
       this.$refs.addEditDialog.dialogVisible = true;
-      // 再次打开时去除表单校验
-      this.$refs.addEditDialog.$nextTick(() => {
-        this.$refs.addEditDialog.$refs.form.clearValidate();
-      });
     },
     handleEditDialogOpen(row) {
       const id = row.id || this.ids[0];

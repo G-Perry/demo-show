@@ -197,6 +197,8 @@ export default {
       });
     },
     handleClose() {
+      // 关闭前清除表单校验
+      this.$refs.form.clearValidate();
       this.dialogVisible = false;
     },
   },
