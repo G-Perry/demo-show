@@ -94,7 +94,7 @@ export default {
     };
   },
   userEdit(config) {
-    console.log('userAdd');
+    console.log('userEdit');
     let user = JSON.parse(config.body);
     Object.assign(findObjectById(List, user.id), user)
     return {
