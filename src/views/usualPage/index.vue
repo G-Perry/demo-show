@@ -384,6 +384,10 @@ export default {
       };
       this.$refs.addEditDialog.address = [];
       this.$refs.addEditDialog.dialogVisible = true;
+      // 再次打开时去除表单校验
+      this.$refs.addEditDialog.$nextTick(() => {
+        this.$refs.addEditDialog.$refs.form.clearValidate();
+      });
     },
     handleEditDialogOpen(row) {
       const id = row.id || this.ids[0];
