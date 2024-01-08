@@ -31,3 +31,7 @@ npm install axios
 ```
 npm install mockjs
 ```
+### 安装dat.gui
+```
+npm install --save dat.gui
+```
