@@ -31,3 +31,13 @@ npm install axios
 ```
 npm install mockjs
 ```
+
+### 安装echarts
+```
+npm install echarts --save
+```
+
+### 服务器配置code-server
+```
+vim ~/.config/code-server/config.yaml
+```

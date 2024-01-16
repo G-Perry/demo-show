@@ -19,9 +19,19 @@ const routes = [
         component: () => import("../views/usualPage/index.vue"),
       },
       {
+        path: "echarts",
+        name: "echartsPage",
+        component: () => import("../views/echartsPage/index.vue"),
+      },
+      {
         path: "threeLearning",
         name: "threeJsDemoPage",
         component: () => import("../views/threeJsDemo"),
+      },
+      {
+        path: "test",
+        name: "testPage",
+        component: () => import("../views/testPage"),
       },
     ],
   },

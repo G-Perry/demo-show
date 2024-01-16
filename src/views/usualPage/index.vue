@@ -10,16 +10,10 @@
         label-position="top"
       >
         <el-form-item label="条件一">
-          <el-input
-            v-model="queryParams.condition_one"
-            placeholder="请输入条件一"
-          ></el-input>
+          <el-input v-model="queryParams.condition_one" placeholder="请输入条件一"></el-input>
         </el-form-item>
         <el-form-item label="条件二">
-          <el-select
-            v-model="queryParams.condition_two"
-            placeholder="请选择条件二"
-          >
+          <el-select v-model="queryParams.condition_two" placeholder="请选择条件二">
             <el-option label="AAA" value="shanghai"></el-option>
             <el-option label="BBB" value="beijing"></el-option>
           </el-select>
@@ -54,11 +48,7 @@
         <button class="button blue_btn" style="height: 24px">
           <span>查询</span>
         </button>
-        <button
-          class="button plain-btn"
-          style="height: 24px"
-          @click="handleTest"
-        >
+        <button class="button plain-btn" style="height: 24px" @click="handleTest">
           <span>重置</span>
         </button>
       </div>
@@ -69,29 +59,17 @@
         新增
       </button>
       <div class="line"></div>
-      <button
-        class="hover_blue_btn"
-        :disabled="single"
-        @click="handleEditDialogOpen"
-      >
+      <button class="hover_blue_btn" :disabled="single" @click="handleEditDialogOpen">
         <i class="el-icon-edit" style="font-weight: 600"></i>
         修改
       </button>
       <div class="line"></div>
-      <button
-        class="hover_blue_btn"
-        :disabled="multiple"
-        @click="handleStatusChange('on')"
-      >
+      <button class="hover_blue_btn" :disabled="multiple" @click="handleStatusChange('on')">
         <i class="el-icon-check" style="font-weight: 600"></i>
         启用
       </button>
       <div class="line"></div>
-      <button
-        class="hover_blue_btn"
-        :disabled="multiple"
-        @click="handleStatusChange('off')"
-      >
+      <button class="hover_blue_btn" :disabled="multiple" @click="handleStatusChange('off')">
         <i class="el-icon-close" style="font-weight: 600"></i>
         禁用
       </button>
@@ -105,38 +83,21 @@
       <el-table
         :data="tableData"
         :height="tableHeight"
+        v-loading="loading"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column
-          type="selection"
-          width="40"
-          align="center"
-        ></el-table-column>
+        <el-table-column type="selection" width="40" align="center"></el-table-column>
         <!-- <el-table-column type="index" width="50" label="序号" align="center"></el-table-column> -->
-        <el-table-column
-          width="50"
-          label="序号"
-          align="center"
-          prop="index"
-        ></el-table-column>
+        <el-table-column width="50" label="序号" align="center" prop="index"></el-table-column>
         <el-table-column prop="name" label="姓名"></el-table-column>
         <el-table-column prop="sex" label="性别">
           <template slot-scope="scope">{{ scope.row.sex | sexMatch }}</template>
         </el-table-column>
         <el-table-column prop="age" label="年龄"></el-table-column>
         <el-table-column prop="birth" label="出生日期"></el-table-column>
-        <el-table-column
-          prop="identityCard"
-          show-overflow-tooltip
-          label="身份证"
-        ></el-table-column>
+        <el-table-column prop="identityCard" show-overflow-tooltip label="身份证"></el-table-column>
         <el-table-column prop="phoneNum" label="电话号码"></el-table-column>
-        <el-table-column
-          prop="address"
-          label="地址"
-          min-width="300"
-          show-overflow-tooltip
-        ></el-table-column>
+        <el-table-column prop="address" label="地址" min-width="300" show-overflow-tooltip></el-table-column>
         <el-table-column prop="status" width="90" label="状态">
           <template slot-scope="scope">
             <!-- <common-button></common-button> -->
@@ -151,18 +112,10 @@
         </el-table-column>
         <el-table-column label="操作" width="80" align="center">
           <template slot-scope="scope">
-            <button
-              class="btn_in_table"
-              title="修改"
-              @click="handleEditDialogOpen(scope.row)"
-            >
+            <button class="btn_in_table" title="修改" @click="handleEditDialogOpen(scope.row)">
               <i class="el-icon-edit"></i>
             </button>
-            <button
-              class="btn_in_table"
-              title="删除"
-              @click="handleDelete(scope.row)"
-            >
+            <button class="btn_in_table" title="删除" @click="handleDelete(scope.row)">
               <i class="el-icon-delete"></i>
             </button>
           </template>
@@ -219,6 +172,8 @@ export default {
         pageNum: 1,
         pageSize: 20,
       },
+      // 遮罩层
+      loading: true,
       // 表格高度
       tableHeight: 0,
       // 分页相关
