@@ -189,8 +189,8 @@
         //   cube.rotation.x + 0.01;
         //   cube.rotation.y += 0.01;
         //   cube.rotation.z += 0.01;
-        cube.rotation.x += controlData.rotationSpeed;
-        cube.material.color = new THREE.Color(controlData.color);
+        // cube.rotation.x += controlData.rotationSpeed;
+        // cube.material.color = new THREE.Color(controlData.color);
         material.wireframe = controlData.wireframe;
         // 轨道控制器更新
         controls.update();

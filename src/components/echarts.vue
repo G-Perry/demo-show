@@ -1,5 +1,5 @@
 <template>
-  <div ref="echart" style="width: 100%;height: 100%;"></div>
+  <div ref="echart" style="width: 100%; height: 100%"></div>
 </template>
   
   <script>
@@ -217,6 +217,30 @@ export default {
           break;
         case "gauge":
           this.gaugeOption.series[0].data[0].value = this.chartData.value;
+          let colorOne, colorTwo;
+          function getScore(value) {
+            if (value < 60) {
+              colorOne = "#fc8484";
+              colorTwo = "#f9c0c0";
+            } else if (value < 80) {
+              colorOne = "#ffa359";
+              colorTwo = "#ffd9a0";
+            } else if (value < 90) {
+              colorOne = "#4d9cda";
+              colorTwo = "#bfd6f1";
+            } else if (value <= 100) {
+              colorOne = "#0fb68d";
+              colorTwo = "#ade2ce";
+            }
+          }
+          getScore(this.chartData.value);
+          this.gaugeOption.series[0].progress.itemStyle.color = colorOne;
+          this.gaugeOption.series[0].detail.rich.a.color = colorOne;
+          this.gaugeOption.series[0].pointer.itemStyle.borderColor.colorStops[0].color =
+            colorOne;
+          this.gaugeOption.series[1].axisLine.lineStyle.color[0][1] = colorTwo;
+          this.gaugeOption.series[1].splitLine.lineStyle.color = colorTwo;
+          this.gaugeOption.series[1].axisTick.lineStyle.color = colorTwo;
         default:
           break;
       }
