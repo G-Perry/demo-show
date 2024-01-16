@@ -41,3 +41,7 @@ npm install echarts --save
 ```
 vim ~/.config/code-server/config.yaml
 ```
+### 安装dat.gui
+```
+npm install --save dat.gui
+```
