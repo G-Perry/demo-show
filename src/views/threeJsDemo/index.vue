@@ -6,7 +6,7 @@
   import * as THREE from "three";
   // 引入扩展库OrbitControls.js
   import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-  import dat from "dat.gui";
+  // import dat from "dat.gui";
   export default {
     mounted() {
       // 创建控制对象
@@ -16,13 +16,13 @@
         wireframe: false,
       };
       // 创建gui实例
-      const gui = new dat.GUI();
-      const f = gui.addFolder("配置");
-      f.add(controlData, "rotationSpeed").min(0.01).max(0.1).step(0.01);
-      f.addColor(controlData, "color");
-      f.add(controlData, "wireframe");
-      f.domElement.id = "gui";
-      f.open();
+      // const gui = new dat.GUI();
+      // const f = gui.addFolder("配置");
+      // f.add(controlData, "rotationSpeed").min(0.01).max(0.1).step(0.01);
+      // f.addColor(controlData, "color");
+      // f.add(controlData, "wireframe");
+      // f.domElement.id = "gui";
+      // f.open();
       // 创建场景
       // 场景能够让你在什么地方、摆放什么东西来交给three.js渲染,这是你放置物体\灯光\摄像机的地方
       const scene = new THREE.Scene();
@@ -153,7 +153,7 @@
       // 将染器添加到页面
       // document.body.appendChild(renderer.domElement);
       this.$refs.three_demo.appendChild(renderer.domElement);
-      this.$refs.three_demo.appendChild(f.domElement);
+      // this.$refs.three_demo.appendChild(f.domElement);
   
       // 添加轨道控制器
       const controls = new OrbitControls(camera, renderer.domElement);
