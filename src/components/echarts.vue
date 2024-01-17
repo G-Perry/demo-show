@@ -4,6 +4,9 @@
   
   <script>
 import * as echarts from "echarts";
+import { nameMap } from "@/utils/echartsMapData";
+import worldMap from "@/utils/world.json";
+import "echarts-gl";
 export default {
   name: "EchartsPage",
   props: {
@@ -25,7 +28,7 @@ export default {
   },
   data() {
     return {
-      gaugeOption: {
+      firstOption: {
         series: [
           {
             type: "gauge",
@@ -148,7 +151,7 @@ export default {
             data: [
               {
                 value: 90,
-                // name: "高风险事件"
+                // name: ""
               },
             ],
           },
@@ -192,6 +195,535 @@ export default {
           },
         ],
       },
+      secondOption: {
+        grid: {
+          left: "2%",
+          right: "6%",
+          top: "10%",
+          bottom: "10%",
+          containLabel: true,
+        },
+        tooltip: {
+          show: true,
+          trigger: "axis",
+        },
+        xAxis: [
+          {
+            type: "category",
+            axisLine: {
+              show: true,
+              lineStyle: {
+                // color: '#85C1D9'
+              },
+            },
+            axisTick: {
+              show: false,
+            },
+            axisLabel: {
+              // color: '#8BC4F2',
+              margin: 6,
+            },
+            splitLine: {
+              show: false,
+            },
+            boundaryGap: ["5%", "5%"],
+            data: [
+              "0点",
+              "1点",
+              "2点",
+              "3点",
+              "4点",
+              "5点",
+              "6点",
+              "7点",
+              "8点",
+              "9点",
+              "10点",
+              "11点",
+              "12点",
+              "13点",
+              "14点",
+            ],
+          },
+        ],
+        yAxis: [
+          {
+            type: "value",
+            axisLabel: {
+              // color: '#8BC4F2',
+              margin: 6,
+            },
+            splitLine: {
+              lineStyle: {
+                // color: 'red',
+                type: "dashed",
+              },
+            },
+          },
+        ],
+        series: [
+          {
+            name: "",
+            type: "line",
+            // stack: "总量",
+            symbolSize: 6,
+            itemStyle: {
+              color: "#c07f80",
+              // borderColor: 'red',
+              borderWidth: 2,
+            },
+            data: [
+              120, 132, 101, 134, 90, 432, 421, 234, 230, 210, 182, 191, 234,
+              290, 330,
+            ],
+          },
+        ],
+      },
+      thirdOption: {
+        tooltip: {
+          trigger: "axis",
+        },
+        legend: {
+          data: ["类别一", "类别二"],
+          bottom: "0%",
+          icon: "rect",
+          itemGap: 40,
+          itemHeight: 12,
+          itemWidth: 12,
+          textStyle: {
+            color: "#c2c2c2",
+          },
+        },
+        grid: {
+          left: "3%",
+          right: "8%",
+          top: "5%",
+          bottom: "3%",
+          containLabel: true,
+        },
+        // toolbox: {
+        //   feature: {
+        //     saveAsImage: {}
+        //   }
+        // },
+        xAxis: {
+          type: "category",
+          boundaryGap: false,
+          show: false,
+          data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        },
+        yAxis: {
+          type: "value",
+          splitLine: {
+            show: true,
+            lineStyle: {
+              color: "#3d3d3d",
+            },
+          },
+        },
+        series: [
+          {
+            name: "类别一",
+            type: "line",
+            // stack: "Total",
+            data: [220, 182, 191, 234, 290, 330, 310],
+            smooth: true,
+            symbol: "none",
+            itemStyle: {
+              normal: {
+                color: "#1a63fa",
+                lineStyle: {
+                  width: 1,
+                },
+              },
+            },
+          },
+          {
+            name: "类别二",
+            type: "line",
+            // stack: "Total",
+            data: [220, 182, 191, 234, 290, 330, 310],
+            smooth: true,
+            symbol: "none",
+            itemStyle: {
+              normal: {
+                color: "#6dd400",
+                lineStyle: {
+                  width: 1,
+                },
+              },
+            },
+          },
+        ],
+      },
+      forthOption: {
+        // backgroundColor: "#323a5e",
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            // 坐标轴指示器，坐标轴触发有效
+            type: "shadow", // 默认为直线，可选为：'line' | 'shadow'
+          },
+        },
+        grid: {
+          left: "2%",
+          right: "4%",
+          bottom: "2%",
+          top: "12%",
+          containLabel: true,
+        },
+        xAxis: {
+          type: "category",
+          data: ["口岸医院", "镇政府", "某某商城", "邮储银行", "菜市场"],
+          axisLine: {
+            lineStyle: {
+              color: "#325c65",
+            },
+          },
+          axisTick: {
+            show: false,
+          },
+          axisLabel: {
+            textStyle: {
+              fontFamily: "Microsoft YaHei",
+              color: "#fff",
+            },
+          },
+        },
+        yAxis: {
+          type: "value",
+          // max: "1200",
+          name: "个",
+          axisLine: {
+            show: false,
+            lineStyle: {
+              color: "#fff",
+            },
+          },
+          splitLine: {
+            show: true,
+            lineStyle: {
+              color: "#1f3445",
+              type: [5, 10],
+            },
+          },
+          axisLabel: {},
+        },
+        series: [
+          {
+            name: "",
+            type: "bar",
+            barWidth: 15,
+            itemStyle: {
+              normal: {
+                color: "#8df5ff",
+                barBorderRadius: 11,
+                label: {
+                  show: true,
+                  position: "top",
+                },
+              },
+            },
+            data: [400, 600, 700, 700, 1000, 400],
+          },
+        ],
+      },
+      fifthOption: {
+        grid: {
+          top: "3%",
+          left: "6%",
+          right: "6%",
+          bottom: "15%",
+        },
+        tooltip: {
+          trigger: "axis",
+          show: true,
+          borderWidth: 1,
+          borderRadius: 0,
+          extraCssText: "box-shadow: 0 0 0;",
+          borderColor: "#dddddd",
+          formatter: (params) => {
+            let iconColorMap = {
+              等级一: "#aa0000",
+              等级二: "#ee5555",
+              等级三: "#ff9900",
+              等级四: "#4d8dd9",
+              等级五: "#39bba2",
+            };
+            let result =
+              '<span style="font-size:12px">' +
+              params[0].name +
+              "</span>" +
+              "<br />" +
+              '<sapn style="font-size:12px;color:' +
+              iconColorMap[params[0].data] +
+              '">' +
+              params[0].data +
+              "</span>";
+            return result;
+          },
+          position: "top",
+        },
+        xAxis: {
+          type: "category",
+          data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          axisLine: {
+            show: false,
+          },
+          axisLabel: {
+            color: "#999",
+          },
+          axisTick: {
+            show: true,
+            alignWithLabel: true,
+            lineStyle: {
+              color: "#d8e0f0",
+            },
+          },
+        },
+        yAxis: {
+          type: "category",
+          axisTick: {
+            show: false,
+          },
+          axisLine: {
+            show: false,
+          },
+          axisLabel: {
+            color: "#999",
+          },
+          splitLine: {
+            show: true,
+            lineStyle: {
+              color: "#ddd",
+            },
+          },
+          boundaryGap: false,
+          data: ["等级五", "等级四", "等级三", "等级二", "等级一"],
+        },
+        series: [
+          {
+            type: "line",
+            // data: ["等级五", "等级五", "等级三", "等级四", "等级二", "等级一", "等级一"],
+            // silent: true,
+            showSymbol: false,
+            lineStyle: {
+              width: 1, //外边线宽度
+              color: "#4f8eda", //外边线颜色
+            },
+            areaStyle: {
+              //区域填充渐变颜色
+              color: {
+                type: "linear",
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: "rgba(128, 180, 242, 1)", // 0% 处的颜色
+                  },
+                  {
+                    offset: 1,
+                    color: "rgba(237, 243, 251,1)", // 100% 处的颜色
+                  },
+                ],
+                global: false, // 缺省为 false
+              },
+            },
+            smooth: true,
+          },
+        ],
+      },
+      sixthOption: {
+        // color: ["#cc3333", "#ed5454", "#ff9900", "#4d8dd9"],
+        tooltip: {
+          show: true, // 是否显示
+          trigger: "item", // 触发类型  'item'图形触发：散点图，饼图等无类目轴的图表中使用； 'axis'坐标轴触发；'none'：什么都不触发。
+          axisPointer: {
+            // 坐标轴指示器配置项。
+            type: "shadow", // 'line' 直线指示器  'shadow' 阴影指示器  'none' 无指示器  'cross' 十字准星指示器。
+            axis: "auto", // 指示器的坐标轴。
+            snap: true, // 坐标轴指示器是否自动吸附到点上
+          },
+          renderMode: "html", // 浮层的渲染模式，默认以 'html 即额外的 DOM 节点展示 tooltip；
+          backgroundColor: "#fff", // 提示框浮层的背景颜色。
+          borderColor: "#dedede", // 提示框浮层的边框颜色。
+          borderRadius: 1,
+          borderWidth: 1, // 提示框浮层的边框宽。
+          padding: 5, // 提示框浮层内边距，
+          textStyle: {
+            // 提示框浮层的文本样式。
+            color: "#000",
+            fontStyle: "normal",
+            fontWeight: "normal",
+            fontFamily: "sans-serif",
+            fontSize: 14,
+          },
+          confine: false, // 是否将 tooltip 框限制在图表的区域内。
+          formatter: "{b} : {c} 个",
+        },
+        legend: {
+          icon: "circle",
+          itemlength: 20,
+          itemWidth: 10,
+          itemGap: 20,
+          orient: "vertical",
+          align: "left",
+          top: "middle",
+          right: "17%",
+          textStyle: {
+            color: "#000",
+          },
+          height: 150,
+          formatter: (name) => {
+            return (
+              name +
+              ": " +
+              this.sixthOption.series[0].data.find((item) => item.name === name)
+                .value +
+              "个"
+            );
+          },
+          // formatter: "{b} : {c} 个"
+        },
+        series: [
+          {
+            name: "",
+            type: "pie",
+            radius: [50, 65],
+            center: ["29%", "50%"],
+            hoverAnimation: false,
+            itemStyle: {
+              borderColor: "#fff",
+              borderWidth: 1,
+            },
+            label: {
+              normal: {
+                show: true,
+                position: "center",
+                color: "#4c4a4a",
+                formatter: "{a|" + "8" + "}" + "{b| 个}" + "\n" + "{c|XXXX}",
+                rich: {
+                  a: {
+                    fontSize: 30,
+                  },
+                  b: {
+                    fontSize: 14,
+                    lineHeight: 40,
+                  },
+                  c: {
+                    fontSize: 14,
+                    color: "#999",
+                  },
+                },
+              },
+            },
+            emphasis: {
+              disabled: true,
+            },
+            data: [
+              { value: 1048, name: "已失陷" },
+              { value: 735, name: "高危" },
+              { value: 580, name: "中危" },
+              { value: 484, name: "低危" },
+            ],
+          },
+        ],
+      },
+      seventhOption: {
+        tooltip: {
+          trigger: "item",
+        },
+        geo: {
+          type: "map",
+          map: "world",
+          top: "0",
+          bottom: "0",
+          left: "0",
+          right: "0",
+          nameMap: nameMap,
+          label: {
+            show: false,
+            fontFamily: " Microsoft YaHei",
+            fontSize: 12,
+            color: "#fff",
+          },
+          selectedMode: "single",
+          itemStyle: {
+            borderColor: "rgb(26,43,66)", //边界线颜色
+            areaColor: "rgb(43,84,88)", //默认区域颜色
+          },
+          emphasis: {
+            label: {
+              color: "#fff",
+            },
+            itemStyle: {
+              show: true,
+              areaColor: "rgb(115,243,229)", //鼠标滑过区域颜色
+            },
+          },
+          select: {
+            itemStyle: {
+              areaColor: "rgb(115,243,229)",
+            },
+            label: {
+              color: "#fff",
+            },
+          },
+        },
+        series: [
+          {
+            type: "scatter",
+            coordinateSystem: "geo",
+            symbol: "circle",
+            symbolSize: 3,
+            itemStyle: {
+              color: "yellow",
+            },
+            emphasis: {
+              itemStyle: {
+                borderColor: "yellow",
+              },
+              label: {
+                show: true,
+                formatter: "{b}",
+                position: "bottom",
+              },
+            },
+            data: [],
+          },
+          {
+            type: "lines",
+            coordinateSystem: "geo",
+            // 动画效果
+            effect: {
+              show: true,
+              period: 4, //特效动画的时间，单位为 s
+              trailLength: 0.2, //特效尾迹的长度。0~1数值越大尾迹越长
+              trailColor: "#FF2A2E",
+              trailWidth: 3,
+              trailOpacity: 1,
+            },
+            lineStyle: {
+              color: "#FF2A2E",
+              width: 2,
+              opacity: 0.1,
+              curveness: 0.2,
+            },
+            blendMode: "lighter",
+            data: [],
+          },
+          {
+            name: "总攻击个数",
+            type: "map",
+            geoIndex: 0,
+            data: [],
+          },
+        ],
+      },
+      eighthOption: {},
       echart: null,
     };
   },
@@ -201,9 +733,14 @@ export default {
       if (this.echart) {
         this.echart.setOption(this.option);
       } else {
-        this.echart = echarts.init(this.$refs.echart, null, {
-          renderer: "svg",
-        });
+        if (this.optionType == "seventh") {
+          echarts.registerMap("world", { geoJSON: worldMap });
+          this.echart = echarts.init(this.$refs.echart);
+        } else {
+          this.echart = echarts.init(this.$refs.echart, null, {
+            renderer: "svg",
+          });
+        }
         this.echart.setOption(this.option);
       }
       this.echart.off("click"); //防止单机一次触发多次事件
@@ -213,10 +750,8 @@ export default {
     },
     initChartData() {
       switch (this.optionType) {
-        case "":
-          break;
-        case "gauge":
-          this.gaugeOption.series[0].data[0].value = this.chartData.value;
+        case "first":
+          this.firstOption.series[0].data[0].value = this.chartData.value;
           let colorOne, colorTwo;
           function getScore(value) {
             if (value < 60) {
@@ -234,13 +769,49 @@ export default {
             }
           }
           getScore(this.chartData.value);
-          this.gaugeOption.series[0].progress.itemStyle.color = colorOne;
-          this.gaugeOption.series[0].detail.rich.a.color = colorOne;
-          this.gaugeOption.series[0].pointer.itemStyle.borderColor.colorStops[0].color =
+          this.firstOption.series[0].progress.itemStyle.color = colorOne;
+          this.firstOption.series[0].detail.rich.a.color = colorOne;
+          this.firstOption.series[0].pointer.itemStyle.borderColor.colorStops[0].color =
             colorOne;
-          this.gaugeOption.series[1].axisLine.lineStyle.color[0][1] = colorTwo;
-          this.gaugeOption.series[1].splitLine.lineStyle.color = colorTwo;
-          this.gaugeOption.series[1].axisTick.lineStyle.color = colorTwo;
+          this.firstOption.series[1].axisLine.lineStyle.color[0][1] = colorTwo;
+          this.firstOption.series[1].splitLine.lineStyle.color = colorTwo;
+          this.firstOption.series[1].axisTick.lineStyle.color = colorTwo;
+        case "second":
+          this.secondOption.xAxis[0].data = this.chartData.xData;
+          this.secondOption.series[0].data = this.chartData.yData;
+          break;
+        case "third":
+          this.thirdOption.xAxis.data = this.chartData.xData;
+          this.thirdOption.series[0].data = this.chartData.yDataOne;
+          this.thirdOption.series[1].data = this.chartData.yDataTwo;
+        case "forth":
+          this.forthOption.series[0].data = this.chartData.yData;
+          this.forthOption.xAxis.data = this.chartData.xData;
+          break;
+        case "fifth":
+          this.fifthOption.xAxis.data = this.chartData.xData;
+          this.fifthOption.series[0].data = this.chartData.yData;
+          break;
+        case "sixth":
+          this.sixthOption.series[0].data = this.chartData.pieData;
+          this.sixthOption.series[0].label.normal.formatter =
+            "{a|" +
+            this.chartData.count +
+            "}" +
+            "{b| 个}" +
+            "\n" +
+            "{c|" +
+            this.chartData.msg +
+            "}";
+          break;
+        case "seventh":
+          this.seventhOption.series[0].data = this.chartData.scatterList;
+          this.seventhOption.series[1].data = this.chartData.lineList;
+          this.seventhOption.series[2].data = this.chartData.dataList;
+          break;
+        case "eighth":
+          break;
+
         default:
           break;
       }
@@ -249,8 +820,22 @@ export default {
   computed: {
     option() {
       switch (this.optionType) {
-        case "gauge":
-          return this.gaugeOption;
+        case "first":
+          return this.firstOption;
+        case "second":
+          return this.secondOption;
+        case "third":
+          return this.thirdOption;
+        case "forth":
+          return this.forthOption;
+        case "fifth":
+          return this.fifthOption;
+        case "sixth":
+          return this.sixthOption;
+        case "seventh":
+          return this.seventhOption;
+        case "eighth":
+          return this.eighthOption;
         default:
           break;
       }

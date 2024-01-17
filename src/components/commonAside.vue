@@ -40,15 +40,22 @@ export default {
         {
           path: "/",
           name: "echartsPage",
-          label: "Echarts_show",
-          icon: "icon-file-text",
+          label: "Echarts_Show",
+          icon: "icon-echart",
           url: "",
         },
         {
           path: "/",
           name: "threeJsDemoPage",
-          label: "ThreeJs_demo",
+          label: "ThreeJs_Demo",
           icon: "icon-codepen",
+          url: "",
+        },
+        {
+          path: "/",
+          name: "cssAndSvgPage",
+          label: "CSS_&_SVG_Show",
+          icon: "icon-command",
           url: "",
         },
         {

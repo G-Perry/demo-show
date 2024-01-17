@@ -29,6 +29,11 @@ const routes = [
         component: () => import("../views/threeJsDemo"),
       },
       {
+        path: "cssAndSvg",
+        name: "cssAndSvgPage",
+        component: () => import("../views/cssAndSvgPage"),
+      },
+      {
         path: "test",
         name: "testPage",
         component: () => import("../views/testPage"),
