@@ -1005,3 +1005,1148 @@ export let seventhChartData = [
     num: 1,
   },
 ];
+export let eighthChartData = [
+  {
+    regionCode: "4369",
+    regionName: "保加利亚",
+    longitude: "23.324150",
+    latitude: "42.697510",
+    totalNum: 28804,
+    levelInfos: [
+      {
+        num: 28719,
+        level: "2",
+      },
+      {
+        num: 85,
+        level: "3",
+      },
+    ],
+  },
+  {
+    regionCode: "4529",
+    regionName: "俄罗斯联邦",
+    longitude: "44.002050",
+    latitude: "56.328670",
+    totalNum: 17001,
+    levelInfos: [
+      {
+        num: 16687,
+        level: "2",
+      },
+      {
+        num: 293,
+        level: "3",
+      },
+      {
+        num: 17,
+        level: "0",
+      },
+      {
+        num: 4,
+        level: "1",
+      },
+    ],
+  },
+  {
+    regionCode: "4473",
+    regionName: "立陶宛",
+    longitude: "25.279986",
+    latitude: "54.689185",
+    totalNum: 6369,
+    levelInfos: [
+      {
+        num: 6311,
+        level: "2",
+      },
+      {
+        num: 56,
+        level: "3",
+      },
+      {
+        num: 2,
+        level: "1",
+      },
+    ],
+  },
+  {
+    regionCode: "4567",
+    regionName: "美国",
+    longitude: "-121.894960",
+    latitude: "37.339390",
+    totalNum: 5120,
+    levelInfos: [
+      {
+        num: 2720,
+        level: "2",
+      },
+      {
+        num: 1310,
+        level: "1",
+      },
+      {
+        num: 1063,
+        level: "3",
+      },
+      {
+        num: 27,
+        level: "0",
+      },
+    ],
+  },
+  {
+    regionCode: "4389",
+    regionName: "瑞士",
+    longitude: "8.562561",
+    latitude: "47.431421",
+    totalNum: 3225,
+    levelInfos: [
+      {
+        num: 3203,
+        level: "2",
+      },
+      {
+        num: 20,
+        level: "1",
+      },
+      {
+        num: 2,
+        level: "3",
+      },
+    ],
+  },
+  {
+    regionCode: "4420",
+    regionName: "大不列颠及北爱尔兰联合王国",
+    longitude: "-0.125740",
+    latitude: "51.508530",
+    totalNum: 3068,
+    levelInfos: [
+      {
+        num: 3044,
+        level: "2",
+      },
+      {
+        num: 13,
+        level: "3",
+      },
+      {
+        num: 11,
+        level: "1",
+      },
+    ],
+  },
+  {
+    regionCode: "4564",
+    regionName: "乌克兰",
+    longitude: "30.523800",
+    latitude: "50.454660",
+    totalNum: 3018,
+    levelInfos: [
+      {
+        num: 3002,
+        level: "2",
+      },
+      {
+        num: 16,
+        level: "3",
+      },
+    ],
+  },
+  {
+    regionCode: "4527",
+    regionName: "罗马尼亚",
+    longitude: "26.106070",
+    latitude: "44.432300",
+    totalNum: 2931,
+    levelInfos: [
+      {
+        num: 2927,
+        level: "2",
+      },
+      {
+        num: 3,
+        level: "3",
+      },
+      {
+        num: 1,
+        level: "1",
+      },
+    ],
+  },
+  {
+    regionCode: "4401",
+    regionName: "德国",
+    longitude: "8.681996",
+    latitude: "50.110880",
+    totalNum: 2019,
+    levelInfos: [
+      {
+        num: 1980,
+        level: "2",
+      },
+      {
+        num: 32,
+        level: "3",
+      },
+      {
+        num: 4,
+        level: "1",
+      },
+      {
+        num: 3,
+        level: "0",
+      },
+    ],
+  },
+  {
+    regionCode: "4518",
+    regionName: "波兰",
+    longitude: "21.011780",
+    latitude: "52.229770",
+    totalNum: 1740,
+    levelInfos: [
+      {
+        num: 1300,
+        level: "3",
+      },
+      {
+        num: 440,
+        level: "2",
+      },
+    ],
+  },
+  {
+    regionCode: "4505",
+    regionName: "荷兰",
+    longitude: "4.899980",
+    latitude: "52.378502",
+    totalNum: 1275,
+    levelInfos: [
+      {
+        num: 1142,
+        level: "2",
+      },
+      {
+        num: 104,
+        level: "3",
+      },
+      {
+        num: 26,
+        level: "1",
+      },
+      {
+        num: 3,
+        level: "0",
+      },
+    ],
+  },
+  {
+    regionCode: "4445",
+    regionName: "印度",
+    longitude: "77.603290",
+    latitude: "12.976230",
+    totalNum: 714,
+    levelInfos: [
+      {
+        num: 683,
+        level: "2",
+      },
+      {
+        num: 21,
+        level: "3",
+      },
+      {
+        num: 10,
+        level: "1",
+      },
+    ],
+  },
+  {
+    regionCode: "4536",
+    regionName: "新加坡",
+    longitude: "103.850281",
+    latitude: "1.289987",
+    totalNum: 613,
+    levelInfos: [
+      {
+        num: 365,
+        level: "2",
+      },
+      {
+        num: 186,
+        level: "0",
+      },
+      {
+        num: 54,
+        level: "1",
+      },
+      {
+        num: 8,
+        level: "3",
+      },
+    ],
+  },
+  {
+    regionCode: "4360",
+    regionName: "澳大利亚",
+    longitude: "144.963171",
+    latitude: "-37.814007",
+    totalNum: 593,
+    levelInfos: [
+      {
+        num: 581,
+        level: "2",
+      },
+      {
+        num: 11,
+        level: "3",
+      },
+      {
+        num: 1,
+        level: "0",
+      },
+    ],
+  },
+  {
+    regionCode: "4418",
+    regionName: "法国",
+    longitude: "2.293486",
+    latitude: "48.859078",
+    totalNum: 529,
+    levelInfos: [
+      {
+        num: 500,
+        level: "2",
+      },
+      {
+        num: 17,
+        level: "1",
+      },
+      {
+        num: 10,
+        level: "3",
+      },
+      {
+        num: 2,
+        level: "0",
+      },
+    ],
+  },
+  {
+    regionCode: "4535",
+    regionName: "瑞典",
+    longitude: "18.064841",
+    latitude: "59.332748",
+    totalNum: 522,
+    levelInfos: [
+      {
+        num: 516,
+        level: "2",
+      },
+      {
+        num: 3,
+        level: "1",
+      },
+      {
+        num: 3,
+        level: "3",
+      },
+    ],
+  },
+  {
+    regionCode: "4450",
+    regionName: "意大利",
+    longitude: "9.188547",
+    latitude: "45.464336",
+    totalNum: 475,
+    levelInfos: [
+      {
+        num: 474,
+        level: "2",
+      },
+      {
+        num: 1,
+        level: "3",
+      },
+    ],
+  },
+  {
+    regionCode: "4441",
+    regionName: "印度尼西亚",
+    longitude: "106.845493",
+    latitude: "-6.208678",
+    totalNum: 405,
+    levelInfos: [
+      {
+        num: 396,
+        level: "2",
+      },
+      {
+        num: 9,
+        level: "3",
+      },
+    ],
+  },
+  {
+    regionCode: "4462",
+    regionName: "韩国（共和国）",
+    longitude: "126.977207",
+    latitude: "37.566309",
+    totalNum: 400,
+    levelInfos: [
+      {
+        num: 382,
+        level: "2",
+      },
+      {
+        num: 10,
+        level: "3",
+      },
+      {
+        num: 8,
+        level: "1",
+      },
+    ],
+  },
+  {
+    regionCode: "4558",
+    regionName: "突尼斯",
+    longitude: "10.165820",
+    latitude: "36.818999",
+    totalNum: 358,
+    levelInfos: [
+      {
+        num: 358,
+        level: "2",
+      },
+    ],
+  },
+  {
+    regionCode: "4367",
+    regionName: "比利时",
+    longitude: "4.348780",
+    latitude: "50.850850",
+    totalNum: 263,
+    levelInfos: [
+      {
+        num: 203,
+        level: "2",
+      },
+      {
+        num: 60,
+        level: "3",
+      },
+    ],
+  },
+  {
+    regionCode: "4465",
+    regionName: "哈萨克斯坦",
+    longitude: "79.666670",
+    latitude: "46.950000",
+    totalNum: 137,
+    levelInfos: [
+      {
+        num: 137,
+        level: "2",
+      },
+    ],
+  },
+  {
+    regionCode: "4489",
+    regionName: "马提尼克",
+    longitude: "-61.009330",
+    latitude: "14.608000",
+    totalNum: 132,
+    levelInfos: [
+      {
+        num: 132,
+        level: "3",
+      },
+    ],
+  },
+  {
+    regionCode: "4384",
+    regionName: "伯利兹",
+    longitude: "-88.766670",
+    latitude: "17.250000",
+    totalNum: 111,
+    levelInfos: [
+      {
+        num: 95,
+        level: "3",
+      },
+      {
+        num: 16,
+        level: "2",
+      },
+    ],
+  },
+  {
+    regionCode: "4378",
+    regionName: "巴西",
+    longitude: "-42.112780",
+    latitude: "-11.135560",
+    totalNum: 101,
+    levelInfos: [
+      {
+        num: 62,
+        level: "2",
+      },
+      {
+        num: 23,
+        level: "1",
+      },
+      {
+        num: 15,
+        level: "3",
+      },
+      {
+        num: 1,
+        level: "0",
+      },
+    ],
+  },
+  {
+    regionCode: "4454",
+    regionName: "日本",
+    longitude: "139.692317",
+    latitude: "35.689497",
+    totalNum: 62,
+    levelInfos: [
+      {
+        num: 39,
+        level: "2",
+      },
+      {
+        num: 12,
+        level: "1",
+      },
+      {
+        num: 8,
+        level: "0",
+      },
+      {
+        num: 3,
+        level: "3",
+      },
+    ],
+  },
+  {
+    regionCode: "4575",
+    regionName: "越南",
+    longitude: "105.841460",
+    latitude: "21.024411",
+    totalNum: 51,
+    levelInfos: [
+      {
+        num: 48,
+        level: "2",
+      },
+      {
+        num: 2,
+        level: "1",
+      },
+      {
+        num: 1,
+        level: "3",
+      },
+    ],
+  },
+  {
+    regionCode: "4522",
+    regionName: "葡萄牙",
+    longitude: "-9.133368",
+    latitude: "38.716753",
+    totalNum: 43,
+    levelInfos: [
+      {
+        num: 26,
+        level: "0",
+      },
+      {
+        num: 17,
+        level: "3",
+      },
+    ],
+  },
+  {
+    regionCode: "4553",
+    regionName: "泰国",
+    longitude: "99.992430",
+    latitude: "19.504800",
+    totalNum: 41,
+    levelInfos: [
+      {
+        num: 38,
+        level: "2",
+      },
+      {
+        num: 3,
+        level: "1",
+      },
+    ],
+  },
+  {
+    regionCode: "4448",
+    regionName: "伊朗（伊斯兰共和国）",
+    longitude: "60.862794",
+    latitude: "29.495967",
+    totalNum: 35,
+    levelInfos: [
+      {
+        num: 20,
+        level: "2",
+      },
+      {
+        num: 15,
+        level: "1",
+      },
+    ],
+  },
+  {
+    regionCode: "4366",
+    regionName: "孟加拉国",
+    longitude: "90.407109",
+    latitude: "23.710394",
+    totalNum: 25,
+    levelInfos: [
+      {
+        num: 18,
+        level: "1",
+      },
+      {
+        num: 7,
+        level: "2",
+      },
+    ],
+  },
+  {
+    regionCode: "4581",
+    regionName: "南非",
+    longitude: "28.043550",
+    latitude: "-26.202250",
+    totalNum: 23,
+    levelInfos: [
+      {
+        num: 11,
+        level: "1",
+      },
+      {
+        num: 7,
+        level: "0",
+      },
+      {
+        num: 5,
+        level: "2",
+      },
+    ],
+  },
+  {
+    regionCode: "4569",
+    regionName: "乌兹别克斯坦",
+    longitude: "69.216270",
+    latitude: "41.264650",
+    totalNum: 22,
+    levelInfos: [
+      {
+        num: 22,
+        level: "2",
+      },
+    ],
+  },
+  {
+    regionCode: "4516",
+    regionName: "菲律宾",
+    longitude: "120.600000",
+    latitude: "15.857220",
+    totalNum: 20,
+    levelInfos: [
+      {
+        num: 20,
+        level: "2",
+      },
+    ],
+  },
+  {
+    regionCode: "4349",
+    regionName: "阿拉伯联合酋长国",
+    longitude: "56.341410",
+    latitude: "25.116410",
+    totalNum: 16,
+    levelInfos: [
+      {
+        num: 16,
+        level: "2",
+      },
+    ],
+  },
+  {
+    regionCode: "4496",
+    regionName: "墨西哥",
+    longitude: "-99.127610",
+    latitude: "19.428470",
+    totalNum: 13,
+    levelInfos: [
+      {
+        num: 10,
+        level: "2",
+      },
+      {
+        num: 2,
+        level: "3",
+      },
+      {
+        num: 1,
+        level: "1",
+      },
+    ],
+  },
+  {
+    regionCode: "4503",
+    regionName: "尼日利亚",
+    longitude: "3.395816",
+    latitude: "6.452972",
+    totalNum: 13,
+    levelInfos: [
+      {
+        num: 13,
+        level: "2",
+      },
+    ],
+  },
+  {
+    regionCode: "4517",
+    regionName: "巴基斯坦",
+    longitude: "67.010000",
+    latitude: "24.860000",
+    totalNum: 10,
+    levelInfos: [
+      {
+        num: 9,
+        level: "2",
+      },
+      {
+        num: 1,
+        level: "1",
+      },
+    ],
+  },
+  {
+    regionCode: "4572",
+    regionName: "委内瑞拉（玻利瓦尔共和国）",
+    longitude: "-66.878990",
+    latitude: "10.488010",
+    totalNum: 9,
+    levelInfos: [
+      {
+        num: 7,
+        level: "2",
+      },
+      {
+        num: 2,
+        level: "1",
+      },
+    ],
+  },
+  {
+    regionCode: "4385",
+    regionName: "加拿大",
+    longitude: "-123.116713",
+    latitude: "49.240820",
+    totalNum: 8,
+    levelInfos: [
+      {
+        num: 5,
+        level: "3",
+      },
+      {
+        num: 3,
+        level: "2",
+      },
+    ],
+  },
+  {
+    regionCode: "4432",
+    regionName: "希腊",
+    longitude: "23.716245",
+    latitude: "37.979452",
+    totalNum: 7,
+    levelInfos: [
+      {
+        num: 5,
+        level: "2",
+      },
+      {
+        num: 2,
+        level: "3",
+      },
+    ],
+  },
+  {
+    regionCode: "4497",
+    regionName: "马来西亚",
+    longitude: "102.283330",
+    latitude: "6.033330",
+    totalNum: 7,
+    levelInfos: [
+      {
+        num: 5,
+        level: "2",
+      },
+      {
+        num: 2,
+        level: "3",
+      },
+    ],
+  },
+  {
+    regionCode: "4512",
+    regionName: "巴拿马",
+    longitude: "-79.519767",
+    latitude: "8.993610",
+    totalNum: 6,
+    levelInfos: [
+      {
+        num: 6,
+        level: "2",
+      },
+    ],
+  },
+  {
+    regionCode: "4392",
+    regionName: "智利",
+    longitude: "-70.566522",
+    latitude: "-33.426498",
+    totalNum: 5,
+    levelInfos: [
+      {
+        num: 4,
+        level: "2",
+      },
+      {
+        num: 1,
+        level: "3",
+      },
+    ],
+  },
+  {
+    regionCode: "4382",
+    regionName: "博茨瓦纳",
+    longitude: "25.908583",
+    latitude: "-24.654573",
+    totalNum: 4,
+    levelInfos: [
+      {
+        num: 4,
+        level: "2",
+      },
+    ],
+  },
+  {
+    regionCode: "4400",
+    regionName: "捷克",
+    longitude: "14.420798",
+    latitude: "50.087936",
+    totalNum: 4,
+    levelInfos: [
+      {
+        num: 4,
+        level: "2",
+      },
+    ],
+  },
+  {
+    regionCode: "4412",
+    regionName: "埃塞俄比亚",
+    longitude: "38.746890",
+    latitude: "9.024970",
+    totalNum: 4,
+    levelInfos: [
+      {
+        num: 4,
+        level: "2",
+      },
+    ],
+  },
+  {
+    regionCode: "4487",
+    regionName: "蒙古",
+    longitude: "106.883240",
+    latitude: "47.907710",
+    totalNum: 4,
+    levelInfos: [
+      {
+        num: 3,
+        level: "3",
+      },
+      {
+        num: 1,
+        level: "2",
+      },
+    ],
+  },
+  {
+    regionCode: "4394",
+    regionName: "哥伦比亚",
+    longitude: "-74.081750",
+    latitude: "4.609710",
+    totalNum: 3,
+    levelInfos: [
+      {
+        num: 3,
+        level: "2",
+      },
+    ],
+  },
+  {
+    regionCode: "4408",
+    regionName: "爱沙尼亚",
+    longitude: "24.753530",
+    latitude: "59.436960",
+    totalNum: 3,
+    levelInfos: [
+      {
+        num: 3,
+        level: "2",
+      },
+    ],
+  },
+  {
+    regionCode: "4409",
+    regionName: "埃及",
+    longitude: "29.899892",
+    latitude: "31.200027",
+    totalNum: 3,
+    levelInfos: [
+      {
+        num: 2,
+        level: "3",
+      },
+      {
+        num: 1,
+        level: "2",
+      },
+    ],
+  },
+  {
+    regionCode: "4413",
+    regionName: "芬兰",
+    longitude: "24.935450",
+    latitude: "60.169520",
+    totalNum: 3,
+    levelInfos: [
+      {
+        num: 2,
+        level: "3",
+      },
+      {
+        num: 1,
+        level: "2",
+      },
+    ],
+  },
+  {
+    regionCode: "4479",
+    regionName: "摩尔多瓦（共和国）",
+    longitude: "28.856675",
+    latitude: "47.006042",
+    totalNum: 3,
+    levelInfos: [
+      {
+        num: 3,
+        level: "2",
+      },
+    ],
+  },
+  {
+    regionCode: "4560",
+    regionName: "土耳其",
+    longitude: "28.949660",
+    latitude: "41.013840",
+    totalNum: 3,
+    levelInfos: [
+      {
+        num: 3,
+        level: "2",
+      },
+    ],
+  },
+  {
+    regionCode: "4357",
+    regionName: "阿根廷",
+    longitude: "-58.381555",
+    latitude: "-34.603599",
+    totalNum: 2,
+    levelInfos: [
+      {
+        num: 2,
+        level: "2",
+      },
+    ],
+  },
+  {
+    regionCode: "4403",
+    regionName: "丹麦",
+    longitude: "12.363280",
+    latitude: "55.731650",
+    totalNum: 2,
+    levelInfos: [
+      {
+        num: 2,
+        level: "3",
+      },
+    ],
+  },
+  {
+    regionCode: "4411",
+    regionName: "西班牙",
+    longitude: "-3.684733",
+    latitude: "40.416818",
+    totalNum: 2,
+    levelInfos: [
+      {
+        num: 1,
+        level: "0",
+      },
+      {
+        num: 1,
+        level: "3",
+      },
+    ],
+  },
+  {
+    regionCode: "4455",
+    regionName: "肯尼亚",
+    longitude: "39.663628",
+    latitude: "-4.054685",
+    totalNum: 2,
+    levelInfos: [
+      {
+        num: 1,
+        level: "2",
+      },
+      {
+        num: 1,
+        level: "3",
+      },
+    ],
+  },
+  {
+    regionCode: "4363",
+    regionName: "阿塞拜疆",
+    longitude: "49.891932",
+    latitude: "40.377948",
+    totalNum: 1,
+    levelInfos: [
+      {
+        num: 1,
+        level: "1",
+      },
+    ],
+  },
+  {
+    regionCode: "4390",
+    regionName: "科特迪瓦",
+    longitude: "-4.019241",
+    latitude: "5.309340",
+    totalNum: 1,
+    levelInfos: [
+      {
+        num: 1,
+        level: "2",
+      },
+    ],
+  },
+  {
+    regionCode: "4407",
+    regionName: "厄瓜多尔",
+    longitude: "-78.524950",
+    latitude: "-0.229850",
+    totalNum: 1,
+    levelInfos: [
+      {
+        num: 1,
+        level: "3",
+      },
+    ],
+  },
+  {
+    regionCode: "4438",
+    regionName: "克罗地亚",
+    longitude: "15.978012",
+    latitude: "45.814397",
+    totalNum: 1,
+    levelInfos: [
+      {
+        num: 1,
+        level: "2",
+      },
+    ],
+  },
+  {
+    regionCode: "4440",
+    regionName: "匈牙利",
+    longitude: "21.716272",
+    latitude: "47.955449",
+    totalNum: 1,
+    levelInfos: [
+      {
+        num: 1,
+        level: "2",
+      },
+    ],
+  },
+  {
+    regionCode: "4447",
+    regionName: "伊拉克",
+    longitude: "44.400880",
+    latitude: "33.340580",
+    totalNum: 1,
+    levelInfos: [
+      {
+        num: 1,
+        level: "2",
+      },
+    ],
+  },
+  {
+    regionCode: "4463",
+    regionName: "科威特",
+    longitude: "48.048997",
+    latitude: "29.302920",
+    totalNum: 1,
+    levelInfos: [
+      {
+        num: 1,
+        level: "2",
+      },
+    ],
+  },
+  {
+    regionCode: "4474",
+    regionName: "卢森堡",
+    longitude: "6.102780",
+    latitude: "49.518610",
+    totalNum: 1,
+    levelInfos: [
+      {
+        num: 1,
+        level: "3",
+      },
+    ],
+  },
+  {
+    regionCode: "4533",
+    regionName: "塞舌尔",
+    longitude: "55.449711",
+    latitude: "-4.616794",
+    totalNum: 1,
+    levelInfos: [
+      {
+        num: 1,
+        level: "2",
+      },
+    ],
+  },
+];

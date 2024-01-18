@@ -21,6 +21,7 @@ export default {
   watch: {
     chartData: {
       handler: function () {
+        // console.log(111);
         this.initChart();
       },
       deep: true,
@@ -723,19 +724,210 @@ export default {
           },
         ],
       },
-      eighthOption: {},
+      eightPrevOption: {
+        backgroundColor: "rgb(22,56,124)",
+        series: [
+          {
+            id: "worldMap",
+            type: "map",
+            map: "world",
+            // 绘制完整尺寸的 echarts 实例
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            nameMap: nameMap,
+            boundingCoords: [
+              [-180, 90],
+              [180, -90],
+            ],
+            itemStyle: {
+              borderColor: "rgb(13,70,103)", //边界线颜色
+              areaColor: "rgb(0,4,8)", //默认区域颜色
+            },
+            emphasis: {
+              label: {
+                color: "#fff",
+              },
+              itemStyle: {
+                show: true,
+                areaColor: "rgb(8,51,102)", //鼠标滑过区域颜色
+              },
+            },
+            select: {
+              itemStyle: {
+                areaColor: "rgb(8,51,102)",
+              },
+              label: {
+                color: "#fff",
+              },
+            },
+          },
+        ],
+      },
+      eighthOption: {
+        backgroundColor: "#000",
+        globe: {
+          show: true,
+          shading: "lambert",
+          // baseTexture: texture,
+          // baseTexture: ROOT_PATH + '/data-gl/asset/world.topo.bathy.200401.jpg',
+          atmosphere: {
+            show: false, //显示大气层
+            offset: 8,
+            color: "#fff",
+          },
+          globeRadius: 80,
+          emphasis: {
+            focus: "self",
+          },
+          displacementScale: 0,
+          environment: require("@/assets/images/star_bg.png"),
+          light: {
+            ambient: {
+              intensity: 0.8, //环境光源强度
+            }, //环境光
+            main: {
+              intensity: 0.2, //光源强度
+            },
+            postEffect: {
+              enable: true,
+              bloom: {
+                enable: true,
+                bloomIntensity: 1,
+              },
+            },
+          },
+          viewControl: {
+            autoRotate: true, // 是否开启视角绕物体的自动旋转查看
+            autoRotateSpeed: 3, //物体自转的速度,单位为角度 / 秒，默认为10 ，也就是36秒转一圈。
+            autoRotateAfterStill: 2, // 在鼠标静止操作后恢复自动旋转的时间间隔,默认 3s
+            rotateSensitivity: 2, // 旋转操作的灵敏度，值越大越灵敏.设置为0后无法旋转。[1, 0]只能横向旋转.[0, 1]只能纵向旋转
+            targetCoord: [116.46, 39.92], // 定位到北京
+            maxDistance: 200,
+            minDistance: 200,
+          },
+          layers: [
+            {
+              //地球表面层的配置，你可以使用该配置项加入云层，或者对 baseTexture 进行补充绘制出国家的轮廓等等。
+              show: true,
+              type: "blend",
+              texture: {},
+            },
+          ],
+        },
+        series: [
+          {
+            type: "scatter3D",
+            coordinateSystem: "globe",
+            symbol: "circle",
+            symbolSize: 3,
+            itemStyle: {
+              color: "#FF2A2E",
+            },
+            emphasis: {
+              itemStyle: {
+                borderColor: "yellow",
+              },
+              label: {
+                show: true,
+                formatter: "{b}",
+                position: "bottom",
+              },
+            },
+            // data: scatterList,
+            data: [],
+          },
+          {
+            type: "lines3D",
+            coordinateSystem: "globe",
+            // 动画效果
+            effect: {
+              show: true,
+              period: 4, //特效动画的时间，单位为 s
+              trailLength: 0.2, //特效尾迹的长度。0~1数值越大尾迹越长
+              trailColor: "#FF2A2E",
+              trailWidth: 3,
+              trailOpacity: 1,
+            },
+            lineStyle: {
+              color: "#FF2A2E",
+              width: 2,
+              opacity: 0.1,
+            },
+            blendMode: "lighter",
+            // data: redLineList,
+            data: [],
+          },
+          {
+            type: "lines3D",
+            coordinateSystem: "globe",
+            // 动画效果
+            effect: {
+              show: true,
+              period: 4, //特效动画的时间，单位为 s
+              trailLength: 0.2, //特效尾迹的长度。0~1数值越大尾迹越长
+              trailColor: "#F9D056",
+              trailWidth: 3,
+              trailOpacity: 1,
+            },
+            lineStyle: {
+              color: "#F9D056",
+              width: 2,
+              opacity: 0.1,
+            },
+            blendMode: "lighter",
+            // data: yellowLineList,
+            data: [],
+          },
+          {
+            type: "lines3D",
+            coordinateSystem: "globe",
+            // 动画效果
+            effect: {
+              show: true,
+              period: 4, //特效动画的时间，单位为 s
+              trailLength: 0.2, //特效尾迹的长度。0~1数值越大尾迹越长
+              trailColor: "#00d7dc",
+              trailWidth: 3,
+              trailOpacity: 1,
+            },
+            lineStyle: {
+              color: "#00d7dc",
+              width: 2,
+              opacity: 0.1,
+            },
+            blendMode: "lighter",
+            // data: blueLineList,
+            data: [],
+          },
+        ],
+      },
       echart: null,
     };
   },
   methods: {
     initChart() {
       this.initChartData();
+      // console.log(this.echart, 333);
       if (this.echart) {
         this.echart.setOption(this.option);
       } else {
         if (this.optionType == "seventh") {
           echarts.registerMap("world", { geoJSON: worldMap });
           this.echart = echarts.init(this.$refs.echart);
+        } else if (this.optionType == "eighth") {
+          echarts.registerMap("world", { geoJSON: worldMap });
+          const canvas = document.createElement("canvas");
+          const mapChart = echarts.init(canvas, null, {
+            //作为3d地球表面图层的对象
+            width: 2048,
+            height: 1024,
+          });
+          mapChart.setOption(this.eightPrevOption);
+          this.eighthOption.globe.layers[0].texture = mapChart;
+          this.echart = echarts.init(this.$refs.echart);
+          // console.log(mapChart, 444);
         } else {
           this.echart = echarts.init(this.$refs.echart, null, {
             renderer: "svg",
@@ -810,6 +1002,12 @@ export default {
           this.seventhOption.series[2].data = this.chartData.dataList;
           break;
         case "eighth":
+          // console.log(this.chartData, 222);
+          this.eighthOption.series[0].data = this.chartData.scatterList;
+          this.eighthOption.series[1].data = this.chartData.redLineList;
+          this.eighthOption.series[2].data = this.chartData.yellowLineList;
+          this.eighthOption.series[3].data = this.chartData.blueLineList;
+
           break;
 
         default:

@@ -15,7 +15,6 @@ export default {
 
 <style scoped>
 .pageOne {
-  background: #000726;
   display: flex;
   align-items: center;
   justify-content: center;

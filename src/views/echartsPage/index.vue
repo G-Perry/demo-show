@@ -14,20 +14,19 @@
       <section class="echart" style="background-color: #000726;">
         <echarts optionType="forth" :chartData="forthData"></echarts>
       </section>
-      <section class="echart two_column">
+      <section class="echart two_cells">
         <echarts optionType="fifth" :chartData="fifthData"></echarts>
       </section>
       <section class="echart">
         <Echarts optionType="sixth" :chartData="sixthData"></Echarts>
       </section>
-      <section class="echart four_column" style="background-color: #183c57;">
+      <section class="echart four_cells" style="background-color: #183c57;">
         <Echarts optionType="seventh" :chartData="seventhData"></Echarts>
       </section>
-      <section class="echart four_column">
-        <!-- <Echarts optionType="eighth" :chartData="seventhData"></Echarts> -->
+      <section class="echart"></section>
+      <section class="echart four_cells">
+        <Echarts optionType="eighth" :chartData="eighthData"></Echarts>
       </section>
-      <section class="echart"></section>
-      <section class="echart"></section>
     </div>
   </div>
 </template>
@@ -41,6 +40,7 @@ import {
   fifthChartData,
   sixthChartData,
   seventhChartData,
+  eighthChartData,
 } from "./chartData";
 export default {
   components: {
@@ -67,6 +67,12 @@ export default {
         scatterList: [],
         lineList: [],
         dataList: [],
+      },
+      eighthData: {
+        scatterList: [],
+        redLineList: [],
+        yellowLineList: [],
+        blueLineList: [],
       },
     };
   },
@@ -130,7 +136,42 @@ export default {
           value: item.num,
         });
       });
-      console.log(this.seventhData);
+      // 8
+      eighthChartData.map((item) => {
+        this.eighthData.scatterList.push({
+          name: item.regionName,
+          value: [item.longitude, item.latitude],
+        });
+      });
+      for (var i = 0; i < eighthChartData.length; i++) {
+        if (
+          eighthChartData[i].levelInfos.find((item) => item.level == "0") ||
+          eighthChartData[i].levelInfos.find((item) => item.level == "1")
+        ) {
+          this.eighthData.redLineList.push({
+            coords: [
+              [eighthChartData[i].longitude, eighthChartData[i].latitude],
+              [118.77799, 32.06167],
+            ],
+          });
+        } else if (
+          eighthChartData[i].levelInfos.find((item) => item.level == "2")
+        ) {
+          this.eighthData.yellowLineList.push({
+            coords: [
+              [eighthChartData[i].longitude, eighthChartData[i].latitude],
+              [118.77799, 32.06167],
+            ],
+          });
+        } else {
+          this.eighthData.blueLineList.push({
+            coords: [
+              [eighthChartData[i].longitude, eighthChartData[i].latitude],
+              [118.77799, 32.06167],
+            ],
+          });
+        }
+      }
     }, 0);
   },
 };
@@ -154,12 +195,16 @@ export default {
   /* height: 33vh; */
   border: 1px solid #ddd;
 }
-.echart.two_column {
+.echart.two_cells {
+  grid-column: span 2;
+}
+.echart.four_cells {
+  grid-row: span 2; /*让元素跨足两行 */
   grid-column: span 2; /* 默认占一列 */
 }
-.echart.four_column {
-  grid-row: span 2; /*让第四个子元素跨足两行 */
-  grid-column: span 2; /* 默认占一列 */
+.echart.nine_column {
+  grid-row: span 3;
+  grid-column: span 3; /* 默认占一列 */
 }
 .echartOne {
   position: relative;
