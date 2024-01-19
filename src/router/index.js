@@ -34,6 +34,11 @@ const routes = [
         component: () => import("../views/cssAndSvgPage"),
       },
       {
+        path: "metaphysics",
+        name: "metaphysicsPage",
+        component: () => import("../views/metaphysicsPage"),
+      },
+      {
         path: "test",
         name: "testPage",
         component: () => import("../views/testPage"),

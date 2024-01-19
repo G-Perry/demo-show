@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?lq3rjl');
-  src:  url('fonts/icomoon.eot?lq3rjl#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?lq3rjl') format('truetype'),
-    url('fonts/icomoon.woff?lq3rjl') format('woff'),
-    url('fonts/icomoon.svg?lq3rjl#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?7rwykb');
+  src:  url('fonts/icomoon.eot?7rwykb#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?7rwykb') format('truetype'),
+    url('fonts/icomoon.woff?7rwykb') format('woff'),
+    url('fonts/icomoon.svg?7rwykb#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,6 +25,33 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-dui:before {
+  content: "\e902";
+}
+.icon-gen:before {
+  content: "\e903";
+}
+.icon-kan:before {
+  content: "\e904";
+}
+.icon-kun:before {
+  content: "\e905";
+}
+.icon-li:before {
+  content: "\e906";
+}
+.icon-qian:before {
+  content: "\e907";
+}
+.icon-xun:before {
+  content: "\e908";
+}
+.icon-zhen:before {
+  content: "\e909";
+}
+.icon-taiJi:before {
+  content: "\e90a";
+}
 .icon-echart:before {
   content: "\e901";
 }

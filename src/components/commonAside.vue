@@ -60,6 +60,13 @@ export default {
         },
         {
           path: "/",
+          name: "metaphysicsPage",
+          label: "metaphysics",
+          icon: "icon-taiJi",
+          url: "",
+        },
+        {
+          path: "/",
           name: "testPage",
           label: "testPage",
           icon: "icon-file-empty",

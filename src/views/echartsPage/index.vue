@@ -3,7 +3,7 @@
     <div class="echartsPage">
       <section class="echart echartOne">
         <Echarts optionType="first" :chartData="firstData"></Echarts>
-        <el-slider v-model="firstData.value" class="echartOne_slider"></el-slider>
+        <el-slider v-model="firstData.value" vertical class="echartOne_slider"></el-slider>
       </section>
       <section class="echart">
         <Echarts optionType="second" :chartData="secondData"></Echarts>
@@ -23,10 +23,10 @@
       <section class="echart four_cells" style="background-color: #183c57;">
         <Echarts optionType="seventh" :chartData="seventhData"></Echarts>
       </section>
-      <section class="echart"></section>
       <section class="echart four_cells">
         <Echarts optionType="eighth" :chartData="eighthData"></Echarts>
       </section>
+      <section class="echart"></section>
     </div>
   </div>
 </template>
@@ -211,8 +211,27 @@ export default {
 }
 .echartOne_slider {
   position: absolute;
-  margin: 0 10%;
-  width: 80%;
-  bottom: 10px;
+  /* margin: 0 10%; */
+  /* width: 10vw; */
+  /* bottom: 10px; */
+  height: 80%;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+@media screen and (max-width: 930px) {
+  .echartsPage {
+    display: grid;
+    grid-template-rows: repeat(auto-fill, 1fr);
+    grid-template-columns: repeat(1, 1fr);
+    grid-auto-rows: 40vh;
+    gap: 10px; /* 你可以根据需要调整行之间的间距 */
+  }
+  .echart.two_cells,
+  .echart.four_cells,
+  .echart.nine_column {
+    grid-row: span 1;
+    grid-column: span 1;
+  }
 }
 </style>

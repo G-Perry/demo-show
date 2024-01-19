@@ -1,10 +1,9 @@
 <template>
   <div class="son_fit_father" style="position: relative;">
     <div class="video-bg">
-      <video autoplay loop muted>
-        <!-- <source src="../assets/video/bgVideo.mp4" type="video/mp4" />Your browser does not support the video tag. -->
+      <!-- <video loop muted autoplay playsinline preload="auto">
         <source src="../../assets/video/bgVideo.mp4" type="video/mp4" />Your browser does not support the video tag.
-      </video>
+      </video> -->
     </div>
     <div class="main_content son_fit_father">
       <section class="top_nav">
@@ -40,7 +39,7 @@
       <section v-if="option_select[7].isActive" class="son_fit">
         <page-eight></page-eight>
       </section>
-    </div>
+    </div> 
   </div>
 </template>
 
@@ -69,6 +68,7 @@ export default {
       option_select: [],
       innerStarMsgs: [],
       outterStarMsgs: [],
+      // isPc: !window.matchMedia("(pointer: coarse)").matches,
     };
   },
   methods: {
@@ -180,11 +180,19 @@ export default {
           break;
       }
     },
+    // 解决 移动端打开页面时，背景视频会跳出来播放
+    // handleVideoPlayWhenMobileMounted() {
+    //   if (!window.matchMedia("(pointer: coarse)").matches) {
+    //     this.$refs.bgVideo.play();
+    //   }
+    // },
   },
   beforeMount() {
     this.resetOptionSelectBeforeMount();
   },
-  mounted() {},
+  mounted() {
+    // console.log(window.matchMedia("(pointer: coarse)").matches);
+  },
 };
 </script>
 
@@ -194,12 +202,14 @@ export default {
   width: 100%;
   height: 100%;
   z-index: 0;
+  background: url("../../assets/images/bg.gif") no-repeat;
+  background-size: 100% 100%;
 }
-.video-bg > video {
+/* .video-bg > video {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
+} */
 .main_content {
   width: 100%;
   height: 100%;
