@@ -1,7 +1,7 @@
 <template>
   <div class="son_fit_father">
     <span class="pageTitle">页面标题</span>
-    <section class="search_bar">
+    <section class="search_bar pc">
       <el-form
         ref="form"
         :model="queryParams"
@@ -53,30 +53,82 @@
         </button>
       </div>
     </section>
+    <section class="search_bar search_bar_phone">
+      <el-button icon="el-icon-search" size="mini" @click="handleDrawerOpenWhenPhone"></el-button>
+      <el-drawer
+        :visible.sync="drawerVisible"
+        direction="ttb"
+        :show-close="false"
+        >
+        <!-- :before-close="handleClose" -->
+        <el-form ref="form" :model="queryParams" label-width="80px" label-position="top">
+          <el-form-item label="条件一">
+            <el-input v-model="queryParams.condition_one" placeholder="请输入条件一"></el-input>
+          </el-form-item>
+          <el-form-item label="条件二">
+            <el-select v-model="queryParams.condition_two" placeholder="请选择条件二">
+              <el-option label="AAA" value="shanghai"></el-option>
+              <el-option label="BBB" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="时间范围" style="width: 220px">
+            <el-select
+              v-if="queryParams.time_range.time_range_type !== 'custom_time'"
+              v-model="queryParams.time_range.time_range_type"
+              placeholder="请选择"
+              @change="handleselectChange"
+            >
+              <el-option
+                v-for="item in timeRangeMap"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+            <el-date-picker
+              v-else
+              ref="el_date_picker"
+              v-model="dataRange"
+              type="daterange"
+              range-separator="至"
+              style="width: 220px"
+              value-format="yyyy-MM-dd"
+              :picker-options="pickerOptions"
+            ></el-date-picker>
+          </el-form-item>
+        </el-form>
+        <button class="button blue_btn" style="margin-left: 20px;margin-bottom: 20px;height: 24px">
+          <span>查询</span>
+        </button>
+        <button class="button plain-btn" style="margin-left: 20px;height: 24px">
+          <span>重置</span>
+        </button>
+      </el-drawer>
+    </section>
     <section class="table_up_btns">
       <button class="hover_blue_btn" @click="handleAddDialogOpen">
         <i class="el-icon-circle-plus"></i>
-        新增
+        <span>新增</span>
       </button>
       <div class="line"></div>
       <button class="hover_blue_btn" :disabled="single" @click="handleEditDialogOpen">
         <i class="el-icon-edit" style="font-weight: 600"></i>
-        修改
+        <span>修改</span>
       </button>
       <div class="line"></div>
       <button class="hover_blue_btn" :disabled="multiple" @click="handleStatusChange('on')">
         <i class="el-icon-check" style="font-weight: 600"></i>
-        启用
+        <span>启用</span>
       </button>
       <div class="line"></div>
       <button class="hover_blue_btn" :disabled="multiple" @click="handleStatusChange('off')">
         <i class="el-icon-close" style="font-weight: 600"></i>
-        禁用
+        <span>禁用</span>
       </button>
       <div class="line"></div>
       <button class="hover_blue_btn" :disabled="multiple" @click="handleDelete">
         <i class="el-icon-delete-solid"></i>
-        删除
+        <span>删除</span>
       </button>
     </section>
     <div class="son_fit" style="position: relative">
@@ -219,6 +271,7 @@ export default {
           },
         ],
       },
+      drawerVisible: false,
     };
   },
   filters: {
@@ -393,6 +446,9 @@ export default {
       console.log(this.multiple, "multiple");
       console.log(this.single, "single");
     },
+    handleDrawerOpenWhenPhone() {
+      this.drawerVisible = true;
+    },
   },
   mounted() {
     this.getList();
@@ -430,5 +486,18 @@ export default {
   display: flex;
   align-items: center;
   border-bottom: 1px solid #eee;
+}
+.search_bar_phone {
+  display: none;
+}
+@media screen and (max-width: 930px) {
+  .search_bar.pc,
+  .hover_blue_btn > span,
+  ::v-deep .el-drawer__header {
+    display: none;
+  }
+  .search_bar_phone {
+    display: block;
+  }
 }
 </style>

@@ -1,12 +1,9 @@
 <template>
   <div class="son_fit_father">
-    <el-date-picker
-      v-model="birthTime"
-      type="datetime"
-      placeholder="请选择出生时间"
-      value-format="yyyy|MM|dd|HH|mm|ss"
-    ></el-date-picker>
+    <el-date-picker v-model="birthTime" type="datetime" placeholder="请选择出生时间"></el-date-picker>
+    <!-- value-format="yyyy|MM|dd|HH|mm|ss" -->
     <div>{{ birthTime }}</div>
+    <!-- <div>{{ birthTime.getLunar() }}</div> -->
   </div>
 </template>
 
@@ -24,56 +21,46 @@ export default {
     for (let i = 0; i < 60; i++) {
       CNyear.push(tianGan[i % 10] + diZhi[i % 12]);
     }
-    for (let i = 2000; i < 2020; i++) {}
 
-
-    // console.log(CNyear);
-    // const celestialStems = [
-    //   "甲",
-    //   "乙",
-    //   "丙",
-    //   "丁",
-    //   "戊",
-    //   "己",
-    //   "庚",
-    //   "辛",
-    //   "壬",
-    //   "癸",
-    // ];
-    // const earthlyBranches = [
-    //   "子",
-    //   "丑",
-    //   "寅",
-    //   "卯",
-    //   "辰",
-    //   "巳",
-    //   "午",
-    //   "未",
-    //   "申",
-    //   "酉",
-    //   "戌",
-    //   "亥",
-    // ];
-
-    // function getJiaZiYear(year) {
-    //   const totalStemsBranches = 60; // 天干地支总数
-    //   const celestialIndex = (year - 1) % 10;
-    //   const earthlyIndex = (year - 1) % 12;
-
-    //   const index = (celestialIndex * 12 + earthlyIndex) % totalStemsBranches;
-    //   const celestialStem = celestialStems[index % 10];
-    //   const earthlyBranch = earthlyBranches[index % 12];
-
-    //   return celestialStem + earthlyBranch + "年";
-    // }
-
-    // // 示例用法
-    // for (let year = 2000; year <= 2030; year++) {
-    //   console.log(`${year}年是${getJiaZiYear(year)}`);
-    // }
+    let date = new Date();
+    console.log(date);
+    console.log(date.toLocaleString());
+    console.log(date.getLunar());
   },
 };
 </script>
 
 <style>
+/* 
+  虽说“早知如此绊人心，何如当初莫相识”，但有你的这一场经历依旧是我的幸事
+
+  今天周一，上午研究了一下天文历法，发现这东西极其复杂，不是短时间内能自己手算代码推导农历干支的，只能退而求其次，引用大佬已经写好的库了，不过我发现在公司写这个八卦图案太明显了，所以玄学该学还是学，但这个项目暂停，后续视情况再说
+  
+  倒是学到个新的知识点，简述一下就是“阳历和阴历计算方式的不同，时间长了会有误差，所以在19年里增加7个闰月，则阳历和阴历正好重合。这19年之数就被称为‘一章’”。
+  你会发现2018年19岁生日那天跟你出生那年的日期会重合，或者受闰年影响误差一天。
+
+  学到的另一个处事规则就是 不疾不徐，谋而后动 ，后面的那些个行为虽然小丑了点，但也是当时自己深思熟虑的结果，从萌发念头到付诸实践我都是过了几天的，防止一时上头。
+  包括这次的复盘自省也是从上周三萌发念头一直到现在，期间也动过放弃的念头，文字也是删删改改。
+
+  再说下长远一点的规划，省考成绩出来了，进不了面，不过比去年要好，继续学习，以年为单位学学网安的知识，我发现有个公安局的技术岗竞争小一点；
+  入党的事我后来咨询过，社区入党也是蛮激烈的，所以打算稳定下来看看新公司能不能入，这边公司可以，不过我当时并没有呆长时间的打算，所以作罢
+  相机的话没需求暂时应该不会买，ps应该会找个时间点学一学
+  学习游戏制作的计划先放一放，没这么多精力了
+
+  同样跟你分享一个方法，当思绪困在方寸间打转的时候，不妨出去走走，把目光投向高远处，放空心神，天高地迥，很容易会有灵感迸发，打破那层无形桎梏
+  可以说是一种炼心
+
+  我感觉自己性格、处事能百搭，我对异性的要求就是三观契合，知书达理，有正经工作就行。一开始我还是参照那些个帖子，觉得相亲就是看着差不多合适就凑合过日子呗，然后赶紧见个面，处的下去就处。
+  但似乎你不是这么理解，仅谈我个人对你的猜想，若有差池还请见谅，我觉得你并不知道自己想要什么样的对象，是要先通过聊天的形式打动你，才能更进一步的见面，然后再谈后续，当中稍有差池就是断路。
+
+  所以我现在的想法便是，等到一个三观契合同样又觉得凑合过日子的，概率太低了，其实这也不合适，凑合凑合也凑合不起来。
+  今天把这想法说与同事听，他说他就相了三四个，跟谁结婚不是结，然后来了一句“我已经结婚了，所以我建议你还是找个合适的”
+
+  还是得靠自身吸引，走“花香蝶自来”的路线，先提升自己，当下的我还不是那么好。遇到你确实是一件幸事，大学期间没有目标属实是荒废了，好在受你刺激现在行动为时未晚。
+
+  短则一条信息，长则记事本截图，我尽量简短叙述，不作消息轰炸。
+
+  你会看到有些今天今天的容易混淆，是因为文字不是同一天写的，别太在意，懂意思就行。
+
+*/
 </style>

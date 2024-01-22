@@ -3,7 +3,7 @@
     <div class="video-bg">
       <!-- <video loop muted autoplay playsinline preload="auto">
         <source src="../../assets/video/bgVideo.mp4" type="video/mp4" />Your browser does not support the video tag.
-      </video> -->
+      </video>-->
     </div>
     <div class="main_content son_fit_father">
       <section class="top_nav">
@@ -39,7 +39,7 @@
       <section v-if="option_select[7].isActive" class="son_fit">
         <page-eight></page-eight>
       </section>
-    </div> 
+    </div>
   </div>
 </template>
 
@@ -223,6 +223,8 @@ export default {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 .nav_item {
   width: fit-content;
@@ -238,6 +240,10 @@ export default {
   user-select: none;
   border-bottom: 2px solid transparent;
   transition: all 0.3s;
+
+  white-space: nowrap; /* 不换行 */
+  overflow: hidden; /* 溢出部分隐藏 */
+  /* text-overflow: ellipsis; 显示省略号 */
 }
 .nav_item:hover,
 .nav_item.active {
