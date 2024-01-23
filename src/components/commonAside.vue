@@ -58,13 +58,13 @@ export default {
           icon: "icon-command",
           url: "",
         },
-        {
-          path: "/",
-          name: "metaphysicsPage",
-          label: "metaphysics",
-          icon: "icon-taiJi",
-          url: "",
-        },
+        // {
+        //   path: "/",
+        //   name: "metaphysicsPage",
+        //   label: "metaphysics",
+        //   icon: "icon-taiJi",
+        //   url: "",
+        // },
         {
           path: "/",
           name: "testPage",
