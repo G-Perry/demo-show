@@ -37,7 +37,10 @@ export default {
       this.$store.commit("collapseMenu");
     },
     pageToVsCode() {
-      window.open("http://localhost:8888", "_blank");
+      let protocol = window.location.protocol;
+      let hostname = window.location.hostname;
+      let newUrl = `${protocol}//${hostname}:8888`;
+      window.open(newUrl, "_blank");
     },
   },
 };
