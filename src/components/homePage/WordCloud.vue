@@ -1,14 +1,4 @@
 <template>
-  <!-- <div class="wordCloud" id="wordCloud" ref="wordCloud">
-    <div
-      v-for="(item, index) in wordList"
-      :key="index"
-      :class="(item.asset_num>0 ? 'wordRed' : 'word')"
-      :style="item.style ? item.style : ' '"
-      @click="handleWordClick(item)"
-    >{{ item.event_desc + (item.asset_num >0 ? '('+ item.asset_num +')' : '')}}</div>
-    <!~~ <el-button @click="abcd">111</el-button> ~~>
-  </div>-->
   <div class="wordCloud" ref="wordCloud">
     <div
       v-for="(item, index) in wordList"
@@ -16,7 +6,6 @@
       :key="index"
       :class="item.asset_num > 0 ? 'wordRed' : 'word'"
       :style="`top:${item.top}px;left:${item.left}px`"
-      @click="handleWordClick(item)"
     >
       {{
       item.event_desc + (item.asset_num > 0 ? "(" + item.asset_num + ")" : "")
@@ -30,23 +19,38 @@
 </template>
 
 <script>
+import Mock from "mockjs";
 export default {
   props: {
     words: {
       type: Array,
       default: () => {
-        return [
-          { event_desc: "ZLoader银行木马", asset_num: 0 },
-          { event_desc: "BuleHero 4.0挖矿摆虫", asset_num: 0 },
-          { event_desc: "GravityRAT间谍软件", asset_num: 0 },
-          { event_desc: "飞客蠕虫", asset_num: 1 },
-          { event_desc: "LoggerMiner挖矿木马", asset_num: 0 },
-          { event_desc: "APT32", asset_num: 0 },
-          { event_desc: "LazarusAPT", asset_num: 0 },
-          { event_desc: "TroubleGrabber恶意软件", asset_num: 10 },
-          { event_desc: "systemdMine挖矿病毒", asset_num: 0 },
-          { event_desc: "CLOP勒索病毒新变种", asset_num: 0 },
-        ];
+        function randomText() {
+          return Mock.Random.string("壹贰叁肆伍陆柒捌玖拾", 3, 10);
+        }
+        function randomNum() {
+          return Mock.Random.integer(0, 5);
+        }
+        let words = [];
+        for (let i = 0; i < 10; i++) {
+          words.push({
+            event_desc: randomText(),
+            asset_num: i == 0 || i == 1 ? 0 : randomNum(),
+          });
+        }
+        return words;
+        // [
+        //   { event_desc: "ZLoader银行木马", asset_num: 0 },
+        //   { event_desc: "BuleHero 4.0挖矿摆虫", asset_num: 0 },
+        //   { event_desc: "GravityRAT间谍软件", asset_num: 0 },
+        //   { event_desc: "飞客蠕虫", asset_num: 1 },
+        //   { event_desc: "LoggerMiner挖矿木马", asset_num: 0 },
+        //   { event_desc: "APT32", asset_num: 0 },
+        //   { event_desc: "LazarusAPT", asset_num: 0 },
+        //   { event_desc: "TroubleGrabber恶意软件", asset_num: 10 },
+        //   { event_desc: "systemdMine挖矿病毒", asset_num: 0 },
+        //   { event_desc: "CLOP勒索病毒新变种", asset_num: 0 },
+        // ];
       },
     },
   },
@@ -68,9 +72,6 @@ export default {
   },
   data() {
     return {
-      // wordList: [],
-      // wordPosition: []
-
       // 外部整体的宽高
       outerWidth: 0,
       outerHeight: 0,
@@ -234,41 +235,7 @@ export default {
       });
       this.wordList = this.words;
     },
-    handleWordClick(item) {
-      if (item.asset_num > 0) {
-        this.$router.push({
-          // path: "/secevent/risksafeevent/risksafeeventlist"
-          name: "Risksafeeventlist",
-          params: {
-            fromWhere: "wordCloud",
-            search: item.event_desc,
-            threat_id: item.threat_id,
-          },
-        });
-      }
-    },
-    // handleReSize() {
-    //   console.log(121212);
-    //   this.$nextTick(() => {
-    //     this.getWH();
-    //     this.setWordPosition();
-    //   });
-    // },
   },
-  // mounted() {
-  //   window.addEventListener("resize", () => {
-  //     // this.$nextTick(() => {
-  //     //   this.getWH();
-  //     //   this.setWordPosition();
-  //     // });
-  //     this.handleReSize();
-  //   });
-  // },
-  // beforeDestroy() {
-  //   window.removeEventListener("resize", () => {
-  //     this.handleResize();
-  //   });
-  // },
 };
 </script>
 

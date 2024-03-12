@@ -24,35 +24,35 @@ export default {
     return {
       menuData: [
         {
-          path: "/",
+          path: "home",
           name: "homePage",
           label: "首页",
           icon: "icon-home",
           url: "",
         },
         {
-          path: "/",
+          path: "usual",
           name: "usualPage",
           label: "通用模板页面",
           icon: "icon-file-text",
           url: "",
         },
         {
-          path: "/",
+          path: "echarts",
           name: "echartsPage",
           label: "Echarts_Show",
           icon: "icon-echart",
           url: "",
         },
         {
-          path: "/",
+          path: "threeLearning",
           name: "threeJsDemoPage",
-          label: "ThreeJs_Demo",
+          label: "ThreeJs_Learn",
           icon: "icon-codepen",
           url: "",
         },
         {
-          path: "/",
+          path: "cssAndSvg",
           name: "cssAndSvgPage",
           label: "CSS_&_SVG_Show",
           icon: "icon-command",
@@ -66,7 +66,7 @@ export default {
         //   url: "",
         // },
         {
-          path: "/",
+          path: "test",
           name: "testPage",
           label: "testPage",
           icon: "icon-file-empty",
@@ -95,10 +95,18 @@ export default {
       console.log(key, keyPath);
     },
     handleMenuClick(item) {
+      this.$store.dispatch("changeTab", item.label);
       this.$router.push({
         name: item.name,
       });
     },
+  },
+  mounted() {
+    let pathName = window.location.href.match(/\/([^\/]+)$/)[1];
+    this.$store.dispatch(
+      "changeTab",
+      this.menuData.find((item) => item.path == pathName).label
+    );
   },
 };
 </script>

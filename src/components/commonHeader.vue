@@ -2,19 +2,20 @@
   <div class="header_container">
     <div class="left_content">
       <el-button icon="el-icon-menu" size="mini" @click="handleMenuCollapse"></el-button>
-      <span class="text">首页</span>
+      <span class="text">{{tabName}}</span>
     </div>
     <div class="center_content">
       <el-input v-model="input" prefix-icon="el-icon-search"></el-input>
     </div>
     <div class="right_content">
-      <el-dropdown>
+      <el-button type="info" icon="icon-code" circle title="查看源代码,密码：123qwe" @click="pageToVsCode"></el-button>
+      <!-- <el-dropdown>
         <el-button type="success" icon="el-icon-check" circle></el-button>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>个人中心</el-dropdown-item>
           <el-dropdown-item>退出</el-dropdown-item>
         </el-dropdown-menu>
-      </el-dropdown>
+      </el-dropdown>-->
     </div>
   </div>
 </template>
@@ -26,9 +27,17 @@ export default {
       input: "",
     };
   },
+  computed: {
+    tabName() {
+      return this.$store.state.tab.tabName;
+    },
+  },
   methods: {
     handleMenuCollapse() {
       this.$store.commit("collapseMenu");
+    },
+    pageToVsCode() {
+      window.open("http://localhost:8888", "_blank");
     },
   },
 };

@@ -318,7 +318,7 @@ export default {
             },
             data: [
               {
-                value: 70,
+                value: 66,
               },
             ],
           },

@@ -386,10 +386,10 @@ export default {
       helper.visible = false;
       scene.add(helper);
 
-      const gui = new GUI({ width: 200 });
-      gui.add({ debug: false }, "debug").onChange(function (value) {
-        helper.visible = value;
-      });
+      // const gui = new GUI({ width: 200 });
+      // gui.add({ debug: false }, "debug").onChange(function (value) {
+      //   helper.visible = value;
+      // });
 
       animate();
     });

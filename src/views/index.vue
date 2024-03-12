@@ -45,7 +45,7 @@ export default {
   background: #e9ecef;
 }
 
-.main_content>div {
+.main_content > div {
   background: #fff;
 }
 </style>

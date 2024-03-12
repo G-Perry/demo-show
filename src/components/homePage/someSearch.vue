@@ -132,8 +132,9 @@
       <el-button
         type="primary"
         style="width: 130px;height: 50px;font-size: 17px;"
-        >确定</el-button>
-        <!-- style="width: 130px;height: 50px;font-size: 17px;background: #3e68ef;border: none;" -->
+        class="blue_btn"
+      >确定</el-button>
+      <!-- style="width: 130px;height: 50px;font-size: 17px;background: #3e68ef;border: none;" -->
     </div>
   </div>
 </template>
@@ -280,6 +281,22 @@ export default {
 .tree-node {
   overflow-x: visible;
   overflow-y: clip;
+}
+.blue_btn {
+  background: #295bf9;
+  border: none;
+}
+.blue_btn:focus:not(button[disabled]) {
+  background: #295bf9;
+}
+
+.blue_btn:hover:not(button[disabled]) {
+  transition: all 500ms;
+  background: #4a74ff;
+}
+
+.blue_btn:active:not(button[disabled]) {
+  background: #1647e6;
 }
 </style>
 <style>

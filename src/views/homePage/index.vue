@@ -1,145 +1,147 @@
 <template>
-  <div class="index_page_overall">
-    <div class="bar_item_1 son_fit_father">
-      <div class="bar_subtitle">XXXXX</div>
-      <div class="bar_1_top">
-        <div class="bar_1_top_left">
-          <span class="title">XXXX平台已服务</span>
-          <div class="day_count">
-            <span class="day_count_num">0</span>
-            <span class="day_count_num">3</span>
-            <span class="day_count_num">4</span>
-            <span class="day_count_num">0</span>
-            <span class="day_count_text">天</span>
+  <div class="son_fit_father" style="position: relative;  border-radius: 10px;">
+    <div class="index_page_overall">
+      <div class="bar_item_1 son_fit_father">
+        <div class="bar_subtitle">XXXXX</div>
+        <div class="bar_1_top">
+          <div class="bar_1_top_left">
+            <span class="title">XXXX平台已服务</span>
+            <div class="day_count">
+              <span class="day_count_num">0</span>
+              <span class="day_count_num">3</span>
+              <span class="day_count_num">4</span>
+              <span class="day_count_num">0</span>
+              <span class="day_count_text">天</span>
+            </div>
+          </div>
+          <div class="bar_1_top_right">
+            <div class="bar_1_top_right_item">
+              <div class="item_img_1"></div>
+              <span class="item_num">108</span>
+              <span class="item_text">XXX</span>
+            </div>
+            <div class="bar_1_top_right_item">
+              <div class="item_img_1"></div>
+              <span class="item_num">177</span>
+              <span class="item_text">XXX</span>
+            </div>
           </div>
         </div>
-        <div class="bar_1_top_right">
-          <div class="bar_1_top_right_item">
-            <div class="item_img_1"></div>
-            <span class="item_num">108</span>
-            <span class="item_text">XXX</span>
+        <div class="bar_1_middle">
+          <div class="bar_1_middle_left">
+            <span class="date">2023-9-4</span>
+            <span class="date" style="margin-left: 15px;">星期一</span>
+            <span class="num">4</span>
           </div>
-          <div class="bar_1_top_right_item">
-            <div class="item_img_1"></div>
-            <span class="item_num">177</span>
-            <span class="item_text">XXX</span>
+          <div class="bar_1_middle_right">
+            <span class="text">XXXXXXX</span>
+            <div class="btn flex_center">XXXXXX</div>
           </div>
         </div>
-      </div>
-      <div class="bar_1_middle">
-        <div class="bar_1_middle_left">
-          <span class="date">2023-9-4</span>
-          <span class="date" style="margin-left: 15px;">星期一</span>
-          <span class="num">4</span>
-        </div>
-        <div class="bar_1_middle_right">
-          <span class="text">XXXXXXX</span>
-          <div class="btn flex_center">XXXXXX</div>
-        </div>
-      </div>
-      <!-- <div class="bar_1_bottom son_fit">
+        <!-- <div class="bar_1_bottom son_fit">
         <div class="bar_subtitle" style="border: none;">XXXX</div>
-      </div>-->
-      <div class="bottom_line" style="margin:24px 0 12px"></div>
-      <div class="bar_subtitle" style="border: none;">XXXX</div>
-      <div class="bar_1_bottom son_fit">
-        <some-search></some-search>
+        </div>-->
+        <div class="bottom_line" style="margin:24px 0 12px"></div>
+        <div class="bar_subtitle" style="border: none;">XXXX</div>
+        <div class="bar_1_bottom son_fit">
+          <some-search></some-search>
+        </div>
       </div>
-    </div>
-    <!--  -->
-    <div class="bar_item_2 son_fit_father">
-      <div class="bar_title bottom_line">XXXXXX</div>
-      <div class="bar_2 son_fit">
-        <div class="bar_2_top bottom_line">
-          <div class="son_fit_father">
-            <div class="bar_subtitle">XXXX</div>
-            <word-cloud class="son_fit"></word-cloud>
+      <!--  -->
+      <div class="bar_item_2 son_fit_father">
+        <div class="bar_title bottom_line">XXXXXX</div>
+        <div class="bar_2 son_fit">
+          <div class="bar_2_top bottom_line">
+            <div class="son_fit_father">
+              <div class="bar_subtitle">XXXX</div>
+              <word-cloud class="son_fit"></word-cloud>
+            </div>
           </div>
-        </div>
-        <div class="bar_2_bottom_left">
-          <div class="son_fit_father">
-            <div class="bar_subtitle">XXXX</div>
-            <Echarts class="son_fit gauge_echart" optionType="indexGauge" :chartData="gaugeData"></Echarts>
+          <div class="bar_2_bottom_left">
+            <div class="son_fit_father">
+              <div class="bar_subtitle">XXXX</div>
+              <Echarts class="son_fit gauge_echart" optionType="indexGauge" :chartData="gaugeData"></Echarts>
+            </div>
           </div>
-        </div>
-        <div class="bar_2_bottom_right">
-          <div class="son_fit_father">
-            <div class="bar_subtitle">XXXX</div>
-            <div class="bar_1_top_right son_fit left_line" style="background-color: #fff;">
-              <div class="bar_1_top_right_item">
-                <div class="item_img_3"></div>
-                <span class="item_num">108</span>
-                <span class="item_text">XXXXXX</span>
-              </div>
-              <div class="bar_1_top_right_item">
-                <div class="item_img_4"></div>
-                <span class="item_num">177</span>
-                <span class="item_text">XXXXX</span>
+          <div class="bar_2_bottom_right">
+            <div class="son_fit_father">
+              <div class="bar_subtitle">XXXX</div>
+              <div class="bar_1_top_right son_fit left_line" style="background-color: #fff;">
+                <div class="bar_1_top_right_item">
+                  <div class="item_img_3"></div>
+                  <span class="item_num">108</span>
+                  <span class="item_text">XXXXXX</span>
+                </div>
+                <div class="bar_1_top_right_item">
+                  <div class="item_img_4"></div>
+                  <span class="item_num">177</span>
+                  <span class="item_text">XXXXX</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="bar_item_3 son_fit_father">
-      <div class="bar_title bottom_line">XXXXXX</div>
-      <div class="gird_column_2_5">
-        <div class="bar_subtitle">XXXXXXXXX</div>
-        <div class="bar_subtitle">XXXXXTOP 5</div>
-      </div>
+      <div class="bar_item_3 son_fit_father">
+        <div class="bar_title bottom_line">XXXXXX</div>
+        <div class="gird_column_2_5">
+          <div class="bar_subtitle">XXXXXXXXX</div>
+          <div class="bar_subtitle">XXXXXTOP 5</div>
+        </div>
 
-      <div class="gird_column_2_5 son_fit">
-        <Echarts optionType="pie" :chartData="pieDataOne" fromWhere="index_server"></Echarts>
-        <asset-top-five-table :tableData="tableDataOne"></asset-top-five-table>
-      </div>
-    </div>
-    <div class="bar_item_5 son_fit_father">
-      <div class="bar_title bottom_line">XXXXXX</div>
-      <div class="gird_column_2_5">
-        <div class="bar_subtitle">XX统计图</div>
-        <div class="bar_subtitle">XX趋势图</div>
-      </div>
-      <div class="gird_column_2_5 son_fit">
-        <Echarts optionType="pieOne" :chartData="pieDataTwo" fromWhere="index_threaten_count"></Echarts>
-        <div class="fill_content">
-          <Echarts
-            optionType="indexLine"
-            :chartData="lineData"
-            fromWhere="index_terminal"
-            class="left_line"
-          ></Echarts>
+        <div class="gird_column_2_5 son_fit">
+          <Echarts optionType="pie" :chartData="pieDataOne" fromWhere="index_server"></Echarts>
+          <asset-top-five-table :tableData="tableDataOne"></asset-top-five-table>
         </div>
-        <!-- <Echarts optionType="barFour" :chartData="barFourData" fromWhere="index_terminal"></Echarts> -->
       </div>
-    </div>
-    <div class="bar_item_6 son_fit_father">
-      <div class="bar_title bottom_line">XXXX</div>
-      <div class="bar_subtitle">XXXX统计（XX数）</div>
-      <div class="son_fit countRanking">
-        <div v-for="item in countRanking" :key="item.id">
-          <div
-            class="flex_row"
-            style="justify-content: space-between;padding-right:50px;box-sizing:border-box;margin-bottom: 5px;"
-          >
-            <span style="font-size: 12px;color:#9095ab;">{{item.name}}</span>
-            <span style="font-size: 12px;color:#c2c2c2;">{{item.count}}</span>
+      <div class="bar_item_5 son_fit_father">
+        <div class="bar_title bottom_line">XXXXXX</div>
+        <div class="gird_column_2_5">
+          <div class="bar_subtitle">XX统计图</div>
+          <div class="bar_subtitle">XX趋势图</div>
+        </div>
+        <div class="gird_column_2_5 son_fit">
+          <Echarts optionType="pieOne" :chartData="pieDataTwo" fromWhere="index_threaten_count"></Echarts>
+          <div class="fill_content">
+            <Echarts
+              optionType="indexLine"
+              :chartData="lineData"
+              fromWhere="index_terminal"
+              class="left_line"
+            ></Echarts>
           </div>
-          <el-progress
-            :stroke-width="12"
-            :percentage="parseInt(item.percentage)"
-            color="#295bf9"
-            define-back-color="#eff2ff"
-          ></el-progress>
+          <!-- <Echarts optionType="barFour" :chartData="barFourData" fromWhere="index_terminal"></Echarts> -->
         </div>
       </div>
-    </div>
-    <div class="bar_item_7 son_fit_father">
-      <!-- <div class="bar_title bottom_line">XXXX</div> -->
-      <div class="bar_title bottom_line flex_row_center" style="justify-content: space-between;">
-        <span>XXXX</span>
-        <self-tabs :selfTabs="selfTabs" @tab-click="handleTabClick"></self-tabs>
+      <div class="bar_item_6 son_fit_father">
+        <div class="bar_title bottom_line">XXXX</div>
+        <div class="bar_subtitle">XXXX统计（XX数）</div>
+        <div class="son_fit countRanking">
+          <div v-for="item in countRanking" :key="item.id">
+            <div
+              class="flex_row"
+              style="justify-content: space-between;padding-right:50px;box-sizing:border-box;margin-bottom: 5px;"
+            >
+              <span style="font-size: 12px;color:#9095ab;">{{item.name}}</span>
+              <span style="font-size: 12px;color:#c2c2c2;">{{item.count}}</span>
+            </div>
+            <el-progress
+              :stroke-width="12"
+              :percentage="parseInt(item.percentage)"
+              color="#295bf9"
+              define-back-color="#eff2ff"
+            ></el-progress>
+          </div>
+        </div>
       </div>
-      <index-report-table :tableData="tableDataTwo"></index-report-table>
+      <div class="bar_item_7 son_fit_father">
+        <!-- <div class="bar_title bottom_line">XXXX</div> -->
+        <div class="bar_title bottom_line flex_row_center" style="justify-content: space-between;">
+          <span>XXXX</span>
+          <self-tabs :selfTabs="selfTabs" @tab-click="handleTabClick"></self-tabs>
+        </div>
+        <index-report-table :tableData="tableDataTwo"></index-report-table>
+      </div>
     </div>
   </div>
 </template>
@@ -182,7 +184,18 @@ export default {
 </script>
 
 <style scoped>
+::-webkit-scrollbar {
+  width: 0;
+  /* 滚动条宽度 */
+  height: 0;
+}
 .index_page_overall {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  overflow: auto;
+  box-sizing: border-box;
+  border-radius: 10px;
   background: #e9ecef !important;
   display: grid;
   /* grid-template-rows: repeat(auto-fit, 1fr); */

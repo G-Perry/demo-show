@@ -6,9 +6,9 @@
       <template slot-scope="scope">{{ typeMap[scope.row.type] }}</template>
     </el-table-column>
     <el-table-column prop="createTime" label="时间" width="180"></el-table-column>
-    <el-table-column label="操作" width="100">
+    <el-table-column label="操作" width="80">
       <template slot-scope="scope">
-        <span style="color: #4677c6; cursor: pointer" @click="handleDownload(scope.row)">下载</span>
+        <span style="color: #4677c6; cursor: pointer" @click="handleDownload(scope.row)">操作</span>
       </template>
     </el-table-column>
   </el-table>
@@ -27,7 +27,9 @@ export default {
     };
   },
   methods: {
-    handlePageChange() {},
+    handlePageChange(row) {
+      row;
+    },
   },
 };
 </script>
