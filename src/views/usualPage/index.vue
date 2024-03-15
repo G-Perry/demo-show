@@ -55,11 +55,7 @@
     </section>
     <section class="search_bar search_bar_phone">
       <el-button icon="el-icon-search" size="mini" @click="handleDrawerOpenWhenPhone"></el-button>
-      <el-drawer
-        :visible.sync="drawerVisible"
-        direction="ttb"
-        :show-close="false"
-        >
+      <el-drawer :visible.sync="drawerVisible" direction="ttb" :show-close="false">
         <!-- :before-close="handleClose" -->
         <el-form ref="form" :model="queryParams" label-width="80px" label-position="top">
           <el-form-item label="条件一">
@@ -196,11 +192,9 @@ import {
   getUserDetailsById,
   userDeleteById,
 } from "@/api/index";
-import commonButton from "@/components/commonButton.vue";
 import addEditDialog from "./addEditDialog.vue";
 export default {
   components: {
-    commonButton,
     addEditDialog,
   },
   data() {
