@@ -16,6 +16,10 @@ export default [
     desc: "年前空闲的时候学习的一个threeJS官网案例。有个疑问若能解答万分感谢：最开始的时候将配置项、方法以vue2的语法写在data和methods中，在写到球的碰撞检测时页面很卡，发现是因为循环函数走的是CPU不是GPU，一直没能解决，后来改成原生的写法就好了。对比了下两者，从js的语法角度看，无非一个的配置绑在了vue实例上，其他并没有区别，但为什么一个循环走的是CPU而另一个是GPU呢？",
   },
   {
+    name: "CSS_&_SVG_Show",
+    desc: "这一部分均是自己手写的代码，有参考但并未调用任何库。",
+  },
+  {
     name: "CSS_&_SVG_Show - CSS 3D Sphere",
     desc: '使用css的"border-radius: 50%;transform-style: preserve-3d;transform: rotateY(deg)"等属性绘制的一个带有经纬度的3D球',
   },
@@ -37,6 +41,14 @@ export default [
   },
   {
     name: "CSS_&_SVG_Show - SVG 拓扑图 1",
-    desc: '使用svg实现的一个拓扑图页面。实现思路：先渲染方形div并给它绑定id，使用[{from: "id1",to: "id2"}]表示连接关系,使用document.getElementById()方法循环找出连接双方的对应点，',
+    desc: '使用svg实现的一个拓扑图页面。实现思路：先渲染方形div并给它绑定id，使用[{from: "id1",to: "id2"}]表示连接关系,使用document.getElementById()方法循环找出连接双方的对应点，再将点push进线的数组并渲染。鼠标移入时根据ID使用递归算法找到路径并渲染。',
+  },
+  {
+    name: "CSS_&_SVG_Show - SVG 拓扑图 2",
+    desc: "仿照flink监控的一个页面，实现思路：将数据转成树形数据，再得出每一条的相应层级，根据层级循环摆放，并计算出每个方块的中心点，再以此连线；通过svg的':transform=`translate(${translateX},${translateY})scale(${scaleCoefficient})`'属性来实现鼠标拖拽和滚动缩放效果",
+  },
+  {
+    name: "CSS_&_SVG_Show - Word Cloud",
+    desc: "词云组件，实现思路：先求出字符的长度，再循环随机摆放位置，逐个与之前的进行碰撞检测，并设置上限防止死循环",
   },
 ];
