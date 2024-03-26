@@ -15,10 +15,25 @@
         <span>{{ item.label }}</span>
       </div>
     </div>
+    <el-popover placement="right" width="360" trigger="hover">
+      <section class="page_info">
+        <span>
+          页面：
+          <span style="font-size: 12px;">{{ pageInfoName }}</span>
+        </span>
+        <span>
+          简述：
+          <span style="font-size: 12px;">{{ pageInfoDesc }}</span>
+        </span>
+      </section>
+      <i class="el-icon-info page_info_icon" slot="reference"></i>
+    </el-popover>
   </section>
 </template>
 
 <script>
+import page_info_desc from "./page_info_desc";
+import { findObjectById } from "../utils/handleObjMethods";
 export default {
   data() {
     return {
@@ -82,9 +97,18 @@ export default {
     hasChildren() {
       return this.menuData.filter((item) => item.children);
     },
-
     isCollapse() {
       return this.$store.state.tab.isCollapse;
+    },
+    pageInfoName() {
+      return this.$store.state.tab.activedPageName;
+    },
+    pageInfoDesc() {
+      let obj = findObjectById(page_info_desc, this.pageInfoName, "name") || {
+        desc: "",
+      };
+
+      return obj.desc;
     },
   },
   methods: {
@@ -96,6 +120,7 @@ export default {
     },
     handleMenuClick(item) {
       this.$store.dispatch("changeTab", item.label);
+      this.$store.commit("PAGE_CHANGE", item.label);
       this.$router.push({
         name: item.name,
       });
@@ -103,9 +128,12 @@ export default {
   },
   mounted() {
     let pathName = window.location.href.match(/\/([^\/]+)$/)[1];
-    this.$store.dispatch(
-      "changeTab",
-      this.menuData.find((item) => item.path == pathName).label
+    let label = this.menuData.find((item) => item.path == pathName).label;
+    this.$store.dispatch("changeTab", label);
+
+    this.$store.commit(
+      "PAGE_CHANGE",
+      label === "CSS_&_SVG_Show" ? "CSS_&_SVG_Show - CSS 3D Sphere" : label
     );
   },
 };
@@ -116,6 +144,19 @@ export default {
   height: 100%;
   width: fit-content;
   background: #545c64;
+  position: relative;
+}
+.page_info {
+  display: flex;
+  flex-direction: column;
+}
+.page_info_icon {
+  position: absolute;
+  font-size: 36px;
+  color: #909399;
+  cursor: pointer;
+  left: 16px;
+  bottom: 16px;
 }
 .aside_title {
   display: inline-block;

@@ -111,6 +111,7 @@ export default {
     handleOptionClick(item, index) {
       this.option_select.forEach((item) => (item.isActive = false));
       this.option_select[index].isActive = true;
+      this.$store.commit("PAGE_CHANGE", `CSS_&_SVG_Show - ${item.label}`);
       switch (item.label) {
         case "SVG + Sphere":
           setTimeout(() => {

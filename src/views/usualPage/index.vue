@@ -437,8 +437,8 @@ export default {
         });
     },
     handleTest() {
-      console.log(this.multiple, "multiple");
-      console.log(this.single, "single");
+      // console.log(this.multiple, "multiple");
+      // console.log(this.single, "single");
     },
     handleDrawerOpenWhenPhone() {
       this.drawerVisible = true;
