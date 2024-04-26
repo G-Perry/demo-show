@@ -19,6 +19,11 @@ const routes = [
         component: () => import("../views/usualPage/index.vue"),
       },
       {
+        path: "usualBySecondaryPackaging",
+        name: "anotherUsualPage",
+        component: () => import("../views/usualPage/anotherUsualPage.vue"),
+      },
+      {
         path: "echarts",
         name: "echartsPage",
         component: () => import("../views/echartsPage/index.vue"),

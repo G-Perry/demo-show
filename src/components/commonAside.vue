@@ -53,6 +53,13 @@ export default {
           url: "",
         },
         {
+          path: "usualBySecondaryPackaging",
+          name: "anotherUsualPage",
+          label: "通用模板页面2",
+          icon: "icon-file-text",
+          url: "",
+        },
+        {
           path: "echarts",
           name: "echartsPage",
           label: "Echarts_Show",

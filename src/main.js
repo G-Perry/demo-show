@@ -12,6 +12,9 @@ import "./assets/iconFont/style.css";
 
 Vue.use(ElementUI);
 
+import MyTable from "@/components/my_table_pagination.vue";
+Vue.component("my-table", MyTable);
+
 Vue.config.productionTip = false;
 
 new Vue({

@@ -127,65 +127,52 @@
         <span>删除</span>
       </button>
     </section>
-    <div class="son_fit" style="position: relative">
-      <el-table
-        :data="tableData"
-        :height="tableHeight"
-        v-loading="loading"
-        @selection-change="handleSelectionChange"
-      >
-        <el-table-column type="selection" width="40" align="center"></el-table-column>
-        <!-- <el-table-column type="index" width="50" label="序号" align="center"></el-table-column> -->
-        <el-table-column width="50" label="序号" align="center" prop="index"></el-table-column>
-        <el-table-column prop="name" label="姓名"></el-table-column>
-        <el-table-column prop="sex" label="性别">
-          <template slot-scope="scope">{{ scope.row.sex | sexMatch }}</template>
-        </el-table-column>
-        <el-table-column prop="age" label="年龄"></el-table-column>
-        <el-table-column prop="birth" label="出生日期"></el-table-column>
-        <el-table-column prop="identityCard" show-overflow-tooltip label="身份证"></el-table-column>
-        <el-table-column prop="phoneNum" label="电话号码"></el-table-column>
-        <el-table-column prop="address" label="地址" min-width="300" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="status" width="90" label="状态">
-          <template slot-scope="scope">
-            <!-- <common-button></common-button> -->
-            <el-switch
-              v-model="scope.row.status"
-              :active-value="1"
-              :inactive-value="0"
-              @change="handleStatusSwitchChange(scope.row)"
-            ></el-switch>
-            <!-- <el-switch v-model="scope.row.status | statusMatch"></el-switch> -->
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" width="80" align="center">
-          <template slot-scope="scope">
-            <button class="btn_in_table" title="修改" @click="handleEditDialogOpen(scope.row)">
-              <i class="el-icon-edit"></i>
-            </button>
-            <button class="btn_in_table" title="删除" @click="handleDelete(scope.row)">
-              <i class="el-icon-delete"></i>
-            </button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <div ref="pagination-bar" class="footer_pagination">
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="currentPage"
-          :page-sizes="[10, 20, 50, 100]"
-          :page-size="pageSize"
-          layout="total, prev, pager, next, sizes"
-          :total="total"
-        ></el-pagination>
-      </div>
-    </div>
+    <my-table
+      :data="tableData"
+      v-loading="loading"
+      @selection-change="handleSelectionChange"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+    >
+      <el-table-column type="selection" width="40" align="center"></el-table-column>
+      <el-table-column width="50" label="序号" align="center" prop="index"></el-table-column>
+      <el-table-column prop="name" label="姓名"></el-table-column>
+      <el-table-column prop="sex" label="性别">
+        <template slot-scope="scope">{{ scope.row.sex | sexMatch }}</template>
+      </el-table-column>
+      <el-table-column prop="age" label="年龄"></el-table-column>
+      <el-table-column prop="birth" label="出生日期"></el-table-column>
+      <el-table-column prop="identityCard" show-overflow-tooltip label="身份证"></el-table-column>
+      <el-table-column prop="phoneNum" label="电话号码"></el-table-column>
+      <el-table-column prop="address" label="地址" min-width="300" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="status" width="90" label="状态">
+        <template slot-scope="scope">
+          <!-- <common-button></common-button> -->
+          <el-switch
+            v-model="scope.row.status"
+            :active-value="1"
+            :inactive-value="0"
+            @change="handleStatusSwitchChange(scope.row)"
+          ></el-switch>
+          <!-- <el-switch v-model="scope.row.status | statusMatch"></el-switch> -->
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" width="80" align="center">
+        <template slot-scope="scope">
+          <button class="btn_in_table" title="修改" @click="handleEditDialogOpen(scope.row)">
+            <i class="el-icon-edit"></i>
+          </button>
+          <button class="btn_in_table" title="删除" @click="handleDelete(scope.row)">
+            <i class="el-icon-delete"></i>
+          </button>
+        </template>
+      </el-table-column>
+    </my-table>
     <add-edit-dialog ref="addEditDialog"></add-edit-dialog>
   </div>
 </template>
-
-<script>
+  
+  <script>
 import {
   getUserList,
   updateUserStatusById,
@@ -445,17 +432,18 @@ export default {
     },
   },
   mounted() {
+    // console.log(this);
     this.getList();
-    this.setTableHeight();
-    window.addEventListener("resize", this.setTableHeight);
+    // this.setTableHeight();
+    // window.addEventListener("resize", this.setTableHeight);
   },
   beforeDestroy() {
-    window.removeEventListener("resize", this.setTableHeight);
+    // window.removeEventListener("resize", this.setTableHeight);
   },
 };
 </script>
-
-<style scoped>
+  
+  <style scoped>
 .pageTitle {
   display: block;
   height: 36px;
