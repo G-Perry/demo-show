@@ -1316,3 +1316,132 @@ export function findObjectById(array, id, keyName = "id") {
   // 使用 Array.prototype.find() 方法查找匹配的对象
   return array.find((obj) => obj[keyName] === id).value;
 }
+
+//用于日历的task数组
+export let tasks = [
+  {
+    date: "2024-5-3",
+    tasks: [
+      {
+        id: 1,
+        type: "warning", //  warning  danger  primary   info
+        desc: "abdcefghijklmnopqrstuvwxyz",
+      },
+      {
+        id: 2,
+        type: "info", 
+        desc: "abdcefghijklmnopqrstuvwxyz",
+      },
+    ],
+  },
+  {
+    date: "2024-6-10",
+    tasks: [
+      {
+        id: 1,
+        type: "warning", //  warning  danger  info
+        desc: "abdcefghijklmnopqrstuvwxyz",
+      },
+      {
+        id: 2,
+        type: "info",
+        desc: "abdcefghijklmnopqrstuvwxyz",
+      },
+      {
+        id: 3,
+        type: "danger",
+        desc: "abdcefghijklmnopqrstuvwxyz",
+      },
+      {
+        id: 4,
+        type: "danger",
+        desc: "abdcefghijklmnopqrstuvwxyz",
+      },
+    ],
+  },
+  {
+    date: "2024-4-11",
+    tasks: [
+      {
+        id: 1,
+        type: "warning", //  warning  danger  info
+        desc: "abdcefghijklmnopqrstuvwxyz",
+      },
+      {
+        id: 2,
+        type: "info",
+        desc: "abdcefghijklmnopqrstuvwxyz",
+      },
+      {
+        id: 3,
+        type: "danger",
+        desc: "abdcefghijklmnopqrstuvwxyz",
+      },
+    ],
+  },
+  {
+    date: "2024-4-30",
+    tasks: [
+      {
+        id: 1,
+        type: "warning", //  warning  danger  info
+        desc: "abdcefghijklmnopqrstuvwxyz",
+      },
+      {
+        id: 2,
+        type: "info",
+        desc: "abdcefghijklmnopqrstuvwxyz",
+      },
+      {
+        id: 3,
+        type: "danger",
+        desc: "abdcefghijklmnopqrstuvwxyz",
+      },
+    ],
+  },
+  {
+    date: "2024-5-13",
+    tasks: [
+      {
+        id: 1,
+        type: "danger", //  warning  danger  primary   info
+        desc: "abdcefghijklmnopqrstuvwxyz",
+      },
+      {
+        id: 2,
+        type: "info",
+        desc: "abdcefghijklmnopqrstuvwxyz",
+      },
+      {
+        id: 3,
+        type: "warning",
+        desc: "abdcefghijklmnopqrstuvwxyz",
+      },
+    ],
+  },
+  {
+    date: "2024-5-28",
+    tasks: [
+      {
+        id: 1,
+        type: "info", //  warning  danger  primary   info
+        desc: "abdcefghijklmnopqrstuvwxyz",
+      },
+      {
+        id: 2,
+        type: "info",
+        desc: "abdcefghijklmnopqrstuvwxyz",
+      },
+    ],
+  },
+  {
+    date: "2024-7-27",
+    tasks: [
+      {
+        id: 1,
+        type: "warning", //  warning  danger  primary   info
+        desc: "abdcefghijklmnopqrstuvwxyz",
+      },
+    ],
+  },
+];

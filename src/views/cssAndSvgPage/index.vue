@@ -39,6 +39,9 @@
       <section v-if="option_select[7].isActive" class="son_fit">
         <page-eight></page-eight>
       </section>
+      <section v-if="option_select[8].isActive" class="son_fit">
+        <page-nine></page-nine>
+      </section>
     </div>
   </div>
 </template>
@@ -52,6 +55,7 @@ import pageFive from "./components/pageFive.vue";
 import pageSix from "./components/pageSix.vue";
 import pageSeven from "./components/pageSeven.vue";
 import pageEight from "./components/pageEight.vue";
+import pageNine from "./components/pageNine.vue";
 export default {
   components: {
     pageOne,
@@ -62,6 +66,7 @@ export default {
     pageSix,
     pageSeven,
     pageEight,
+    pageNine,
   },
   data() {
     return {
@@ -106,12 +111,16 @@ export default {
           label: "Word Cloud",
           isActive: false,
         },
+        {
+          label: "Calendar And Plan",
+          isActive: false,
+        },
       ];
     },
     handleOptionClick(item, index) {
       this.option_select.forEach((item) => (item.isActive = false));
       this.option_select[index].isActive = true;
-      this.$store.commit("PAGE_CHANGE", `CSS_&_SVG_Show - ${item.label}`);
+      this.$store.commit("PAGE_CHANGE", `Achieve_By_Oneself - ${item.label}`);
       switch (item.label) {
         case "SVG + Sphere":
           setTimeout(() => {

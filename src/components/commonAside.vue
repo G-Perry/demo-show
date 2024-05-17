@@ -52,13 +52,13 @@ export default {
           icon: "icon-file-text",
           url: "",
         },
-        {
-          path: "usualBySecondaryPackaging",
-          name: "anotherUsualPage",
-          label: "通用模板页面2",
-          icon: "icon-file-text",
-          url: "",
-        },
+        // {
+        //   path: "usualBySecondaryPackaging",
+        //   name: "anotherUsualPage",
+        //   label: "通用模板页面2",
+        //   icon: "icon-file-text",
+        //   url: "",
+        // },
         {
           path: "echarts",
           name: "echartsPage",
@@ -76,7 +76,7 @@ export default {
         {
           path: "cssAndSvg",
           name: "cssAndSvgPage",
-          label: "CSS_&_SVG_Show",
+          label: "Achieve_By_Oneself",
           icon: "icon-command",
           url: "",
         },
@@ -140,7 +140,7 @@ export default {
 
     this.$store.commit(
       "PAGE_CHANGE",
-      label === "CSS_&_SVG_Show" ? "CSS_&_SVG_Show - CSS 3D Sphere" : label
+      label === "Achieve_By_Oneself" ? "Achieve_By_Oneself - CSS 3D Sphere" : label
     );
   },
 };
