@@ -46,6 +46,13 @@ export default {
           url: "",
         },
         {
+          path: "homeOne",
+          name: "homePageOne",
+          label: "首页-1",
+          icon: "icon-home",
+          url: "",
+        },
+        {
           path: "usual",
           name: "usualPage",
           label: "通用模板页面",

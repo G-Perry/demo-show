@@ -14,6 +14,11 @@ const routes = [
         component: () => import("../views/homePage/index.vue"),
       },
       {
+        path: "homeOne",
+        name: "homePageOne",
+        component: () => import("../views/homePageOne/index.vue"),
+      },
+      {
         path: "usual",
         name: "usualPage",
         component: () => import("../views/usualPage/index.vue"),
