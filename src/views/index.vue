@@ -28,16 +28,14 @@ export default {
 }
 
 .left_content {
-  /* flex: 1; */
   width: fit-content;
-  max-width: 200px;
+  /* max-width: 200px; */
   background: gray;
 }
 
 .right_content {
   flex: 1;
   overflow-x: hidden;
-  /* flex: 7; */
 }
 
 .main_content {
