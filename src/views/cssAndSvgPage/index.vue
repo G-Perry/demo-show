@@ -42,6 +42,9 @@
       <section v-if="option_select[8].isActive" class="son_fit">
         <page-nine></page-nine>
       </section>
+      <section v-if="option_select[9].isActive" class="son_fit">
+        <page-ten></page-ten>
+      </section>
     </div>
   </div>
 </template>
@@ -56,6 +59,7 @@ import pageSix from "./components/pageSix.vue";
 import pageSeven from "./components/pageSeven.vue";
 import pageEight from "./components/pageEight.vue";
 import pageNine from "./components/pageNine.vue";
+import pageTen from "./components/pageTen.vue";
 export default {
   components: {
     pageOne,
@@ -67,6 +71,7 @@ export default {
     pageSeven,
     pageEight,
     pageNine,
+    pageTen,
   },
   data() {
     return {
@@ -113,6 +118,10 @@ export default {
         },
         {
           label: "Calendar And Plan",
+          isActive: false,
+        },
+        {
+          label: "Add Item In Table",
           isActive: false,
         },
       ];

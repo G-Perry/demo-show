@@ -59,4 +59,8 @@ export default [
     name: "Achieve_By_Oneself - Calendar And Plan",
     desc: "日历、计划，实现思路：grid布局，先使用new Date(year, month, 0).getDate()求上个月和这个月天数，getDay()求上月末所在星期数，以此为基准推导本月的数据信息；再根据计划的日期查找对应坐标，使用`grid-column: ${x} / span 1; grid-row: ${y};`将计划放在对应位置。参考地址：https://codepen.io/knyttneve/pen/QVqyNg",
   },
+  {
+    name: "Achieve_By_Oneself - Add Item In Table",
+    desc: "用于表单新增时添加多条同类目数据的组件，必填校验、数据双向绑定",
+  },
 ];
