@@ -35,7 +35,7 @@
           <el-date-picker
             v-else
             ref="el_date_picker"
-            v-model="dataRange"
+            v-model="dateRange"
             type="daterange"
             range-separator="至"
             style="width: 220px"
@@ -84,7 +84,7 @@
             <el-date-picker
               v-else
               ref="el_date_picker"
-              v-model="dataRange"
+              v-model="dateRange"
               type="daterange"
               range-separator="至"
               style="width: 220px"
@@ -233,28 +233,28 @@ export default {
         { label: "最近1天", value: "last24h" },
         { label: "自定义", value: "custom_time" },
       ],
-      dataRange: [],
+      dateRange: [],
       pickerOptions: {
         shortcuts: [
           {
             text: "最近1个月",
             onClick() {
               that.queryParams.time_range.time_range_type = "last30d";
-              that.dataRange = [];
+              that.dateRange = [];
             },
           },
           {
             text: "最近7天",
             onClick() {
               that.queryParams.time_range.time_range_type = "last7d";
-              that.dataRange = [];
+              that.dateRange = [];
             },
           },
           {
             text: "最近1天",
             onClick() {
               that.queryParams.time_range.time_range_type = "last24h";
-              that.dataRange = [];
+              that.dateRange = [];
             },
           },
           {
