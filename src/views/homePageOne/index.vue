@@ -434,7 +434,7 @@ export default {
     grid-template-rows: 40vh;
     grid-template-columns: repeat(2, 1fr);
     grid-auto-rows: 40vh;
-    gap: 10px; /* 你可以根据需要调整行之间的间距 */
+    gap: 10px;
   }
 }
 @media screen and (max-width: 990px) {
@@ -446,7 +446,7 @@ export default {
     grid-template-rows: 40vh;
     grid-template-columns: repeat(1, 1fr);
     grid-auto-rows: 40vh;
-    gap: 10px; /* 你可以根据需要调整行之间的间距 */
+    gap: 10px;
   }
 }
 </style>
