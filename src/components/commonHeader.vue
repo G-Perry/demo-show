@@ -97,4 +97,10 @@ export default {
 .center_content:hover ::v-deep .el-input__icon {
   color: #928e8e;
 }
+
+::v-deep .el-button{
+  width: 36px;
+  height: 36px;
+  padding: 0;
+}
 </style>
