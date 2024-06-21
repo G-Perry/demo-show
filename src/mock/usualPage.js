@@ -114,6 +114,11 @@ export default {
     console.log(config);
     let ids = config.url.split("/").pop().split(",");
     List = List.filter((item) => !ids.includes(item.id));
+    // 另一种删除思路，不适合用在此处
+    // let index = this.assetTableData.indexOf(row);
+    // if (index !== -1) {
+    //   this.assetTableData.splice(index, 1);
+    // }
     return {
       code: 200,
       msg: "",

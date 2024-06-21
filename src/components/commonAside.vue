@@ -59,13 +59,13 @@ export default {
           icon: "icon-file-text",
           url: "",
         },
-        // {
-        //   path: "usualBySecondaryPackaging",
-        //   name: "anotherUsualPage",
-        //   label: "通用模板页面2",
-        //   icon: "icon-file-text",
-        //   url: "",
-        // },
+        {
+          path: "anotherUsualPage",
+          name: "anotherUsualPage",
+          label: "通用模板页面2",
+          icon: "icon-file-text",
+          url: "",
+        },
         {
           path: "echarts",
           name: "echartsPage",
@@ -101,6 +101,13 @@ export default {
           icon: "icon-file-empty",
           url: "",
         },
+        // {
+        //   path: "testOne",
+        //   name: "testPageOne",
+        //   label: "testPageOne",
+        //   icon: "icon-file-empty",
+        //   url: "",
+        // },
       ],
     };
   },

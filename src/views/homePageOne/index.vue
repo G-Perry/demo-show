@@ -1,5 +1,5 @@
 <template>
-  <section class="son_fit_father" style="position: relative;  border-radius: 10px;">
+  <section class="son_fit_father" style="position: relative;  border-radius: 10px;overflow: hidden;">
     <div class="top_bar fff son_fit_father">
       <div class="subtitle">
         <span class="title">资产概览</span>
@@ -30,6 +30,11 @@
           <span class="desc">中间件</span>
           <span class="num">30494</span>
           <img src="@/assets/images/homePageOne/card_5.png" alt />
+        </div>
+        <div class="card">
+          <span class="desc">操作系统</span>
+          <span class="num">18</span>
+          <img src="@/assets/images/homePageOne/card_6.png" alt />
         </div>
       </div>
     </div>
@@ -136,11 +141,7 @@
       <div class="card fff son_fit_father">
         <span class="title">资产类型</span>
         <div class="son_fit lock_son">
-          <Echarts
-            optionType="assetOverviewBar"
-            :chartData="assetOverviewBarData"
-            fromWhere="index_server"
-          ></Echarts>
+          <Echarts optionType="assetOverviewBar" :chartData="assetOverviewBarData" fromWhere="index_server"></Echarts>
         </div>
       </div>
       <div class="card fff son_fit_father">
@@ -163,7 +164,7 @@
     </div>
   </section>
 </template>
-  
+
 <script>
 import Echarts from "./echarts.vue";
 export default {
@@ -248,11 +249,12 @@ export default {
   },
 };
 </script>
-  
+
 <style lang="scss" scoped>
 .main-title {
   display: none;
 }
+
 .top_bar {
   width: 100%;
   height: 160px;
@@ -263,6 +265,7 @@ export default {
     height: 50px;
     line-height: 50px;
     padding-left: 16px;
+
     .title {
       font-weight: 700;
       font-size: 16px;
@@ -276,16 +279,19 @@ export default {
       color: #7c869c;
     }
   }
+
   .cards {
     padding: 0 16px 16px;
     display: flex;
     gap: 16px;
+
     .card {
       flex: 1;
       border-radius: 6px;
       position: relative;
       color: #ffffff;
       min-width: 130px;
+
       .desc {
         font-size: 14px;
         letter-spacing: 2px;
@@ -293,42 +299,58 @@ export default {
         top: 16px;
         left: 24px;
       }
+
       .num {
         font-size: 24px;
         position: absolute;
         bottom: 16px;
         left: 24px;
       }
+
       img {
         position: absolute;
         top: 50%;
         right: 20px;
         transform: translateY(-50%);
       }
+
       &:nth-of-type(1) {
         background-color: #ff5b5b;
       }
+
       &:nth-of-type(2) {
         background: #19b9ff;
       }
+
       &:nth-of-type(3) {
         background: #5975e9;
       }
+
       &:nth-of-type(4) {
         background: #2cd0c8;
       }
+
       &:nth-of-type(5) {
         background: #44d571;
+      }
+
+      &:nth-of-type(6) {
+        background: #5a81be;
       }
     }
   }
 }
+
 .three_two_grid {
   padding-top: 16px;
   display: grid;
-  grid-template-columns: 3fr 4fr 4fr; /* 设置三列，比例为1:2:2 */
-  grid-template-rows: auto auto; /* 两行 */
-  gap: 16px; /* 网格间隙 */
+  grid-template-columns: 3fr 4fr 4fr;
+  /* 设置三列，比例为1:2:2 */
+  grid-template-rows: auto auto;
+  /* 两行 */
+  gap: 16px;
+
+  /* 网格间隙 */
   .card {
     .title {
       display: inline-block;
@@ -338,12 +360,14 @@ export default {
       color: #7c869c;
       padding-left: 16px;
     }
+
     .card_1 {
       box-sizing: border-box;
       padding: 16px 30px;
       display: flex;
       flex-direction: column;
       gap: 16px;
+
       .bar {
         flex: 1;
         display: flex;
@@ -351,22 +375,27 @@ export default {
         justify-content: space-between;
         padding-left: 30px;
         padding-right: 30px;
+
         .desc {
           display: flex;
           align-items: center;
           font-weight: 400;
           font-size: 16px;
         }
+
         .num {
           font-size: 24px;
           color: #000000;
         }
+
         &:nth-of-type(1) {
           background: #f0f6ff;
           border: 1px solid #a6baff;
           border-radius: 4px;
+
           .desc {
             color: #0030d5;
+
             &::before {
               content: "";
               display: inline-block;
@@ -378,12 +407,15 @@ export default {
             }
           }
         }
+
         &:nth-of-type(2) {
           background: #f9942d1a;
           border: 1px solid #edc481;
           border-radius: 4px;
+
           .desc {
             color: #9b6100;
+
             &::before {
               content: "";
               display: inline-block;
@@ -397,12 +429,14 @@ export default {
         }
       }
     }
+
     .card_2 {
       box-sizing: border-box;
       padding: 0 10px 16px;
       display: flex;
       flex-direction: column;
       gap: 10px;
+
       .bar {
         flex: 1;
         background: #f3f6fb;
@@ -411,10 +445,12 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
+
         .desc {
           font-weight: 700;
           font-size: 12px;
           color: #000000;
+
           span {
             font-weight: 400;
             font-size: 12px;
@@ -425,10 +461,12 @@ export default {
     }
   }
 }
+
 @media screen and (max-width: 1500px) {
   .overall {
     overflow: auto;
   }
+
   .three_two_grid {
     display: grid;
     grid-template-rows: 40vh;
@@ -437,10 +475,12 @@ export default {
     gap: 10px;
   }
 }
+
 @media screen and (max-width: 990px) {
   .overall {
     overflow: auto;
   }
+
   .three_two_grid {
     display: grid;
     grid-template-rows: 40vh;
@@ -448,5 +488,9 @@ export default {
     grid-auto-rows: 40vh;
     gap: 10px;
   }
+}
+
+::v-deep .el-table__cell {
+  padding-left: 5px !important;
 }
 </style>

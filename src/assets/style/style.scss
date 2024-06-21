@@ -380,3 +380,11 @@ button[disabled] i {
 ::-webkit-scrollbar-thumb:hover {
   background-color: #555;
 }
+
+.resizable {
+  width: 500px;
+  height: 500px;
+  border: 1px solid #ddd;
+  resize: both;
+  overflow: auto;
+}

@@ -41,6 +41,7 @@ export default {
 .main_content {
   padding: 10px;
   background: #e9ecef;
+  overflow: auto;
 }
 
 .main_content > div {
