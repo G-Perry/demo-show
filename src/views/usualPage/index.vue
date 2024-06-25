@@ -1,6 +1,6 @@
 <template>
   <div class="son_fit_father">
-    <span class="pageTitle">页面标题</span>
+    <span class="pageTitle">页面aaa标题</span>
     <section class="search_bar pc">
       <el-form
         ref="form"
