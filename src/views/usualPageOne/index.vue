@@ -49,6 +49,7 @@
       :data="tableData"
       v-loading="loading"
       @selection-change="handleSelectionChange"
+      height="0"
     >
       <el-table-column
         type="selection"
@@ -92,7 +93,7 @@
           <!-- <el-switch v-model="scope.row.status | statusMatch"></el-switch> -->
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="80" align="center">
+      <el-table-column label="操作" width="80" align="center" fixed="right">
         <template slot-scope="scope">
           <button
             class="btn_in_table"

@@ -101,13 +101,20 @@ export default {
           icon: "icon-file-empty",
           url: "",
         },
-        // {
-        //   path: "testOne",
-        //   name: "testPageOne",
-        //   label: "testPageOne",
-        //   icon: "icon-file-empty",
-        //   url: "",
-        // },
+        {
+          path: "testOne",
+          name: "testPageOne",
+          label: "testPageOne",
+          icon: "icon-file-empty",
+          url: "",
+        },
+        {
+          path: "testTwo",
+          name: "testPageTwo",
+          label: "testPageTwo",
+          icon: "icon-file-empty",
+          url: "",
+        },
       ],
     };
   },

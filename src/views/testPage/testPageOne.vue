@@ -3,16 +3,24 @@
     <section class="form_merge one">
       <!-- <my-form :option="formOption" :row="rowOne"></my-form> -->
       <!-- <el-checkbox-group v-model="checkedOne" @change="handleCheckedChange('left')"> -->
-      <div style="display: flex;flex-direction: column;gap: 20px;margin-left:20px;margin-top:20px">
+      <div
+        style="
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+          margin-left: 20px;
+          margin-top: 20px;
+        "
+      >
         <el-checkbox
-          v-for="(item) in option"
+          v-for="item in option"
           :label="item.id"
           :key="item.id"
-          :disabled="item.checkedPosition&&item.checkedPosition=='right'"
-          @change="handleCheckedChange($event,'left',item)"
+          :disabled="item.checkedPosition && item.checkedPosition == 'right'"
+          @change="handleCheckedChange($event, 'left', item)"
         >
           <!-- @change="handleCheckedChange" -->
-          <span>{{item.label+':'+rowOne[item.propName]}}</span>
+          <span>{{ item.label + ":" + rowOne[item.propName] }}</span>
         </el-checkbox>
       </div>
       <!-- </el-checkbox-group> -->
@@ -27,16 +35,24 @@
     <section class="form_merge three">
       <!-- <my-form :option="formOption" :row="rowTwo"></my-form> -->
       <!-- <el-checkbox-group v-model="checkedTwo" @change="handleCheckedChange()"> -->
-      <div style="display: flex;flex-direction: column;gap: 20px;margin-left:20px;margin-top:20px">
+      <div
+        style="
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+          margin-left: 20px;
+          margin-top: 20px;
+        "
+      >
         <el-checkbox
-          v-for="(item) in option"
+          v-for="item in option"
           :label="item.id"
           :key="item.id"
-          @change="handleCheckedChange($event,'right',item)"
-          :disabled="item.checkedPosition&&item.checkedPosition=='left'"
+          @change="handleCheckedChange($event, 'right', item)"
+          :disabled="item.checkedPosition && item.checkedPosition == 'left'"
         >
           <!-- @change="handleCheckedChange" -->
-          <span>{{item.label+':'+rowTwo[item.propName]}}</span>
+          <span>{{ item.label + ":" + rowTwo[item.propName] }}</span>
         </el-checkbox>
       </div>
       <!-- </el-checkbox-group> -->
