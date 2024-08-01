@@ -63,6 +63,36 @@ const routes = [
         name: "testPageTwo",
         component: () => import("../views/testPage/testPageTwo.vue"),
       },
+      {
+        path: "shoppingMall",
+        name: "shoppingMall",
+        // meta: { title: "商城", activeMenu: "whitehat" },
+        component: () => import("../views/shoppingMall/index"),
+      },
+      {
+        path: "goodsList",
+        name: "goodsList",
+        // meta: { title: "商品列表", activeMenu: "whitehat" },
+        component: () => import("../views/shoppingMall/goodsList.vue"),
+      },
+      {
+        path: "goodsDetails",
+        name: "goodsDetails",
+        // meta: { title: "商品详情", activeMenu: "whitehat" },
+        component: () => import("../views/shoppingMall/goodsDetails.vue"),
+      },
+      {
+        path: "shoppingCart",
+        name: "shoppingCart",
+        // meta: { title: "购物车", activeMenu: "whitehat" },
+        component: () => import("../views/shoppingMall/shoppingCart.vue"),
+      },
+      {
+        path: "shoppingOrder",
+        name: "shoppingOrder",
+        // meta: { title: "订单中心", activeMenu: "whitehat" },
+        component: () => import("../views/shoppingMall/shoppingOrder.vue"),
+      },
     ],
   },
 ];

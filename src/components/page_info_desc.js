@@ -17,7 +17,7 @@ export default [
   },
   {
     name: "Echarts_Show",
-    desc: "部分项目中曾配置过的Echarts图表，使用grid布局，数据均为假数据",
+    desc: "部分项目中曾配置过的部分Echarts图表，使用grid布局，数据均为假数据",
   },
   {
     name: "ThreeJs_Learn",
@@ -66,5 +66,9 @@ export default [
   {
     name: "Achieve_By_Oneself - Add Item In Table",
     desc: "用于表单新增时添加多条同类目数据的组件，必填校验、数据双向绑定",
+  },
+  {
+    name: "Shopping_Mall",
+    desc: "一个简易的pc端积分商城，UI简陋，有基本的几个页面，数据均为假数据，商品详情页有个图片放大预览的功能",
   },
 ];

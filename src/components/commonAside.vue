@@ -1,14 +1,14 @@
 <template>
   <section class="common_aside">
-    <span class="aside_title" :class="{ small : isCollapse }">DEMO SHOW</span>
-    <span class="side_title" :class="{ small : isCollapse }">MENU</span>
-    <div class="side_menu" :class="{ small : isCollapse }">
+    <span class="aside_title" :class="{ small: isCollapse }">DEMO SHOW</span>
+    <span class="side_title" :class="{ small: isCollapse }">MENU</span>
+    <div class="side_menu" :class="{ small: isCollapse }">
       <div
         v-for="item in noChildren"
         :key="item.label"
         :index="item.label"
         class="side_menu_item_self"
-        :class="{ small : isCollapse }"
+        :class="{ small: isCollapse }"
         @click="handleMenuClick(item)"
       >
         <i :class="item.icon"></i>
@@ -19,11 +19,11 @@
       <section class="page_info">
         <span>
           页面：
-          <span style="font-size: 12px;">{{ pageInfoName }}</span>
+          <span style="font-size: 12px">{{ pageInfoName }}</span>
         </span>
         <span>
           简述：
-          <span style="font-size: 12px;">{{ pageInfoDesc }}</span>
+          <span style="font-size: 12px">{{ pageInfoDesc }}</span>
         </span>
       </section>
       <i class="el-icon-info page_info_icon" slot="reference"></i>
@@ -101,18 +101,25 @@ export default {
           icon: "icon-file-empty",
           url: "",
         },
+        // {
+        //   path: "testOne",
+        //   name: "testPageOne",
+        //   label: "testPageOne",
+        //   icon: "icon-file-empty",
+        //   url: "",
+        // },
+        // {
+        //   path: "testTwo",
+        //   name: "testPageTwo",
+        //   label: "testPageTwo",
+        //   icon: "icon-file-empty",
+        //   url: "",
+        // },
         {
-          path: "testOne",
-          name: "testPageOne",
-          label: "testPageOne",
-          icon: "icon-file-empty",
-          url: "",
-        },
-        {
-          path: "testTwo",
-          name: "testPageTwo",
-          label: "testPageTwo",
-          icon: "icon-file-empty",
+          path: "shoppingMall",
+          name: "shoppingMall",
+          label: "Shopping_Mall",
+          icon: "el-icon-goods",
           url: "",
         },
       ],
@@ -161,7 +168,9 @@ export default {
 
     this.$store.commit(
       "PAGE_CHANGE",
-      label === "Achieve_By_Oneself" ? "Achieve_By_Oneself - CSS 3D Sphere" : label
+      label === "Achieve_By_Oneself"
+        ? "Achieve_By_Oneself - CSS 3D Sphere"
+        : label
     );
   },
 };
