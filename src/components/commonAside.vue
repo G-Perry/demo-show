@@ -122,6 +122,13 @@ export default {
           icon: "el-icon-goods",
           url: "",
         },
+        {
+          path: "documentCatalogue",
+          name: "documentCatalogue",
+          label: "Document_Catalogue",
+          icon: "el-icon-link",
+          url: "",
+        },
       ],
     };
   },
@@ -156,9 +163,14 @@ export default {
     handleMenuClick(item) {
       this.$store.dispatch("changeTab", item.label);
       this.$store.commit("PAGE_CHANGE", item.label);
-      this.$router.push({
-        name: item.name,
-      });
+      if (item.name == "documentCatalogue") {
+        const routeUrl = this.$router.resolve({ name: item.name });
+        window.open(routeUrl.href, "_blank");
+      } else {
+        this.$router.push({
+          name: item.name,
+        });
+      }
     },
   },
   mounted() {

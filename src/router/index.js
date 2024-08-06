@@ -95,6 +95,11 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/documentCatalogue",
+    name: "documentCatalogue",
+    component: () => import("../views/documentCatalogue/index.vue"),
+  },
 ];
 
 // 防止连续点击多次路由报错
