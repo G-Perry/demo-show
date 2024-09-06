@@ -93,6 +93,12 @@ const routes = [
         // meta: { title: "订单中心", activeMenu: "whitehat" },
         component: () => import("../views/shoppingMall/shoppingOrder.vue"),
       },
+      {
+        path: "svgFlowChart",
+        name: "svgFlowChart",
+        // meta: { title: "订单中心", activeMenu: "whitehat" },
+        component: () => import("../views/svgFlowChart/index.vue"),
+      },
     ],
   },
   {

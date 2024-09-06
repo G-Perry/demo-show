@@ -129,6 +129,13 @@ export default {
           icon: "el-icon-link",
           url: "",
         },
+        {
+          path: "svgFlowChart",
+          name: "svgFlowChart",
+          label: "Svg_Flow_Chart",
+          icon: "el-icon-link",
+          url: "",
+        },
       ],
     };
   },
