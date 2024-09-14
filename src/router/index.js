@@ -97,8 +97,8 @@ const routes = [
         path: "svgFlowChart",
         name: "svgFlowChart",
         // meta: { title: "订单中心", activeMenu: "whitehat" },
-        // component: () => import("../views/svgFlowChart/index.vue"),
-        component: () => import("../views/serverRoom/indexTest.vue"),
+        component: () => import("../views/svgFlowChart/index.vue"),
+        // component: () => import("../views/serverRoom/indexTest.vue"),
 
       },
       {

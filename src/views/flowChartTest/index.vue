@@ -1,13 +1,10 @@
-<template>
-  <section style="width: 100%; height: 100%;" class="fff"></section>
+<<template>
+  
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
 <style>
-
-</style>
+</style>>
