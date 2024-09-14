@@ -97,7 +97,19 @@ const routes = [
         path: "svgFlowChart",
         name: "svgFlowChart",
         // meta: { title: "订单中心", activeMenu: "whitehat" },
-        component: () => import("../views/svgFlowChart/index.vue"),
+        // component: () => import("../views/svgFlowChart/index.vue"),
+        component: () => import("../views/serverRoom/indexTest.vue"),
+
+      },
+      {
+        path: "serverRoom",
+        name: "serverRoom",
+        component: () => import("../views/serverRoom/index.vue"),
+      },
+      {
+        path: "flowChartTest",
+        name: "flowChartTest",
+        component: () => import("../views/flowChartTest/index.vue"),
       },
     ],
   },
@@ -106,6 +118,11 @@ const routes = [
     name: "documentCatalogue",
     component: () => import("../views/documentCatalogue/index.vue"),
   },
+  // {
+  //   path: "/serverRoom",
+  //   name: "serverRoom",
+  //   component: () => import("../views/serverRoom/index.vue"),
+  // },
 ];
 
 // 防止连续点击多次路由报错

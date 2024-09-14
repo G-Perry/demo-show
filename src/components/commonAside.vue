@@ -136,6 +136,20 @@ export default {
           icon: "el-icon-link",
           url: "",
         },
+        {
+          path: "serverRoom",
+          name: "serverRoom",
+          label: "3D_Server_Room",
+          icon: "el-icon-link",
+          url: "",
+        },
+        {
+          path: "flowChartTest",
+          name: "flowChartTest",
+          label: "Flow_ChartTest",
+          icon: "el-icon-link",
+          url: "",
+        },
       ],
     };
   },
@@ -170,6 +184,7 @@ export default {
     handleMenuClick(item) {
       this.$store.dispatch("changeTab", item.label);
       this.$store.commit("PAGE_CHANGE", item.label);
+      // if (item.name == "documentCatalogue" || item.name == "serverRoom") {
       if (item.name == "documentCatalogue") {
         const routeUrl = this.$router.resolve({ name: item.name });
         window.open(routeUrl.href, "_blank");
