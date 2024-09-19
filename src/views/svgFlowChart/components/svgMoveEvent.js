@@ -7,7 +7,7 @@ export const svgMoveEvent = {
       // 整个svg的缩放比例
       scaleCoefficient: 1,
       // 鼠标事件
-      mosueEvent: null,
+      svgMosueEvent: null,
       savedTranslateX: 0,
       savedTranslateY: 0,
     };
@@ -47,20 +47,36 @@ export const svgMoveEvent = {
       this.scaleCoefficient = newScale;
     },
     handleMouseUp() {
-      this.mosueEvent = null;
+      this.svgMosueEvent = null;
+      this.svgFlowNodeEvent = null;
+      this.selectedNode = null;
+
       this.savedTranslateX = this.translateX;
       this.savedTranslateY = this.translateY;
+      this.$refs.svg.style.cursor = "grab";
     },
     handleMouseDown(event) {
-      this.mosueEvent = { x: event.clientX, y: event.clientY };
+
+      this.svgMosueEvent = { x: event.clientX, y: event.clientY };
+      this.$refs.svg.style.cursor = "grabbing";
+      event.stopPropagation();
     },
     handleMouseMove(event) {
-      if (this.mosueEvent) {
+      if (this.svgMosueEvent) {
         this.translateX =
-          this.savedTranslateX + event.clientX - this.mosueEvent.x;
+          this.savedTranslateX + event.clientX - this.svgMosueEvent.x;
         this.translateY =
-          this.savedTranslateY + event.clientY - this.mosueEvent.y;
+          this.savedTranslateY + event.clientY - this.svgMosueEvent.y;
       }
+
+      if (this.svgFlowNodeEvent) {
+        let node = this[this.selectedNode.sign].find(
+          (item) => item.key == this.selectedNode.key
+        );
+        node.x = this.selectedNode.x + event.clientX - this.svgFlowNodeEvent.x;
+        node.y = this.selectedNode.y + event.clientY - this.svgFlowNodeEvent.y;
+      }
+      // event.stopPropagation();
     },
   },
 };
