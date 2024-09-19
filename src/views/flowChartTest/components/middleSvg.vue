@@ -10,6 +10,25 @@
     height="100%"
     ref="svg"
   >
+    <defs>
+      <marker
+        id="arrow"
+        markerWidth="10"
+        markerHeight="10"
+        refX="9"
+        refY="3"
+        orient="auto"
+        markerUnits="strokeWidth"
+      >
+        <path
+          d="M 1 5 L 6 3 L 1 1"
+          stroke-width="1"
+          class="arrow-path"
+          fill="none"
+          stroke="black"
+        />
+      </marker>
+    </defs>
     <g
       ref="canvas"
       :transform="`translate(${translateX},${translateY})scale(${scaleCoefficient})`"
@@ -26,8 +45,10 @@
         :key="line.key"
         :d="`M ${line.srcX} ${line.srcY} L ${line.tarX} ${line.tarY}`"
         :stroke="line.color"
+        :class="`aa_${line.color}`"
         stroke-width="2"
         fill="none"
+        marker-end="url(#arrow)"
       />
       <template v-for="nodeClassification in nodesCollection">
         <g
@@ -123,39 +144,7 @@ export default {
     },
   },
   methods: {
-    handleWheel(event) {
-      // 阻止事件冒泡和默认行为，防止整个页面滚动
-      event.preventDefault();
-      event.stopPropagation();
-
-      // 获取 svg 元素的尺寸
-      const svgRect = this.$refs.svg.getBoundingClientRect();
-      const centerX = svgRect.width / 2;
-      const centerY = svgRect.height / 2;
-
-      // 计算缩放前的中心点位置
-      const oldCenterX = (centerX - this.translateX) / this.scaleCoefficient;
-      const oldCenterY = (centerY - this.translateY) / this.scaleCoefficient;
-
-      // 更新缩放系数
-      const newScale =
-        this.scaleCoefficient * (1 - Math.sign(event.deltaY) * 0.1);
-
-      // 计算新的中心点位置
-      const newCenterX = oldCenterX * newScale;
-      const newCenterY = oldCenterY * newScale;
-
-      // 调整 translateX 和 translateY 以保持中心点位置不变
-      this.translateX = centerX - newCenterX;
-      this.translateY = centerY - newCenterY;
-
-      // 为鼠标移动事件存储数据
-      this.savedTranslateX = this.translateX;
-      this.savedTranslateY = this.translateY;
-
-      // 应用新的缩放系数
-      this.scaleCoefficient = newScale;
-    },
+    // 用于节点的移动
     handleFlowNodeMouseDown(event, sign, item) {
       let that = this.$parent;
       that.svgFlowNodeEvent = { x: event.clientX, y: event.clientY };
@@ -169,10 +158,12 @@ export default {
 
       event.stopPropagation();
     },
+    // 获取点在视口的位置
     getDotCenterPositionInWindow(id) {
       let dotRect = document.getElementById(id).getBoundingClientRect();
       return { x: dotRect.x + 4, y: dotRect.y + 4 };
     },
+    // 获取点在svg中相对的位置
     getDotCenterPositionInSvg(id) {
       let dotRect = document.getElementById(id).getBoundingClientRect();
       let that = this.$parent;
@@ -200,9 +191,6 @@ export default {
         x: x,
         y: y,
       };
-      // console.log(this.temporaryLine,222);
-
-      // this.lines.push(data);
       event.stopPropagation();
     },
     getSelfRect() {
@@ -222,7 +210,6 @@ export default {
           color: item.color,
         });
       });
-      console.log(this.lines, 222);
     },
   },
   mounted() {},
@@ -235,5 +222,8 @@ svg {
 }
 circle {
   cursor: crosshair;
+}
+.aa_#8ec9ff .arrow-path {
+  stroke: #8ec9ff;
 }
 </style>

@@ -350,14 +350,18 @@ export default {
       }
     },
     handleExport() {
-      let data = this.$refs.middleSvg.nodesCollection;
-      localStorage.setItem("svgData", JSON.stringify(data));
+      let SVG = this.$refs.middleSvg;
+
+      let nodes = SVG.nodesCollection;
+      let lines = SVG.connectionInfo;
+      localStorage.setItem("svgNodesInfo", JSON.stringify(nodes));
+      localStorage.setItem("svgLinesInfo", JSON.stringify(lines));
     },
     handleInport() {
-      let data = localStorage.getItem("svgData");
-      // console.log(data);
-      this.$refs.middleSvg.nodesCollection = data
-        ? JSON.parse(data)
+      let SVG = this.$refs.middleSvg;
+      let nodes = localStorage.getItem("svgNodesInfo");
+      SVG.nodesCollection = nodes
+        ? JSON.parse(nodes)
         : {
             node_start: [],
             node_branch: [],
@@ -366,6 +370,11 @@ export default {
             node_auto: [],
             node_end: [],
           };
+      let lines = localStorage.getItem("svgLinesInfo");
+      SVG.connectionInfo = lines ? JSON.parse(lines) : [];
+      SVG.$nextTick(() => {
+        SVG.drawLinesByIds();
+      });
     },
     handleClear() {
       localStorage.clear();
