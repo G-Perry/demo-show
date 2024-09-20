@@ -1,8 +1,8 @@
 <template>
-  <!-- @wheel.stop="handleWheel" -->
   <!-- @mouseup="handleMouseUp" -->
   <!-- @mousedown="handleMouseDown" -->
   <!-- @mousemove="handleMouseMove" -->
+  <!-- @wheel.stop="handleWheel" -->
   <svg
     xmlns="http://www.w3.org/2000/svg"
     version="1.1"
@@ -12,20 +12,22 @@
   >
     <defs>
       <marker
-        id="arrow"
+        v-for="m in arrowMarkerColor"
+        :key="m.id"
+        :id="m.id"
         markerWidth="10"
         markerHeight="10"
-        refX="9"
+        refX="6"
         refY="3"
         orient="auto"
         markerUnits="strokeWidth"
       >
+        <!-- :fill="m.color" -->
         <path
           d="M 1 5 L 6 3 L 1 1"
           stroke-width="1"
-          class="arrow-path"
           fill="none"
-          stroke="black"
+          :stroke="m.color"
         />
       </marker>
     </defs>
@@ -42,27 +44,28 @@
       />
       <path
         v-for="line in lines"
-        :key="line.key"
+        :key="line.id"
         :d="`M ${line.srcX} ${line.srcY} L ${line.tarX} ${line.tarY}`"
         :stroke="line.color"
-        :class="`aa_${line.color}`"
         stroke-width="2"
         fill="none"
-        marker-end="url(#arrow)"
+        :marker-end="`url(#${line.markerId})`"
       />
       <template v-for="nodeClassification in nodesCollection">
         <g
           v-for="node in nodeClassification"
-          :key="node.key"
+          :key="node.id"
           :transform="`translate(${node.x},${node.y})`"
           @mousedown="
             (event) => handleFlowNodeMouseDown(event, node.nodeType, node)
           "
+          :class="{ showReceiveDot: showReceiveDot, dotNodeFocus: node.focus }"
         >
           <foreignObject
             :width="node.width"
             :height="node.height"
-            v-html="node.html"
+            v-html="$options.filters.htmlFilter(node)"
+            @click="(event) => handleNodeSettingOpen(event, node)"
           >
           </foreignObject>
           <circle
@@ -72,6 +75,7 @@
             :key="dot.id"
             :fill="dot.color"
             :transform="dot | transformDotPosition(index, node)"
+            :class="dot.attribute"
             @mousedown="(event) => handleNodeDotMouseDown(event, dot, node)"
           ></circle>
         </g>
@@ -105,7 +109,7 @@ export default {
       },
       // 用于移动单个节点位置时暂存的数据
       selectedNode: null,
-      // 连线信息
+      // 连线信息，起始点的id，对应节点id
       connectionInfo: [],
       // 用于连线的起始点的位置信息
       srcDotPosition: null,
@@ -114,9 +118,18 @@ export default {
       temporaryLineIsShow: false,
       // 绘制最终连线的信息
       lines: [],
+      // 用于不同颜色连线的箭头
+      arrowMarkerColor: [],
+      // 点击发出点时显示接收点
+      showReceiveDot: false,
     };
   },
   filters: {
+    htmlFilter(node) {
+      const regex = />([^<]+)</;
+      const replacedString = node.html.replace(regex, `>${node.text}<`);
+      return replacedString;
+    },
     transformDotPosition(dot, index, node) {
       let nodeType = node.nodeType;
       let dotCount = node.points.length;
@@ -143,7 +156,23 @@ export default {
       }
     },
   },
+  computed: {
+    // 所有的点信息合集，用于校验能否连线
+    allDotInfos() {
+      let infos = [];
+      for (let i in this.nodesCollection) {
+        this.nodesCollection[i].forEach((item) => {
+          infos.push(...item.points);
+        });
+      }
+      return infos;
+    },
+  },
   methods: {
+    // 获取自身在视口内的位置
+    getSelfRect() {
+      return this.$el.getBoundingClientRect();
+    },
     // 用于节点的移动
     handleFlowNodeMouseDown(event, sign, item) {
       let that = this.$parent;
@@ -151,11 +180,10 @@ export default {
       that.mouseDownRegion = "svgRegion";
       this.selectedNode = {
         sign: sign,
-        key: item.key,
+        id: item.id,
         x: item.x,
         y: item.y,
       };
-
       event.stopPropagation();
     },
     // 获取点在视口的位置
@@ -172,8 +200,10 @@ export default {
         y: dotRect.y + 4 - that.svgRect.top - this.translateY,
       };
     },
-
+    // 用于连线设置临时的连线信息
     handleNodeDotMouseDown(event, dot, node) {
+      this.showReceiveDot = true;
+      node.focus = true;
       let that = this.$parent;
       that.mouseDownRegion = "svgRegion";
       that.svgNodeDotEvent = this.getDotCenterPositionInWindow(dot.id);
@@ -186,6 +216,7 @@ export default {
         tarX: x,
         tarY: y,
         color: dot.color,
+        node,
       };
       this.srcDotPosition = {
         x: x,
@@ -193,14 +224,19 @@ export default {
       };
       event.stopPropagation();
     },
-    getSelfRect() {
-      return this.$el.getBoundingClientRect();
+    // 根据颜色选择对应的箭头复用模板
+    getArrowMarkerIdByColor(color) {
+      return (
+        this.arrowMarkerColor.find((item) => item.color == color)?.id || ""
+      );
     },
+    // 通过始末点的id寻找对应位置，再绘制连线
     drawLinesByIds() {
       this.lines = [];
       this.connectionInfo.forEach((item) => {
         let p1 = this.getDotCenterPositionInSvg(item.srcDotId);
         let p2 = this.getDotCenterPositionInSvg(item.tarDotId);
+        let markerId = this.getArrowMarkerIdByColor(item.color);
         this.lines.push({
           id: item.id,
           srcX: p1.x,
@@ -208,8 +244,14 @@ export default {
           tarX: p2.x,
           tarY: p2.y,
           color: item.color,
+          markerId,
         });
       });
+    },
+    // 点击节点打开配置
+    handleNodeSettingOpen(event, node) {
+      this.$emit("openNodeSetting", node);
+      event.stopPropagation();
     },
   },
   mounted() {},
@@ -223,7 +265,11 @@ svg {
 circle {
   cursor: crosshair;
 }
-.aa_#8ec9ff .arrow-path {
-  stroke: #8ec9ff;
+.showReceiveDot .receive {
+  visibility: visible;
+}
+.dotNodeFocus .receive,
+.receive {
+  visibility: hidden;
 }
 </style>

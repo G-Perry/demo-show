@@ -5,22 +5,31 @@
       <node-options ref="leftOptions"></node-options>
     </div>
     <div class="middle">
-      <middle-svg ref="middleSvg"></middle-svg>
+      <middle-svg
+        ref="middleSvg"
+        @openNodeSetting="openNodeSetting"
+      ></middle-svg>
     </div>
     <div class="right">
+      <button type="button" @click="handleClearAll">清空重画</button>
       <button type="button" @click="handleExport">保存到缓存</button>
       <button type="button" @click="handleInport">从缓存读取</button>
-      <button type="button" @click="handleClear">清除缓存</button>
+      <button type="button" @click="handleClearStorage">清除缓存</button>
     </div>
+    <node-setting
+      ref="nodeSettingDrawer"
+      @settingSave="handleSettingSave"
+    ></node-setting>
   </section>
 </template>
 
 <script>
 import middleSvg from "./components/middleSvg.vue";
 import nodeOptions from "./components/leftFlowNodeOption.vue";
+import nodeSetting from "./components/nodeSettingDrawer.vue";
 import { UUID } from "@/utils/handleObjMethods";
 export default {
-  components: { middleSvg, nodeOptions },
+  components: { middleSvg, nodeOptions, nodeSetting },
   data() {
     return {
       // 左侧选项的位置信息
@@ -157,7 +166,7 @@ export default {
           // 用于移动流程节点
           if (this.svgFlowNodeEvent) {
             let node = SVG.nodesCollection[SVG.selectedNode.sign].find(
-              (item) => item.key == SVG.selectedNode.key
+              (item) => item.id == SVG.selectedNode.id
             );
             node.x =
               SVG.selectedNode.x + event.clientX - this.svgFlowNodeEvent.x;
@@ -167,18 +176,14 @@ export default {
               SVG.drawLinesByIds();
             });
           }
+          // 用于绘制临时的连线
           if (this.svgNodeDotEvent) {
-            // let lineCount = SVG.lines.length;
-            // let line = SVG.lines[lineCount - 1];
-            // line.tarX =
-            //   SVG.srcDotPosition.x + event.clientX - this.svgNodeDotEvent.x;
-            // line.tarY =
-            //   SVG.srcDotPosition.y + event.clientY - this.svgNodeDotEvent.y;
             SVG.temporaryLineIsShow = true;
             SVG.temporaryLine.tarX =
               SVG.srcDotPosition.x + event.clientX - this.svgNodeDotEvent.x;
             SVG.temporaryLine.tarY =
               SVG.srcDotPosition.y + event.clientY - this.svgNodeDotEvent.y;
+            // SVG.showReceiveDot = true;
           }
 
           break;
@@ -204,12 +209,13 @@ export default {
             ) {
               let domCopy = dom.cloneNode(true);
               let sign = domCopy.id.replace("_copy", "");
+
               domCopy.removeAttribute("id");
               domCopy.removeAttribute("style");
               domCopy.classList.remove("moveDom");
 
               let node = {
-                key: UUID(),
+                id: UUID(),
                 nodeType: sign,
                 x:
                   event.clientX -
@@ -224,17 +230,31 @@ export default {
                 width: dom.offsetWidth,
                 height: dom.offsetHeight,
                 html: domCopy.outerHTML,
+                text: dom.textContent,
                 points: [],
-                // point: {
-                //   receivePoint: [],
-                //   emitPoint: [],
-                // },
+                focus: false,
               };
               this.initNodePoints(node);
-              // console.log(sign, 111);
+              switch (sign) {
+                case "node_start":
+                  if (SVG.nodesCollection[sign].length > 0) {
+                    this.$message.error("只能有一个开始点呢 喵");
+                  } else {
+                    SVG.nodesCollection[sign].push(node);
+                  }
+                  break;
+                case "node_end":
+                  if (SVG.nodesCollection[sign].length > 0) {
+                    this.$message.error("只能有一个结束点呢 喵");
+                  } else {
+                    SVG.nodesCollection[sign].push(node);
+                  }
+                  break;
 
-              SVG.nodesCollection[sign].push(node);
-              // console.log(SVG.nodesCollection, 111);
+                default:
+                  SVG.nodesCollection[sign].push(node);
+                  break;
+              }
             }
             dom.remove();
             this.optionRegionMosueEvent = null;
@@ -249,39 +269,80 @@ export default {
           this.svgFlowNodeEvent = null;
           SVG.selectedNode = null;
 
+          // 处理从发射点连线的逻辑
           if (this.svgNodeDotEvent) {
+            SVG.temporaryLine.node.focus = false;
             let element = document.elementFromPoint(
               event.clientX,
               event.clientY
             );
-            if (element.tagName.toUpperCase() === "CIRCLE") {
-              let rect = SVG.getDotCenterPositionInWindow(element.id);
-              // let lineCount = SVG.lines.length;
-              // let line = SVG.lines[lineCount - 1];
-              // line.tarX = rect.x - this.svgRect.left - SVG.translateX;
-              // line.tarY = rect.y - this.svgRect.top - SVG.translateY;
-              SVG.temporaryLine.tarX =
-                rect.x - this.svgRect.left - SVG.translateX;
-              SVG.temporaryLine.tarY =
-                rect.y - this.svgRect.top - SVG.translateY;
-              SVG.connectionInfo.push({
-                id: UUID(),
-                srcDotId: SVG.temporaryLine.srcDotId,
-                tarDotId: element.id,
-                color: SVG.temporaryLine.color,
-              });
-              // console.log(SVG.temporaryLine,111);
 
-              SVG.temporaryLineIsShow = false;
-              SVG.$nextTick(() => {
-                SVG.drawLinesByIds();
-              });
+            if (
+              element.id !== SVG.temporaryLine.srcDotId &&
+              element.tagName.toUpperCase() === "CIRCLE"
+            ) {
+              let tarDotInfo = SVG.allDotInfos.find(
+                (item) => item.id === element.id
+              );
+
+              // 获取目标点性质，只有是接收点才能连上
+              switch (tarDotInfo.attribute) {
+                case "emit":
+                  SVG.temporaryLine = null;
+                  SVG.temporaryLineIsShow = false;
+                  this.$message.error("连不了下发点呢 喵");
+                  break;
+                case "receive":
+                  // 首先校验是否循环
+                  let srcNodeId = SVG.temporaryLine.node.id;
+                  let tarNodeId = tarDotInfo.belongedNodeId;
+                  if (this.checkIsLoop(srcNodeId, tarNodeId)) {
+                    SVG.temporaryLine = null;
+                    SVG.temporaryLineIsShow = false;
+                    this.$message.error("循环了呢 喵");
+                  } else {
+                    let rect = SVG.getDotCenterPositionInWindow(element.id);
+                    SVG.temporaryLine.tarX =
+                      rect.x - this.svgRect.left - SVG.translateX;
+                    SVG.temporaryLine.tarY =
+                      rect.y - this.svgRect.top - SVG.translateY;
+                    SVG.connectionInfo.push({
+                      id: UUID(),
+                      srcDotId: SVG.temporaryLine.srcDotId,
+                      tarDotId: element.id,
+                      color: SVG.temporaryLine.color,
+                      srcNodeId,
+                      tarNodeId,
+                    });
+                    if (
+                      !this.colorIsExist(
+                        SVG.arrowMarkerColor,
+                        SVG.temporaryLine.color
+                      )
+                    ) {
+                      SVG.arrowMarkerColor.push({
+                        id: UUID(),
+                        color: SVG.temporaryLine.color,
+                      });
+                    }
+                    SVG.temporaryLine = null;
+                    SVG.temporaryLineIsShow = false;
+                    SVG.$nextTick(() => {
+                      SVG.drawLinesByIds();
+                    });
+                  }
+
+                  break;
+
+                default:
+                  break;
+              }
             } else {
-              // SVG.lines.pop();
               SVG.temporaryLineIsShow = false;
             }
             this.svgNodeDotEvent = null;
             SVG.srcDotPosition = null;
+            SVG.showReceiveDot = false;
           }
 
           SVG.savedTranslateX = SVG.translateX;
@@ -293,6 +354,24 @@ export default {
           break;
       }
     },
+    checkIsLoop(nodeWaitCheck_id, prevNodeId) {
+      let SVG = this.$refs.middleSvg;
+      let nextNodeId = SVG.connectionInfo.find(
+        (item) => item.srcNodeId == prevNodeId
+      )?.tarNodeId;
+      if (nextNodeId) {
+        if (nextNodeId == nodeWaitCheck_id) {
+          return true;
+        } else {
+          return this.checkIsLoop(nodeWaitCheck_id, nextNodeId);
+        }
+      } else {
+        return false;
+      }
+    },
+    colorIsExist(arr, color) {
+      return arr.some((obj) => Object.values(obj).includes(color));
+    },
     // 初始化节点的点信息,用于连线
     initNodePoints(node) {
       let dot = null;
@@ -303,6 +382,7 @@ export default {
               id: UUID(),
               attribute: attribute,
               color: "#52c41a",
+              belongedNodeId: node.id,
             };
             node.points.push(dot);
             break;
@@ -312,6 +392,7 @@ export default {
                 id: UUID(),
                 attribute: attribute,
                 color: colorMap[i % colorMap.length],
+                belongedNodeId: node.id,
               };
               node.points.push(dot);
             }
@@ -349,13 +430,26 @@ export default {
           break;
       }
     },
+    handleClearAll() {
+      let SVG = this.$refs.middleSvg;
+      SVG.nodesCollection = {
+        node_start: [],
+        node_branch: [],
+        node_examine: [],
+        node_manual: [],
+        node_auto: [],
+        node_end: [],
+      };
+      SVG.connectionInfo = [];
+      SVG.lines = [];
+    },
     handleExport() {
       let SVG = this.$refs.middleSvg;
 
       let nodes = SVG.nodesCollection;
-      let lines = SVG.connectionInfo;
+      let connectionInfo = SVG.connectionInfo;
       localStorage.setItem("svgNodesInfo", JSON.stringify(nodes));
-      localStorage.setItem("svgLinesInfo", JSON.stringify(lines));
+      localStorage.setItem("svgLinesInfo", JSON.stringify(connectionInfo));
     },
     handleInport() {
       let SVG = this.$refs.middleSvg;
@@ -370,15 +464,33 @@ export default {
             node_auto: [],
             node_end: [],
           };
-      let lines = localStorage.getItem("svgLinesInfo");
-      SVG.connectionInfo = lines ? JSON.parse(lines) : [];
+
+      let connectionInfo = localStorage.getItem("svgLinesInfo");
+      SVG.connectionInfo = connectionInfo ? JSON.parse(connectionInfo) : [];
+      SVG.connectionInfo.forEach((item) => {
+        SVG.arrowMarkerColor.push({
+          id: UUID(),
+          color: item.color,
+        });
+      });
       SVG.$nextTick(() => {
         SVG.drawLinesByIds();
       });
     },
-    handleClear() {
+    handleClearStorage() {
       localStorage.clear();
       alert("Local Storage cleared!");
+    },
+    openNodeSetting(node) {
+      let nodeSetting = this.$refs.nodeSettingDrawer;
+      nodeSetting.open(node);
+    },
+    handleSettingSave(nodeInfo) {
+      let SVG = this.$refs.middleSvg;
+      let node = SVG.nodesCollection[nodeInfo.nodeType].find(
+        (item) => item.id == nodeInfo.id
+      );
+      node.text = nodeInfo.text;
     },
   },
   mounted() {
