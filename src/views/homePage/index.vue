@@ -147,13 +147,13 @@
 </template>
 
 <script>
-import WordCloud from "@/components/homePage/WordCloud.vue";
-import Echarts from "@/components/homePage/Echarts.vue";
-import assetTopFiveTable from "@/components/homePage/assetTopFiveTable.vue";
-import indexReportTable from "@/components/homePage/indexReportTable.vue";
-import selfTabs from "@/components/homePage/selfTabs.vue";
-import someSearch from "@/components/homePage/someSearch.vue";
-import { homePageData } from "@/mixins/homePageData";
+import WordCloud from "./components/WordCloud.vue";
+import Echarts from "./components/Echarts.vue";
+import assetTopFiveTable from "./components/assetTopFiveTable.vue";
+import indexReportTable from "./components/indexReportTable.vue";
+import selfTabs from "./components/selfTabs.vue";
+import someSearch from "./components/someSearch.vue";
+import { homePageData } from "./mixins/homePageData";
 export default {
   mixins: [homePageData],
   components: {

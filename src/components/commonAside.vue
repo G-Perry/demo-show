@@ -4,15 +4,14 @@
     <span class="side_title" :class="{ small: isCollapse }">MENU</span>
     <div class="side_menu" :class="{ small: isCollapse }">
       <div
-        v-for="item in noChildren"
-        :key="item.label"
-        :index="item.label"
+        v-for="item in menuData"
+        :key="item.name"
         class="side_menu_item_self"
         :class="{ small: isCollapse }"
         @click="handleMenuClick(item)"
       >
-        <i :class="item.icon"></i>
-        <span>{{ item.label }}</span>
+        <i :class="item.meta?.icon"></i>
+        <span>{{ item.meta?.label }}</span>
       </div>
     </div>
     <el-popover placement="right" width="360" trigger="hover">
@@ -34,131 +33,27 @@
 <script>
 import page_info_desc from "./page_info_desc";
 import { findObjectById } from "../utils/handleObjMethods";
+import { routes } from "../router/index";
 export default {
   data() {
-    return {
-      menuData: [
-        {
-          path: "home",
-          name: "homePage",
-          label: "首页",
-          icon: "icon-home",
-          url: "",
-        },
-        {
-          path: "homeOne",
-          name: "homePageOne",
-          label: "首页-1",
-          icon: "icon-home",
-          url: "",
-        },
-        {
-          path: "usual",
-          name: "usualPage",
-          label: "通用模板页面",
-          icon: "icon-file-text",
-          url: "",
-        },
-        {
-          path: "anotherUsualPage",
-          name: "anotherUsualPage",
-          label: "通用模板页面2",
-          icon: "icon-file-text",
-          url: "",
-        },
-        {
-          path: "echarts",
-          name: "echartsPage",
-          label: "Echarts_Show",
-          icon: "icon-echart",
-          url: "",
-        },
-        {
-          path: "threeLearning",
-          name: "threeJsDemoPage",
-          label: "ThreeJs_Learn",
-          icon: "icon-codepen",
-          url: "",
-        },
-        {
-          path: "cssAndSvg",
-          name: "cssAndSvgPage",
-          label: "Achieve_By_Oneself",
-          icon: "icon-command",
-          url: "",
-        },
-        // {
-        //   path: "/",
-        //   name: "metaphysicsPage",
-        //   label: "metaphysics",
-        //   icon: "icon-taiJi",
-        //   url: "",
-        // },
-        {
-          path: "test",
-          name: "testPage",
-          label: "testPage",
-          icon: "icon-file-empty",
-          url: "",
-        },
-        // {
-        //   path: "testOne",
-        //   name: "testPageOne",
-        //   label: "testPageOne",
-        //   icon: "icon-file-empty",
-        //   url: "",
-        // },
-        // {
-        //   path: "testTwo",
-        //   name: "testPageTwo",
-        //   label: "testPageTwo",
-        //   icon: "icon-file-empty",
-        //   url: "",
-        // },
-        {
-          path: "shoppingMall",
-          name: "shoppingMall",
-          label: "Shopping_Mall",
-          icon: "el-icon-goods",
-          url: "",
-        },
-        {
-          path: "documentCatalogue",
-          name: "documentCatalogue",
-          label: "Document_Catalogue",
-          icon: "el-icon-link",
-          url: "",
-        },
-        {
-          path: "svgFlowChart",
-          name: "svgFlowChart",
-          label: "Svg_Flow_Chart",
-          icon: "el-icon-link",
-          url: "",
-        },
-        {
-          path: "serverRoom",
-          name: "serverRoom",
-          label: "3D_Server_Room",
-          icon: "el-icon-link",
-          url: "",
-        },
-        {
-          path: "flowChartTest",
-          name: "flowChartTest",
-          label: "Flow_ChartTest",
-          icon: "el-icon-link",
-          url: "",
-        },
-      ],
-    };
+    return {};
   },
   computed: {
-    noChildren() {
-      return this.menuData.filter((item) => !item.children);
-    },
-    hasChildren() {
-      return this.menuData.filter((item) => item.children);
+    menuData() {
+      let arr = [];
+      routes.forEach((item) => {
+        if (item.path == "/") {
+          item.children.forEach((e) => {
+            if (e.visible) {
+              arr.push({ ...e });
+            }
+          });
+        } else {
+          arr.push(item);
+        }
+      });
+      arr.sort((a, b) => a.meta.sort - b.meta.sort);
+      return arr;
     },
     isCollapse() {
       return this.$store.state.tab.isCollapse;
@@ -170,20 +65,15 @@ export default {
       let obj = findObjectById(page_info_desc, this.pageInfoName, "name") || {
         desc: "",
       };
-
       return obj.desc;
     },
   },
   methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
-    },
     handleMenuClick(item) {
-      this.$store.dispatch("changeTab", item.label);
-      this.$store.commit("PAGE_CHANGE", item.label);
+      console.log(item);
+
+      this.$store.dispatch("changeTab", item.meta.label);
+      this.$store.commit("PAGE_CHANGE", item.meta.label);
       // if (item.name == "documentCatalogue" || item.name == "serverRoom") {
       if (item.name == "documentCatalogue") {
         const routeUrl = this.$router.resolve({ name: item.name });
@@ -197,7 +87,7 @@ export default {
   },
   mounted() {
     let pathName = window.location.href.match(/\/([^\/]+)$/)[1];
-    let label = this.menuData.find((item) => item.path == pathName).label;
+    let label = this.menuData.find((item) => item.path == pathName).meta.label;
     this.$store.dispatch("changeTab", label);
 
     this.$store.commit(
@@ -206,6 +96,7 @@ export default {
         ? "Achieve_By_Oneself - CSS 3D Sphere"
         : label
     );
+    console.log(111, this.pageInfoName);
   },
 };
 </script>
