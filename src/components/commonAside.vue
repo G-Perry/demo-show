@@ -70,8 +70,6 @@ export default {
   },
   methods: {
     handleMenuClick(item) {
-      console.log(item);
-
       this.$store.dispatch("changeTab", item.meta.label);
       this.$store.commit("PAGE_CHANGE", item.meta.label);
       // if (item.name == "documentCatalogue" || item.name == "serverRoom") {

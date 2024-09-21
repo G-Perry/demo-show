@@ -373,18 +373,16 @@ export default {
           return this.checkIsLoop(nodeWaitCheck_id, id);
         }
       });
-      // let nextNodeId = SVG.connectionInfo.find(
-      //   (item) => item.srcNodeId == prevNodeId
-      // )?.tarNodeId;
-      // if (nextNodeId) {
-      //   if (nextNodeId == nodeWaitCheck_id) {
+
+      // for (let i = 0; i < nextNodeIds.length; i++) {
+      //   let id = nextNodeIds[i].tarNodeId;
+      //   if (id == nodeWaitCheck_id) {
       //     return true;
       //   } else {
-      //     return this.checkIsLoop(nodeWaitCheck_id, nextNodeId);
+      //     return this.checkIsLoop(nodeWaitCheck_id, id);
       //   }
-      // } else {
-      //   return false;
       // }
+      // return false;
     },
     colorIsExist(arr, color) {
       return arr.some((obj) => Object.values(obj).includes(color));
