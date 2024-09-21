@@ -19,11 +19,23 @@ export default {
     };
   },
   methods: {
+    setDrawerHeight() {
+      let windowHeight = window.innerHeight;
+      let domRect = this.$parent.$el.getBoundingClientRect();
+      let top = domRect.top;
+      let bottom = Math.max(windowHeight - domRect.bottom, 0);
+      let drawerElement = document.querySelector(".el-drawer.rtl");
+      drawerElement.style.top = top + "px";
+      // drawerElement.style.bottom = bottom + "px";
+      drawerElement.style.height = windowHeight - top - bottom + "px";
+    },
     open(node) {
       this.nodeInfo = node;
       this.drawerVisible = true;
     },
     handleClose() {
+      let that = this.$parent;
+      that.allowMove = true;
       this.drawerVisible = false;
     },
     handleSettingSave() {
@@ -31,6 +43,13 @@ export default {
       this.$emit("settingSave", this.nodeInfo);
       this.handleClose();
     },
+  },
+  mounted() {
+    this.setDrawerHeight();
+    window.addEventListener("resize", this.setDrawerHeight);
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.setDrawerHeight);
   },
 };
 </script>

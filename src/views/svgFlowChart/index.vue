@@ -50,6 +50,8 @@ export default {
       domInitPosition: null,
       // 点击坐标与被点击dom的偏移量
       eventOffsetTarget: null,
+      // 用于打开设置drawer时禁止svg移动
+      allowMove: true,
     };
   },
   methods: {
@@ -157,7 +159,7 @@ export default {
         case "svgRegion":
           let SVG = this.$refs.middleSvg;
           // 用于移动svg
-          if (this.svgMosueEvent) {
+          if (this.allowMove && this.svgMosueEvent) {
             SVG.translateX =
               SVG.savedTranslateX + event.clientX - this.svgMosueEvent.x;
             SVG.translateY =
@@ -165,6 +167,7 @@ export default {
           }
           // 用于移动流程节点
           if (this.svgFlowNodeEvent) {
+            SVG.allowClick = false;
             let node = SVG.nodesCollection[SVG.selectedNode.sign].find(
               (item) => item.id == SVG.selectedNode.id
             );
@@ -268,6 +271,9 @@ export default {
 
           this.svgFlowNodeEvent = null;
           SVG.selectedNode = null;
+          setTimeout(() => {
+            SVG.allowClick = true;
+          }, 0);
 
           // 处理从发射点连线的逻辑
           if (this.svgNodeDotEvent) {
@@ -356,18 +362,29 @@ export default {
     },
     checkIsLoop(nodeWaitCheck_id, prevNodeId) {
       let SVG = this.$refs.middleSvg;
-      let nextNodeId = SVG.connectionInfo.find(
+      let nextNodeIds = SVG.connectionInfo.filter(
         (item) => item.srcNodeId == prevNodeId
-      )?.tarNodeId;
-      if (nextNodeId) {
-        if (nextNodeId == nodeWaitCheck_id) {
+      );
+      return nextNodeIds.some((item) => {
+        let id = item.tarNodeId;
+        if (id == nodeWaitCheck_id) {
           return true;
         } else {
-          return this.checkIsLoop(nodeWaitCheck_id, nextNodeId);
+          return this.checkIsLoop(nodeWaitCheck_id, id);
         }
-      } else {
-        return false;
-      }
+      });
+      // let nextNodeId = SVG.connectionInfo.find(
+      //   (item) => item.srcNodeId == prevNodeId
+      // )?.tarNodeId;
+      // if (nextNodeId) {
+      //   if (nextNodeId == nodeWaitCheck_id) {
+      //     return true;
+      //   } else {
+      //     return this.checkIsLoop(nodeWaitCheck_id, nextNodeId);
+      //   }
+      // } else {
+      //   return false;
+      // }
     },
     colorIsExist(arr, color) {
       return arr.some((obj) => Object.values(obj).includes(color));

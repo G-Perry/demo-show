@@ -96,7 +96,6 @@ export default {
         ? "Achieve_By_Oneself - CSS 3D Sphere"
         : label
     );
-    console.log(111, this.pageInfoName);
   },
 };
 </script>

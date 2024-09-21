@@ -122,6 +122,8 @@ export default {
       arrowMarkerColor: [],
       // 点击发出点时显示接收点
       showReceiveDot: false,
+      // 用于节点移动时忽略点击事件
+      allowClick: true,
     };
   },
   filters: {
@@ -250,7 +252,10 @@ export default {
     },
     // 点击节点打开配置
     handleNodeSettingOpen(event, node) {
-      this.$emit("openNodeSetting", node);
+      if (this.allowClick) {
+        this.$emit("openNodeSetting", node);
+        this.$parent.allowMove = false;
+      }
       event.stopPropagation();
     },
   },
