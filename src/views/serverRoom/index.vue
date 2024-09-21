@@ -112,49 +112,44 @@ export default {
     function loadModel() {
       const loader = new GLTFLoader().setPath("./threeJsModel/gltf/");
 
-      loader.load(
-        // "server_box.glb",
-        // "server_rack.glb",
-        "server_room.glb",
-        (gltf) => {
-          const model = gltf.scene;
+      loader.load("server_room.glb", (gltf) => {
+        const model = gltf.scene;
 
-          // 确保模型及其子对象都是可见的
-          // model.traverse((child) => {
-          //   if (child.isMesh) {
-          //     child.visible = true;
-          //     child.frustumCulled = false; // 确保光线投射能穿透所有层级
-          //     if (
-          //       !child.material ||
-          //       (!child.material.isMeshStandardMaterial &&
-          //         !child.material.isMeshPhongMaterial)
-          //     ) {
-          //       console.warn(
-          //         "Unsupported material type for raycasting:",
-          //         child.material
-          //       );
-          //     }
-          //   }
-          // });
-          // 确保模型及其子对象都是可见的，并且有独立的材质
-          model.traverse((child) => {
-            if (child.isMesh) {
-              child.visible = true;
-              child.frustumCulled = false; // 确保光线投射能穿透所有层级
+        // 确保模型及其子对象都是可见的
+        // model.traverse((child) => {
+        //   if (child.isMesh) {
+        //     child.visible = true;
+        //     child.frustumCulled = false; // 确保光线投射能穿透所有层级
+        //     if (
+        //       !child.material ||
+        //       (!child.material.isMeshStandardMaterial &&
+        //         !child.material.isMeshPhongMaterial)
+        //     ) {
+        //       console.warn(
+        //         "Unsupported material type for raycasting:",
+        //         child.material
+        //       );
+        //     }
+        //   }
+        // });
+        // 确保模型及其子对象都是可见的，并且有独立的材质
+        model.traverse((child) => {
+          if (child.isMesh) {
+            child.visible = true;
+            child.frustumCulled = false; // 确保光线投射能穿透所有层级
 
-              // 确保每个模型实例都有独立的材质
-              if (child.material) {
-                child.material = child.material.clone();
-              }
-
-              // 禁用双面渲染
-              // child.material.side = THREE.FrontSide;
+            // 确保每个模型实例都有独立的材质
+            if (child.material) {
+              child.material = child.material.clone();
             }
-          });
 
-          scene.add(model);
-        }
-      );
+            // 禁用双面渲染
+            // child.material.side = THREE.FrontSide;
+          }
+        });
+
+        scene.add(model);
+      });
     }
 
     function onWindowResize() {
@@ -182,7 +177,7 @@ export default {
           console.log(selectedItem.object.name);
           let position = selectedItem.object.position;
           console.log(position);
-          camera.position.set(position.x, position.y, position.z+5);
+          camera.position.set(position.x, position.y, position.z + 5);
           camera.lookAt(position.x, position.y, position.z);
         }
       }
