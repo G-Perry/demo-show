@@ -51,9 +51,9 @@ export const routes = [
         meta: { label: 'ThreeJs_Learn', icon: 'icon-codepen', sort: 6 }
       },
       {
-        path: "cssAndSvg",
-        name: "cssAndSvgPage",
-        component: () => import("../views/cssAndSvgPage"),
+        path: "achieveByOneself",
+        name: "achieveByOneselfPage",
+        component: () => import("../views/achieveByOneself"),
         visible: true,
         meta: { label: 'Achieve_By_Oneself', icon: 'icon-command', sort: 7 }
       },

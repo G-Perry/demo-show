@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import addItemInTable from "@/components/addItemInTable.vue";
+import addItemInTable from "./addItemInTable.vue";
 
 export default {
   components: { addItemInTable },

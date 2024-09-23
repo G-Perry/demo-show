@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { UUID } from "../utils/handleObjMethods";
+import { UUID } from "../../../utils/handleObjMethods";
 
 export default {
   props: {
