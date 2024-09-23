@@ -7,7 +7,7 @@
       :id="item.nodeType"
       :class="item.nodeType"
     >
-      <span> {{ item.label }} </span>
+      <span>{{ item.label }}</span>
     </section>
   </div>
 </template>
@@ -20,32 +20,32 @@ export default {
     return {
       flowNodeOptions: [
         {
-          key: UUID(),
+          key: UUID("node_start"),
           label: "开始",
           nodeType: "node_start",
         },
         {
-          key: UUID(),
+          key: UUID("node_branch"),
           label: "分支节点",
           nodeType: "node_branch",
         },
         {
-          key: UUID(),
+          key: UUID("node_examine"),
           label: "审批节点",
           nodeType: "node_examine",
         },
         {
-          key: UUID(),
+          key: UUID("node_manual"),
           label: "人工节点",
           nodeType: "node_manual",
         },
         {
-          key: UUID(),
+          key: UUID("node_auto"),
           label: "自动任务",
           nodeType: "node_auto",
         },
         {
-          key: UUID(),
+          key: UUID("node_end"),
           label: "结束",
           nodeType: "node_end",
         },

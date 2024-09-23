@@ -218,7 +218,7 @@ export default {
               domCopy.classList.remove("moveDom");
 
               let node = {
-                id: UUID(),
+                id: UUID(sign),
                 nodeType: sign,
                 x:
                   event.clientX -
@@ -296,7 +296,7 @@ export default {
                 case "emit":
                   SVG.temporaryLine = null;
                   SVG.temporaryLineIsShow = false;
-                  this.$message.error("连不了下发点呢 喵");
+                  this.$message.error("连不了下发点");
                   break;
                 case "receive":
                   // 首先校验是否循环
@@ -305,7 +305,7 @@ export default {
                   if (this.checkIsLoop(srcNodeId, tarNodeId)) {
                     SVG.temporaryLine = null;
                     SVG.temporaryLineIsShow = false;
-                    this.$message.error("循环了呢 喵");
+                    this.$message.error("循环了");
                   } else {
                     let rect = SVG.getDotCenterPositionInWindow(element.id);
                     SVG.temporaryLine.tarX =
@@ -313,7 +313,7 @@ export default {
                     SVG.temporaryLine.tarY =
                       rect.y - this.svgRect.top - SVG.translateY;
                     SVG.connectionInfo.push({
-                      id: UUID(),
+                      id: UUID("connection"),
                       srcDotId: SVG.temporaryLine.srcDotId,
                       tarDotId: element.id,
                       color: SVG.temporaryLine.color,
@@ -327,7 +327,7 @@ export default {
                       )
                     ) {
                       SVG.arrowMarkerColor.push({
-                        id: UUID(),
+                        id: UUID("arrorColor"),
                         color: SVG.temporaryLine.color,
                       });
                     }
@@ -394,7 +394,7 @@ export default {
         switch (attribute) {
           case "receive":
             dot = {
-              id: UUID(),
+              id: UUID("dot"),
               attribute: attribute,
               color: "#52c41a",
               belongedNodeId: node.id,
@@ -404,7 +404,7 @@ export default {
           case "emit":
             for (let i = 0; i < count; i++) {
               dot = {
-                id: UUID(),
+                id: UUID("dot"),
                 attribute: attribute,
                 color: colorMap[i % colorMap.length],
                 belongedNodeId: node.id,
@@ -484,7 +484,7 @@ export default {
       SVG.connectionInfo = connectionInfo ? JSON.parse(connectionInfo) : [];
       SVG.connectionInfo.forEach((item) => {
         SVG.arrowMarkerColor.push({
-          id: UUID(),
+          id: UUID("arrorColor"),
           color: item.color,
         });
       });

@@ -252,7 +252,10 @@ export default {
     },
     // 点击节点打开配置
     handleNodeSettingOpen(event, node) {
-      if (this.allowClick) {
+      if (
+        this.allowClick &&
+        ["node_start", "node_end"].indexOf(node.nodeType) == -1
+      ) {
         this.$emit("openNodeSetting", node);
         this.$parent.allowMove = false;
       }
