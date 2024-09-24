@@ -22,7 +22,6 @@
         orient="auto"
         markerUnits="strokeWidth"
       >
-        <!-- :fill="m.color" -->
         <path
           d="M 1 5 L 6 3 L 1 1"
           stroke-width="1"
@@ -42,15 +41,38 @@
         stroke-width="2"
         fill="none"
       />
-      <path
-        v-for="line in lines"
-        :key="line.id"
-        :d="`M ${line.srcX} ${line.srcY} L ${line.tarX} ${line.tarY}`"
-        :stroke="line.color"
-        stroke-width="2"
-        fill="none"
-        :marker-end="`url(#${line.markerId})`"
-      />
+      <g v-for="line in lines" :key="line.id" :id="line.id">
+        <path
+          :d="`M ${line.srcX} ${line.srcY} L ${line.tarX} ${line.tarY}`"
+          :stroke="line.color"
+          stroke-width="2"
+          fill="none"
+          :marker-end="`url(#${line.markerId})`"
+          :class="{ showReceiveDot: showReceiveDot }"
+        />
+        <template v-if="line.lineHaveText">
+          <rect
+            v-if="line.textRectIsShow"
+            :x="line.lineText.x - line.lineText.textWidth / 2"
+            :y="line.lineText.y - 8"
+            :width="line.lineText.textWidth"
+            height="16"
+            fill="#fff"
+            stroke="none"
+            stroke-width="0"
+          ></rect>
+          <text
+            :x="line.lineText.x"
+            :y="line.lineText.y"
+            font-size="12"
+            fill="#9094a6"
+            text-anchor="middle"
+            transform="translate(0, 4.8)"
+          >
+            {{ line.lineText.text }}
+          </text>
+        </template>
+      </g>
       <template v-for="nodeClassification in nodesCollection">
         <g
           v-for="node in nodeClassification"
@@ -116,8 +138,9 @@ export default {
       // 临时的线用于从点出发画线
       temporaryLine: null,
       temporaryLineIsShow: false,
-      // 绘制最终连线的信息
+      // 绘制最终连线和描述的信息
       lines: [],
+      texts: [],
       // 用于不同颜色连线的箭头
       arrowMarkerColor: [],
       // 点击发出点时显示接收点
@@ -218,6 +241,8 @@ export default {
         tarX: x,
         tarY: y,
         color: dot.color,
+        lineHaveText: dot.haveText,
+        lineText: dot.text,
         node,
       };
       this.srcDotPosition = {
@@ -235,6 +260,7 @@ export default {
     // 通过始末点的id寻找对应位置，再绘制连线
     drawLinesByIds() {
       this.lines = [];
+      this.texts = [];
       this.connectionInfo.forEach((item) => {
         let p1 = this.getDotCenterPositionInSvg(item.srcDotId);
         let p2 = this.getDotCenterPositionInSvg(item.tarDotId);
@@ -246,8 +272,29 @@ export default {
           tarX: p2.x,
           tarY: p2.y,
           color: item.color,
-          markerId,
+          markerId: markerId,
+          lineHaveText: item.lineHaveText,
+          textRectIsShow: false,
+          lineText: {
+            x: (p1.x + p2.x) / 2,
+            y: (p1.y + p2.y) / 2,
+            text: item.lineText,
+            textWidth: 0,
+          },
         });
+      });
+      this.$nextTick(() => {
+        this.drawTextRects();
+      });
+    },
+    // 等文字渲染完成后，获取文字宽度，再绘制文字的矩形背景
+    drawTextRects() {
+      this.lines.forEach((item) => {
+        if (item.lineHaveText) {
+          let textRect = document.getElementById(item.id).lastChild.getBBox();
+          item.lineText.textWidth = textRect.width;
+          item.textRectIsShow = true;
+        }
       });
     },
     // 点击节点打开配置
@@ -279,5 +326,8 @@ circle {
 .dotNodeFocus .receive,
 .receive {
   visibility: hidden;
+}
+text {
+  user-select: none;
 }
 </style>

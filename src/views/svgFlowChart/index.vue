@@ -186,7 +186,6 @@ export default {
               SVG.srcDotPosition.x + event.clientX - this.svgNodeDotEvent.x;
             SVG.temporaryLine.tarY =
               SVG.srcDotPosition.y + event.clientY - this.svgNodeDotEvent.y;
-            // SVG.showReceiveDot = true;
           }
 
           break;
@@ -241,14 +240,14 @@ export default {
               switch (sign) {
                 case "node_start":
                   if (SVG.nodesCollection[sign].length > 0) {
-                    this.$message.error("只能有一个开始点呢 喵");
+                    this.$message.error("流程只能有一个开始点");
                   } else {
                     SVG.nodesCollection[sign].push(node);
                   }
                   break;
                 case "node_end":
                   if (SVG.nodesCollection[sign].length > 0) {
-                    this.$message.error("只能有一个结束点呢 喵");
+                    this.$message.error("流程只能有一个结束点");
                   } else {
                     SVG.nodesCollection[sign].push(node);
                   }
@@ -299,10 +298,14 @@ export default {
                   this.$message.error("连不了下发点");
                   break;
                 case "receive":
-                  // 首先校验是否循环
                   let srcNodeId = SVG.temporaryLine.node.id;
                   let tarNodeId = tarDotInfo.belongedNodeId;
-                  if (this.checkIsLoop(srcNodeId, tarNodeId)) {
+                  if (this.checkIsOnlyOneLine(SVG.temporaryLine.srcDotId)) {
+                    SVG.temporaryLine = null;
+                    SVG.temporaryLineIsShow = false;
+                    this.$message.error("一个下发点只能连一个接收点");
+                  } else if (this.checkIsLoop(srcNodeId, tarNodeId)) {
+                    // 首先校验是否循环
                     SVG.temporaryLine = null;
                     SVG.temporaryLineIsShow = false;
                     this.$message.error("循环了");
@@ -319,6 +322,8 @@ export default {
                       color: SVG.temporaryLine.color,
                       srcNodeId,
                       tarNodeId,
+                      lineHaveText: SVG.temporaryLine.lineHaveText,
+                      lineText: SVG.temporaryLine.lineText,
                     });
                     if (
                       !this.colorIsExist(
@@ -360,6 +365,7 @@ export default {
           break;
       }
     },
+    // 校验连线是否形成循环
     checkIsLoop(nodeWaitCheck_id, prevNodeId) {
       let SVG = this.$refs.middleSvg;
       let nextNodeIds = SVG.connectionInfo.filter(
@@ -384,13 +390,19 @@ export default {
       // }
       // return false;
     },
+    // 校验是否只连了一条线
+    checkIsOnlyOneLine(srcDotId) {
+      let SVG = this.$refs.middleSvg;
+      let srcIds = SVG.connectionInfo.map((item) => item.srcDotId);
+      return srcIds.includes(srcDotId);
+    },
     colorIsExist(arr, color) {
       return arr.some((obj) => Object.values(obj).includes(color));
     },
     // 初始化节点的点信息,用于连线
     initNodePoints(node) {
       let dot = null;
-      function createDotAndPush(count, attribute, colorMap) {
+      function createDotAndPush(count, attribute, colorMap, haveText, text) {
         switch (attribute) {
           case "receive":
             dot = {
@@ -408,6 +420,8 @@ export default {
                 attribute: attribute,
                 color: colorMap[i % colorMap.length],
                 belongedNodeId: node.id,
+                haveText: haveText,
+                text: text[i % text.length],
               };
               node.points.push(dot);
             }
@@ -419,23 +433,29 @@ export default {
       }
       switch (node.nodeType) {
         case "node_start":
-          createDotAndPush(1, "emit", ["#8ec9ff"]);
+          createDotAndPush(1, "emit", ["#8ec9ff"], false, []);
           break;
         case "node_branch":
           createDotAndPush(1, "receive");
-          createDotAndPush(2, "emit", ["#67cb8a", "#bcc0ce"]);
+          createDotAndPush(2, "emit", ["#67cb8a", "#bcc0ce"], true, [
+            "分支一",
+            "其他",
+          ]);
           break;
         case "node_examine":
           createDotAndPush(1, "receive");
-          createDotAndPush(2, "emit", ["#52be70", "#fd4c6a"]);
+          createDotAndPush(2, "emit", ["#52be70", "#fd4c6a"], true, [
+            "通过",
+            "拒绝",
+          ]);
           break;
         case "node_manual":
           createDotAndPush(1, "receive");
-          createDotAndPush(1, "emit", ["#8ec9ff"]);
+          createDotAndPush(1, "emit", ["#8ec9ff"], true, ["提交"]);
           break;
         case "node_auto":
           createDotAndPush(1, "receive");
-          createDotAndPush(1, "emit", ["#8ec9ff"]);
+          createDotAndPush(1, "emit", ["#8ec9ff"], false, []);
           break;
         case "node_end":
           createDotAndPush(1, "receive");
