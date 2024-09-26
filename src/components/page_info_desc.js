@@ -17,7 +17,7 @@ export default [
   },
   {
     name: "Echarts_Show",
-    desc: "部分项目中曾配置过的部分Echarts图表，使用grid布局，数据均为假数据",
+    desc: "项目中曾配置过的部分Echarts图表，使用grid布局，数据均为假数据",
   },
   {
     name: "ThreeJs_Learn",

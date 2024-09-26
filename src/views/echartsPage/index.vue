@@ -26,7 +26,7 @@
       <section class="echart four_cells">
         <Echarts optionType="eighth" :chartData="eighthData"></Echarts>
       </section>
-      <section class="echart"></section>
+      <!-- <section class="echart"></section> -->
     </div>
   </div>
 </template>

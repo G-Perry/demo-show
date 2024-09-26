@@ -370,6 +370,7 @@ export default {
 ::v-deep .el-table {
   display: flex;
   flex-direction: column;
+  min-height: 36px;
 }
 
 ::v-deep .el-table__body-wrapper {

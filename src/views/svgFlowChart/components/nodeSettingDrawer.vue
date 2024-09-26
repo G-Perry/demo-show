@@ -26,9 +26,9 @@
         <div class="editForm">编辑表单 ></div>
       </section>
       <section class="middle_setting">
-        <button @click="branchAdd" v-if="nodeInfo.nodeType == 'node_branch'">
-          +1
-        </button>
+        <template v-if="nodeInfo.nodeType == 'node_branch'">
+          <branch-setting></branch-setting>
+        </template>
       </section>
       <section class="bottom_btns">
         <button type="button" class="btn_Confirm" @click="handleSettingSave">
@@ -43,7 +43,9 @@
 </template>
 
 <script>
+import branchSetting from "./branchSetting.vue";
 export default {
+  components: { branchSetting },
   data() {
     return {
       drawerVisible: false,
@@ -94,7 +96,6 @@ export default {
     },
     branchAdd() {
       console.log(this.nodeInfo);
-      
     },
   },
   mounted() {
@@ -149,7 +150,7 @@ export default {
   cursor: pointer;
   color: #aaa;
 }
-.node_branch_setting {
+/* .node_branch_setting {
   color: #3930e0;
 }
 .node_examine_setting {
@@ -160,7 +161,7 @@ export default {
 }
 .node_auto_setting {
   color: #00b5b5;
-}
+} */
 ::v-deep.el-input__inner {
   padding-left: 5px;
 }
