@@ -86,30 +86,30 @@ export default {
   height: 63px;
 }
 .node_start {
-  background: url(./node_start.png) no-repeat;
+  background: url(./pngs/node_start.png) no-repeat;
   background-size: contain;
 }
 .node_branch {
   height: 89px;
   padding-left: 30px;
   box-sizing: border-box;
-  background: url(./node_branch.png) no-repeat;
+  background: url(./pngs/node_branch.png) no-repeat;
   background-size: 100% 100%;
 }
 .node_examine {
-  background: url(./node_examine.png) no-repeat;
+  background: url(./pngs/node_examine.png) no-repeat;
   background-size: contain;
 }
 .node_manual {
-  background: url(./node_manual.png) no-repeat;
+  background: url(./pngs/node_manual.png) no-repeat;
   background-size: contain;
 }
 .node_auto {
-  background: url(./node_auto.png) no-repeat;
+  background: url(./pngs/node_auto.png) no-repeat;
   background-size: contain;
 }
 .node_end {
-  background: url(./node_end.png) no-repeat;
+  background: url(./pngs/node_end.png) no-repeat;
   background-size: contain;
 }
 .moveDom {
