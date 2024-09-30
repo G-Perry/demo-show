@@ -1,9 +1,9 @@
 <template>
   <div class="son_fit_father">
     <section class="date">
-      <button @click="handleMonthChange('prev')">{{ '<--' }}</button>
-      <span>{{`${nowYear}-${nowMonth}-${nowDate}`}}</span>
-      <button @click="handleMonthChange('next')">{{ '-->' }}</button>
+      <button @click="handleMonthChange('prev')">{{ "<--" }}</button>
+      <span>{{ `${nowYear}-${nowMonth}-${nowDate}` }}</span>
+      <button @click="handleMonthChange('next')">{{ "-->" }}</button>
     </section>
     <section class="day_names">
       <span class="name">Sun</span>
@@ -19,10 +19,10 @@
         class="day"
         v-for="item in dateList"
         :key="`${item.month}-${item.date}`"
-        :class="{'day--disabled':!item.isThisMonth}"
-        @click="handleDayClick(item)"
+        :class="{ 'day--disabled': !item.isThisMonth }"
       >
-        <span>{{item.date}}</span>
+        <!-- @click="handleDayClick(item)" -->
+        <span>{{ item.date }}</span>
         <!-- <span>{{item.position_row}}--{{ item.position_column }}</span> -->
       </div>
       <!-- <section class="task task--warning">Projects</section>
@@ -38,10 +38,12 @@
       <section
         class="task"
         v-for="item in tasksList"
-        :class="[`task_${item.sort}`,`task--${item.type}`]"
+        :class="[`task_${item.sort}`, `task--${item.type}`]"
         :key="`${item.date}-${item.id}`"
         :style="`grid-column: ${item.position_column} / span 1; grid-row: ${item.position_row};`"
-      >{{item.desc}}</section>
+      >
+        {{ item.desc }}
+      </section>
     </div>
   </div>
 </template>
@@ -309,6 +311,7 @@ export default {
     font-size: 14px;
     position: relative;
     align-self: start;
+    overflow: hidden;
     // 四行展示五个，五行展示四个，六行展示三个
     &_1 {
       transform: translateY(0%);

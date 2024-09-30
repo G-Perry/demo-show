@@ -1317,10 +1317,11 @@ export function findObjectById(array, id, keyName = "id") {
   return array.find((obj) => obj[keyName] === id).value;
 }
 
+let thisMonth = new Date().getMonth() + 1;
 //用于日历的task数组
 export let tasks = [
   {
-    date: "2024-5-3",
+    date: `2024-${thisMonth - 1}-3`,
     tasks: [
       {
         id: 1,
@@ -1329,13 +1330,13 @@ export let tasks = [
       },
       {
         id: 2,
-        type: "info", 
+        type: "info",
         desc: "abdcefghijklmnopqrstuvwxyz",
       },
     ],
   },
   {
-    date: "2024-6-10",
+    date: `2024-${thisMonth - 2}-10`,
     tasks: [
       {
         id: 1,
@@ -1360,7 +1361,7 @@ export let tasks = [
     ],
   },
   {
-    date: "2024-4-11",
+    date: `2024-${thisMonth}-11`,
     tasks: [
       {
         id: 1,
@@ -1380,7 +1381,7 @@ export let tasks = [
     ],
   },
   {
-    date: "2024-4-30",
+    date: `2024-${thisMonth - 1}-28`,
     tasks: [
       {
         id: 1,
@@ -1400,7 +1401,7 @@ export let tasks = [
     ],
   },
   {
-    date: "2024-5-13",
+    date: `2024-${thisMonth}-12`,
     tasks: [
       {
         id: 1,
@@ -1420,7 +1421,7 @@ export let tasks = [
     ],
   },
   {
-    date: "2024-5-28",
+    date: `2024-${thisMonth}-22`,
     tasks: [
       {
         id: 1,
@@ -1435,7 +1436,7 @@ export let tasks = [
     ],
   },
   {
-    date: "2024-7-27",
+    date: `2024-${thisMonth}-27`,
     tasks: [
       {
         id: 1,
