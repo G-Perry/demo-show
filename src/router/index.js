@@ -13,84 +13,84 @@ export const routes = [
         name: "homePage",
         component: () => import("../views/homePage/index.vue"),
         visible: true,
-        meta: { label: '首页', icon: 'icon-home', sort: 1 }
+        meta: { label: "首页", icon: "icon-home", sort: 1 },
       },
       {
         path: "homeOne",
         name: "homePageOne",
         component: () => import("../views/homePageOne/index.vue"),
         visible: true,
-        meta: { label: '首页-1', icon: 'icon-home', sort: 2 }
+        meta: { label: "首页-1", icon: "icon-home", sort: 2 },
       },
       {
         path: "usual",
         name: "usualPage",
         component: () => import("../views/usualPage/index.vue"),
         visible: true,
-        meta: { label: '通用模板页面1', icon: 'icon-file-text', sort: 3 }
+        meta: { label: "通用模板页面1", icon: "icon-file-text", sort: 3 },
       },
       {
         path: "anotherUsualPage",
         name: "anotherUsualPage",
         component: () => import("../views/usualPageOne/index.vue"),
         visible: true,
-        meta: { label: '通用模板页面2', icon: 'icon-file-text', sort: 4 }
+        meta: { label: "通用模板页面2", icon: "icon-file-text", sort: 4 },
       },
       {
         path: "echarts",
         name: "echartsPage",
         component: () => import("../views/echartsPage/index.vue"),
         visible: true,
-        meta: { label: 'Echarts_Show', icon: 'icon-echart', sort: 5 }
+        meta: { label: "Echarts_Show", icon: "icon-echart", sort: 5 },
       },
       {
         path: "threeLearning",
         name: "threeJsDemoPage",
         component: () => import("../views/threeJsDemo"),
         visible: true,
-        meta: { label: 'ThreeJs_Learn', icon: 'icon-codepen', sort: 6 }
+        meta: { label: "ThreeJs_Learn", icon: "icon-codepen", sort: 6 },
       },
       {
         path: "achieveByOneself",
         name: "achieveByOneselfPage",
         component: () => import("../views/achieveByOneself"),
         visible: true,
-        meta: { label: 'Achieve_By_Oneself', icon: 'icon-command', sort: 7 }
+        meta: { label: "Achieve_By_Oneself", icon: "icon-command", sort: 7 },
       },
       {
         path: "metaphysics",
         name: "metaphysicsPage",
         component: () => import("../views/metaphysicsPage"),
         visible: false,
-        meta: { label: 'metaphysicsPage', icon: 'icon-command', sort: 8 }
+        meta: { label: "metaphysicsPage", icon: "icon-command", sort: 8 },
       },
       {
         path: "test",
         name: "testPage",
         component: () => import("../views/testPage"),
         visible: true,
-        meta: { label: 'testPage', icon: 'icon-file-empty', sort: 9 }
+        meta: { label: "testPage", icon: "icon-file-empty", sort: 9 },
       },
       {
         path: "testOne",
         name: "testPageOne",
         component: () => import("../views/testPage/testPageOne.vue"),
         visible: false,
-        meta: { label: 'testPageOne', icon: 'icon-file-empty', sort: 10 }
+        meta: { label: "testPageOne", icon: "icon-file-empty", sort: 10 },
       },
       {
         path: "testTwo",
         name: "testPageTwo",
         component: () => import("../views/testPage/testPageTwo.vue"),
         visible: false,
-        meta: { label: 'testPageTwo', icon: 'icon-file-empty', sort: 11 }
+        meta: { label: "testPageTwo", icon: "icon-file-empty", sort: 11 },
       },
       {
         path: "shoppingMall",
         name: "shoppingMall",
         component: () => import("../views/shoppingMall/index"),
         visible: true,
-        meta: { label: 'Shopping_Mall', icon: 'el-icon-goods', sort: 12 }
+        meta: { label: "Shopping_Mall", icon: "el-icon-goods", sort: 12 },
       },
       {
         path: "goodsList",
@@ -121,27 +121,34 @@ export const routes = [
         name: "svgFlowChart",
         component: () => import("../views/svgFlowChart/index.vue"),
         visible: true,
-        meta: { label: 'Svg_Flow_Chart', icon: 'el-icon-link', sort: 20 }
+        meta: { label: "Svg_Flow_Chart", icon: "el-icon-link", sort: 20 },
       },
       {
         path: "serverRoom",
         name: "serverRoom",
         component: () => import("../views/serverRoom/index.vue"),
         visible: true,
-        meta: { label: '3D_Server_Room', icon: 'el-icon-link', sort: 14 }
+        meta: { label: "3D_Server_Room", icon: "el-icon-link", sort: 14 },
       },
       // {
       //   path: "flowChartTest",
       //   name: "flowChartTest",
       //   component: () => import("../views/flowChartTest/index.vue"),
       // },
+      {
+        path: "codePen",
+        name: "codePen",
+        component: () => import("../views/codePen/index.vue"),
+        visible: true,
+        meta: { label: "Code_Pen", icon: "el-icon-edit", sort: 9 },
+      },
     ],
   },
   {
     path: "/documentCatalogue",
     name: "documentCatalogue",
     component: () => import("../views/documentCatalogue/index.vue"),
-    meta: { label: 'Document_Catalogue', icon: 'el-icon-link', sort: 13 }
+    meta: { label: "Document_Catalogue", icon: "el-icon-link", sort: 13 },
   },
   // {
   //   path: "/serverRoom",

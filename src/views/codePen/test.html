@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue Dynamic Component Example</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+  <style>
+    body {
+      margin: 0;
+    }
+
+    #app {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+      padding: 10px;
+      box-sizing: border-box;
+      gap: 10px;
+    }
+
+    .preview {
+      flex: 5;
+      overflow: auto;
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+
+    .codeEditor {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    textarea {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <section class="preview" ref="preview">
+    </section>
+    <section class="codeEditor">
+      <textarea v-model="templateCode" placeholder="在这里输入 template 代码"><h1>Hello World</h1></textarea>
+      <textarea v-model="scriptCode"
+        placeholder="在这里输入 script 代码">data() { return { message: 'Hello from script!' }; }</textarea>
+      <textarea v-model="styleCode" placeholder="在这里输入 style 代码">h1 { color: red; }</textarea>
+      <button type="button" @click="aaaaa">1234</button>
+    </section>
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        templateCode: '<h1>Hello World11111</h1>',
+        scriptCode: `mounted() {
+                      console.log(this, 111);
+                    },`,
+        styleCode: 'h1 { color: red; }'
+      },
+      methods: {
+        aaaaa() {
+
+          this.$refs.preview.innerHTML = ''
+          let dom = document.createElement('div')
+          dom.id = 'abcd'
+          this.$refs.preview.appendChild(dom)
+          const config = (new Function(`return ({${this.scriptCode}})`))();
+
+          // 创建构造器this.scriptCode
+          var Profile = Vue.extend({
+            template: `
+            <div>
+              ${this.templateCode}
+            </div>
+              `,
+            ...config
+          })
+          // 创建 Profile 实例，并挂载到一个元素上。
+          new Profile().$mount('#abcd')
+          this.updateDynamicStyles(this.styleCode)
+        },
+        updateDynamicStyles: function (cssCode) {
+          if (!cssCode) {
+            cssCode = this.cssCode;
+          }
+
+          // 创建 <style> 标签
+          const styleElement = document.createElement('style');
+          styleElement.type = 'text/css';
+          styleElement.innerHTML = cssCode;
+
+          // 插入到页面中
+          document.head.appendChild(styleElement);
+
+          // 移除旧的 <style> 标签
+          const oldStyleElements = document.querySelectorAll('style[data-dynamic-css]');
+          oldStyleElements.forEach(oldStyle => {
+            document.head.removeChild(oldStyle);
+          });
+
+          // 设置新 <style> 标签的属性
+          styleElement.setAttribute('data-dynamic-css', '');
+        }
+      },
+      mounted() {
+      }
+    });
+
+    // const componentString = `
+    //     {
+    //         template: '<div>{{ message }}</div>',
+    //         data() {
+    //             return {
+    //                 message: 'Hello Vue!'
+    //             }
+    //         }
+    //     }
+    //   `;
+
+    // // 使用 JSON.parse 和 JSON.stringify 进行安全转换
+    // const safeComponentString = `(${componentString})`;
+    // const parsedComponent = eval(safeComponentString);
+    // const parsedComponent1 = (new Function(`return ${safeComponentString}`))();
+    // console.log(safeComponentString, parsedComponent, parsedComponent1);
+
+  </script>
+</body>
+
+</html>

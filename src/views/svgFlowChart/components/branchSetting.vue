@@ -9,71 +9,73 @@
         <span>新增分支</span>
       </el-button>
     </div>
-    <div
-      v-for="(item, index) in branch"
-      :key="index"
-      class="branch_item"
-      :style="`border-left-color:${item.leftBorderColor}`"
-    >
-      <div class="top">
-        <div class="top_left">
-          <el-input
-            ref="textEditInput"
-            v-if="item.editInputIsShow"
-            v-model="item.label"
-            placeholder="请输入内容"
-            style="width: 160px"
-            @blur="textEditEnd(item)"
-          ></el-input>
-          <span v-else>{{ item.label }}</span>
-          <i
-            class="el-icon-edit branch_label_edit"
-            v-if="item.editable"
-            @click="branchLabelEdit(item)"
-          ></i>
-        </div>
-        <div class="top_right">
-          <el-switch
-            v-model="item.status"
-            active-color="#2f54eb"
-            inactive-color="#bfbfbf"
-          >
-            <!-- active-value="1"
-            inactive-value="0" -->
-          </el-switch>
-          <i
-            class="el-icon-delete branch_delete"
-            v-if="item.editable"
-            @click="branchDelete(item)"
-          ></i>
-        </div>
-      </div>
-      <div class="middle" v-if="item.editable">
-        <div class="logic">
-          <div v-for="e in item.rules.logic" :key="e.id" class="logic_item">
-            {{ e.a }}
-          </div>
-        </div>
-        <div class="condition">
-          <div
-            v-for="(e, index) in item.rules.condition"
-            :key="e.id"
-            class="condition_item"
-          >
-            {{ e.a }}
+    <transition-group name="fade">
+      <div
+        v-for="(item, index) in branch"
+        :key="index"
+        class="branch_item"
+        :style="`border-left-color:${item.leftBorderColor}`"
+      >
+        <div class="top">
+          <div class="top_left">
+            <el-input
+              ref="textEditInput"
+              v-if="item.editInputIsShow"
+              v-model="item.label"
+              placeholder="请输入内容"
+              style="width: 160px"
+              @blur="textEditEnd(item)"
+            ></el-input>
+            <span v-else>{{ item.label }}</span>
             <i
-              class="el-icon-remove-outline condition_delete"
-              @click="conditionDelete(item, index)"
+              class="el-icon-edit branch_label_edit"
+              v-if="item.editable"
+              @click="branchLabelEdit(item)"
+            ></i>
+          </div>
+          <div class="top_right">
+            <el-switch
+              v-model="item.status"
+              active-color="#2f54eb"
+              inactive-color="#bfbfbf"
+            >
+              <!-- active-value="1"
+            inactive-value="0" -->
+            </el-switch>
+            <i
+              class="el-icon-delete branch_delete"
+              v-if="item.editable"
+              @click="branchDelete(item)"
             ></i>
           </div>
         </div>
+        <div class="middle" v-if="item.editable">
+          <div class="logic">
+            <div v-for="e in item.rules.logic" :key="e.id" class="logic_item">
+              {{ e.a }}
+            </div>
+          </div>
+          <div class="condition">
+            <div
+              v-for="(e, index) in item.rules.condition"
+              :key="e.id"
+              class="condition_item"
+            >
+              {{ e.a }}
+              <i
+                class="el-icon-remove-outline condition_delete"
+                @click="conditionDelete(item, index)"
+              ></i>
+            </div>
+          </div>
+        </div>
+        <div class="bottom" v-if="item.editable">
+          <el-button type="text" size="mini" @click="conditionAdd(item)"
+            >添加</el-button
+          >
+        </div>
       </div>
-      <div class="bottom" v-if="item.editable">
-        <el-button type="text" size="mini" @click="conditionAdd(item)"
-          >添加</el-button
-        >
-      </div>
-    </div>
+    </transition-group>
   </section>
 </template>
 <script>
@@ -276,5 +278,12 @@ export default {
 }
 ::v-deep .el-switch.is-checked .el-switch__core::after {
   margin-left: -13px;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 2s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active 在 Vue 2.x 中 */ {
+  opacity: 0;
 }
 </style>
