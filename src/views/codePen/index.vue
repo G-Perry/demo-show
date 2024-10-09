@@ -4,23 +4,32 @@
     <div class="Mobile_Bar" @mousedown="handleMouseDown"></div>
     <section class="codeEditorSection" ref="codeEditorSection">
       <div class="controlContainer">
-        <el-button
-          type="primary"
-          @click="renderPage"
-          size="mini"
-          style="border-radius: unset"
-        >
-          <i class="el-icon-video-play"></i>
-          运行
-        </el-button>
-        <!-- <el-button
-          type="primary"
-          @click="renderPage"
-          size="mini"
-          style="border-radius: unset"
-        > -->
-        <i class="icon-code formatCode" @click="formatCode"></i>
-        <!-- </el-button> -->
+        <div style="display: flex">
+          <el-button
+            type="primary"
+            @click="renderPage"
+            size="mini"
+            style="border-radius: unset"
+          >
+            <i class="el-icon-video-play"></i>
+            运行
+          </el-button>
+          <el-button
+            type="primary"
+            @click="formatCode"
+            size="mini"
+            style="border-radius: unset"
+          >
+            <i class="icon-code"></i>
+            格式化代码
+          </el-button>
+        </div>
+        <self-tabs
+          :selfTabs="selfTabs"
+          @tab-click="handleTabClick"
+          style="height: 100%"
+        ></self-tabs>
+        <!-- <i class="icon-code formatCode" @click="formatCode"></i> -->
       </div>
       <section class="editorsContainer">
         <codeEditor
@@ -52,16 +61,24 @@
   <script>
 import Vue from "vue/dist/vue.esm.js";
 import codeEditor from "./codeEditor";
+import selfTabs from "../homePage/components/selfTabs.vue";
+import exampleData from "./exampleData";
 export default {
   components: {
     codeEditor,
+    selfTabs,
   },
   data() {
     return {
       moveEvent: null,
-      templateCode: `<div><h1>Hello World</h1><h1>{{message}}</h1></div>`,
-      scriptCode: `data() { return { message: "Hello from script!" }; }`,
-      styleCode: "h1 { color: red; }",
+      selfTabs: [
+        { label: "清空", sign: "exampleOne" },
+        { label: "示例一", sign: "exampleTwo" },
+        { label: "示例二", sign: "exampleThree" },
+      ],
+      templateCode: "",
+      scriptCode: "",
+      styleCode: "",
       formatCodeCount: 0,
       editorResizeCount: 0,
     };
@@ -127,6 +144,11 @@ export default {
       this.moveEvent = null;
       this.editorResizeCount++;
     },
+    handleTabClick(sign) {
+      this.templateCode = exampleData[sign].templateCode;
+      this.scriptCode = exampleData[sign].scriptCode;
+      this.styleCode = exampleData[sign].styleCode;
+    },
   },
   mounted() {
     // window.addEventListener("mousedown", this.handleMouseDown);
@@ -142,6 +164,14 @@ export default {
 </script>
   
   <style scoped>
+::v-deep .tab_items {
+  height: 100%;
+  border-radius: 0 !important;
+  border: none !important;
+}
+::v-deep .tab_items.actived {
+  background: #409eff;
+}
 .codePen {
   display: flex;
   height: 100%;
@@ -186,15 +216,15 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-right: 10px;
+  /* padding-right: 10px; */
   box-sizing: border-box;
 }
-.formatCode {
+/* .formatCode {
   font-size: 12px;
   color: #666;
   cursor: pointer;
 }
 .formatCode:hover {
   color: #5cb6ff;
-}
+} */
 </style>
