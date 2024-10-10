@@ -1,16 +1,16 @@
 export default {
-    exampleOne: {
-        templateCode: '',
-        scriptCode: '',
-        styleCode: '',
-    },
-    exampleTwo: {
-        templateCode: `<div><h1>Hello World</h1><h1>{{message}}</h1></div>`,
-        scriptCode: `data() { return { message: "Hello from script!" }; }`,
-        styleCode: "h1 { color: red; }",
-    },
-    exampleThree: {
-        templateCode: `<div class="full_content">
+  exampleOne: {
+    templateCode: "",
+    scriptCode: "",
+    styleCode: "",
+  },
+  exampleTwo: {
+    templateCode: `<div><h1>Hello World</h1><h1>{{message}}</h1></div>`,
+    scriptCode: `data() { return { message: "Hello from script!" }; }`,
+    styleCode: "h1 { color: red; }",
+  },
+  exampleThree: {
+    templateCode: `<div class="full_content">
     <svg
       ref="starLineSvg"
       stroke-width="1"
@@ -22,24 +22,23 @@ export default {
       @mousemove="handleMouseMove"
     >
       <circle
-        v-for="item in points"
-        :key="item.x+item.cy"
-        :cx="item.cx"
-        :cy="item.cy"
+        v-for="(item, index) in points"
+        :key="'circle' + index"
+        :cx="item.x"
+        :cy="item.y"
         r="10"
         fill="#fff"
       />
       <path
-        v-for="item in lines"
-        :key="item.x1+item.y2"
-        :d="'M '+item.x1+' '+item.y1+' L '+item.x2+' '+item.y2"
+        v-for="(item, index) in lines"
+        :key="'path' + index"
+        :d="'M ' + item.x1 + ' ' + item.y1 + ' L ' + item.x2 + ' ' + item.y2"
         fill="none"
         stroke="#fff"
       />
     </svg>
   </div>`,
-        scriptCode: `
- data() {
+    scriptCode: `  data() {
     return {
       // s：定义图形中每个部分的大小。
 
@@ -52,6 +51,8 @@ export default {
       h: 0, // h：SVG画布的高度。
       points: [], //一个数组，用于存储图形中的所有点的坐标。
       lines: [], // lines：一个数组，用于存储图形中的所有线段的坐标。
+      points3D: [], // 一个数组，用于存储图形中的所有点的3d坐标。
+      lines3D: [], // links：一个数组，用于存储图形中的所有线段的3d坐标。
     };
   },
   methods: {
@@ -60,7 +61,7 @@ export default {
       // let divideDeg = 360 / conut;
       // let divideSize = 120;
       // let lines = [];
-      this.points = [{ x: 0, y: 0, z: 0 }];
+      this.points3D = [{ x: 0, y: 0, z: 0 }];
       // for (let i = 0; i < conut; i++) {
       //   let deg = divideDeg * (i - 1);
       //   let x, y, z;
@@ -74,36 +75,40 @@ export default {
       //   this.points.push({ x: x, y: y, z: z });
       // }
 
-      for (var i = 0; i < 5; i++) {
-        this.part(i, -70, 0);
-        this.part(i, 70, Math.PI);
+      for (let i = 0; i < 5; i++) {
+        this.part(i, -80, 0);
+        this.part(i, 80, Math.PI);
       }
-      console.log(this.points);
+      // console.log(this.points);
+      // this.points.forEach((i) => {
+      //   console.log(i.x, i.y, i.z);
+      // });
+      // console.log(this.lines);
     },
     part(i, y, da) {
       let a = (Math.PI * 2) / 5;
       let A1 = da + i * a;
       let A2 = da + a * (i + 1);
       let A3 = a / 2 + A1;
-      let r1 = y * 0.9;
-      let r2 = y * 1.4;
+      let r1 = 80 * 0.9;
+      let r2 = 80 * 1.4;
       let y1 = y * 1.1;
       let y2 = y / 4;
       let cosA1 = Math.cos(A1);
       let sinA1 = Math.sin(A1);
       let p0 = { x: cosA1 * r1, y: y1, z: sinA1 * r1 };
       let p1 = { x: cosA1 * r2, y: y2, z: sinA1 * r2 };
-      this.points.push(p0);
-      this.points.push(p1);
-      // this.lines.push([p0, p1]);
-      // this.lines.push([
-      //   p1,
-      //   { x: Math.cos(A3) * r2, y: -y2, z: Math.sin(A3) * r2 },
-      // ]);
-      // this.lines.push([
-      //   p0,
-      //   { x: Math.cos(A2) * r1, y: y1, z: Math.sin(A2) * r1 },
-      // ]);
+      let p2 = { x: Math.cos(A3) * r2, y: -y2, z: Math.sin(A3) * r2 };
+      let p3 = { x: Math.cos(A2) * r1, y: y1, z: Math.sin(A2) * r1 };
+      this.points3D.push(p0);
+      this.points3D.push(p1);
+      // this.points.push(p2);
+      // this.points.push(p3);
+      this.lines3D.push([{ x: 0, y: 0, z: 0 }, p0]);
+      this.lines3D.push([{ x: 0, y: 0, z: 0 }, p1]);
+      this.lines3D.push([p0, p1]);
+      this.lines3D.push([p1, p2]);
+      this.lines3D.push([p0, p3]);
     },
     setLines() {
       let x1, y1, x2, y2;
@@ -126,8 +131,12 @@ export default {
       let z = point.z * cosa1 - point.x * sina1;
       let y = point.y * cosa2 + z * sina2;
       let d = z * cosa2 - point.y * sina2 + this.far;
-      point.cx = (this.k / d) * x + this.w / 2;
-      point.cy = (this.k / d) * y + this.h / 2;
+      // point.cx = (this.k / d) * x + this.w / 2;
+      // point.cy = (this.k / d) * y + this.h / 2;
+      return {
+        x: (this.k / d) * x + this.w / 2,
+        y: (this.k / d) * y + this.h / 2,
+      };
     },
 
     handleWheel(event) {
@@ -145,12 +154,26 @@ export default {
       if (this.p) {
         this.a1 = this.p.a1 - (event.clientX - this.p.x) / 100;
         this.a2 = this.p.a2 - (event.clientY - this.p.y) / 100;
+        this.draw();
       }
-      this.draw();
     },
     draw() {
-      this.points.forEach(this.trans3Dto2D);
-      this.setLines();
+      // this.points.forEach(this.trans3Dto2D);
+      this.points = [];
+      this.lines = [];
+      this.points3D.forEach((item) => {
+        this.points.push(this.trans3Dto2D(item));
+      });
+      this.lines3D.forEach((item) => {
+        // this.points.push(this.trans3Dto2D(item));
+        let a = this.trans3Dto2D(item[0]);
+        let b = this.trans3Dto2D(item[1]);
+        this.lines.push({ x1: a.x, y1: a.y, x2: b.x, y2: b.y });
+      });
+      // console.log(this.points);
+      // console.log(this.lines);
+
+      // this.setLines();
     },
   },
   mounted() {
@@ -162,17 +185,10 @@ export default {
       this.draw();
     });
   },`,
-        styleCode: `.full_content {
+    styleCode: `.full_content {
   width: 100%;
   height: 100%;
   background: #000726;
-}
-.starSelf {
-  position: absolute;
-  /* top: 50%;
-    left: 50%; */
-  transform: translate(-50%, -50%) rotateX(30deg);
-  transform-style: preserve-3d;
 }`,
-    },
-}
+  },
+};

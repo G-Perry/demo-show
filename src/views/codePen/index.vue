@@ -1,7 +1,7 @@
 <template>
   <section class="codePen">
     <section class="preview" ref="preview"></section>
-    <div class="Mobile_Bar" @mousedown="handleMouseDown"></div>
+    <div class="Mobile_Bar"></div>
     <section class="codeEditorSection" ref="codeEditorSection">
       <div class="controlContainer">
         <div style="display: flex">
@@ -92,11 +92,6 @@ export default {
       // 获取配置，并定义组件
       const config = new Function(`return ({${this.scriptCode}})`)();
       const Profile = {
-        // template: `
-        //   <div>
-        //     ${this.templateCode}
-        //   </div>
-        // `,
         template: this.templateCode,
         ...config,
       };
@@ -106,7 +101,7 @@ export default {
     },
     updateDynamicStyles: function (cssCode) {
       if (!cssCode) {
-        cssCode = this.cssCode;
+        cssCode = this.cssCode || "";
       }
       // 创建 <style> 标签
       const styleElement = document.createElement("style");
@@ -127,22 +122,36 @@ export default {
       this.formatCodeCount++;
     },
     handleMouseDown(event) {
-      this.moveEvent = {
-        x: event.clientX,
-        y: event.clientY,
-        sectionWidth: this.$refs.codeEditorSection.offsetWidth,
-      };
+      if (event.detail === 2) {
+        // 检查是否为双击
+        event.preventDefault();
+        document.body.style.userSelect = "none"; // 动态设置样式
+      } else {
+        document.body.style.userSelect = "auto"; // 取消禁用
+      }
+      if (event.target.className == "Mobile_Bar") {
+        this.moveEvent = {
+          x: event.clientX,
+          y: event.clientY,
+          sectionWidth: this.$refs.codeEditorSection.offsetWidth,
+        };
+      }
     },
     handleMouseMove(event) {
       if (this.moveEvent) {
+        document.body.style.userSelect = "none"; // 动态设置样式
         let section = this.$refs.codeEditorSection;
         section.style.width =
           this.moveEvent.sectionWidth - event.clientX + this.moveEvent.x + "px";
       }
     },
     handleMouseUp() {
-      this.moveEvent = null;
-      this.editorResizeCount++;
+      if (this.moveEvent) {
+        document.body.style.userSelect = "auto"; // 取消禁用
+        this.moveEvent = null;
+        this.editorResizeCount++;
+        this.renderPage();
+      }
     },
     handleTabClick(sign) {
       this.templateCode = exampleData[sign].templateCode;
@@ -151,12 +160,12 @@ export default {
     },
   },
   mounted() {
-    // window.addEventListener("mousedown", this.handleMouseDown);
+    window.addEventListener("mousedown", this.handleMouseDown);
     window.addEventListener("mousemove", this.handleMouseMove);
     window.addEventListener("mouseup", this.handleMouseUp);
   },
   beforeDestroy() {
-    // window.removeEventListener("mousedown", this.handleMouseDown);
+    window.removeEventListener("mousedown", this.handleMouseDown);
     window.removeEventListener("mousemove", this.handleMouseMove);
     window.removeEventListener("mouseup", this.handleMouseUp);
   },
@@ -165,9 +174,12 @@ export default {
   
   <style scoped>
 ::v-deep .tab_items {
+  width: fit-content;
+  padding: 0 10px;
   height: 100%;
   border-radius: 0 !important;
   border: none !important;
+  font-size: 12px;
 }
 ::v-deep .tab_items.actived {
   background: #409eff;
@@ -194,7 +206,7 @@ export default {
 }
 
 .codeEditorSection {
-  min-width: 300px;
+  min-width: 360px;
   width: 500px;
   display: flex;
   flex-direction: column;

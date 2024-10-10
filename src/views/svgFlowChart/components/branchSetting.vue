@@ -11,8 +11,8 @@
     </div>
     <transition-group name="fade">
       <div
-        v-for="(item, index) in branch"
-        :key="index"
+        v-for="item in branch"
+        :key="item.id"
         class="branch_item"
         :style="`border-left-color:${item.leftBorderColor}`"
       >
@@ -86,6 +86,7 @@ export default {
     return {
       branch: [
         {
+          id: UUID(),
           label: "分支1",
           editable: true,
           editInputIsShow: false,
@@ -97,6 +98,7 @@ export default {
           },
         },
         {
+          id: UUID(),
           label: "其他",
           editable: false,
           status: true,
@@ -122,6 +124,7 @@ export default {
       }
       let length = this.branch.length;
       let obj = {
+        id: UUID(),
         label: `分支${length}`,
         editable: true,
         editInputIsShow: false,
@@ -182,6 +185,7 @@ export default {
   padding: 10px;
   box-sizing: border-box;
   font-size: 14px;
+  transition: all 0.3s;
 }
 .branch_item .top {
   height: 25px;
@@ -281,9 +285,12 @@ export default {
 }
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 2s;
+  transition: opacity 0.5s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active 在 Vue 2.x 中 */ {
   opacity: 0;
 }
+/* .v-move {
+  transition: transform 0.3s;
+} */
 </style>
