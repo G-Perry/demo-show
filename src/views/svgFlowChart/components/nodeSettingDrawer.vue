@@ -27,7 +27,7 @@
       </section>
       <section class="middle_setting">
         <template v-if="nodeInfo.nodeType == 'node_branch'">
-          <branch-setting></branch-setting>
+          <branch-setting v-model="branchSettingInfo"></branch-setting>
         </template>
       </section>
       <section class="bottom_btns">
@@ -53,6 +53,7 @@ export default {
       nodeInfo: {},
       input: "",
       couldEditText: false,
+      branchSettingInfo: [],
     };
   },
   methods: {
@@ -68,6 +69,15 @@ export default {
     },
     open(node) {
       this.nodeInfo = { ...node };
+      switch (node.nodeType) {
+        case "node_branch":
+          this.branchSettingInfo = node.points.filter((item) => {
+            return item.attribute == "emit";
+          });
+          break;
+        default:
+          break;
+      }
       this.drawerVisible = true;
     },
     handleClose() {
@@ -78,9 +88,11 @@ export default {
       this.drawerVisible = false;
     },
     handleSettingSave() {
-      this.nodeInfo.text = this.input;
-      this.$emit("settingSave", this.nodeInfo);
-      this.handleClose();
+      console.log(this.nodeInfo, this.branchSettingInfo);
+
+      // this.nodeInfo.text = this.input;
+      // this.$emit("settingSave", this.nodeInfo);
+      // this.handleClose();
     },
     // 修改节点描述文本
     handleNodeTextEdit() {
@@ -93,9 +105,6 @@ export default {
     textEditEnd() {
       this.nodeInfo.text = this.input;
       this.couldEditText = false;
-    },
-    branchAdd() {
-      console.log(this.nodeInfo);
     },
   },
   mounted() {

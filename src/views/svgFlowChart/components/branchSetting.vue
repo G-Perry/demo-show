@@ -82,33 +82,85 @@
 import { UUID } from "@/utils/handleObjMethods";
 
 export default {
+  props: {
+    value: {
+      type: Array,
+      default: [],
+    },
+  },
+  watch: {
+    value: {
+      handler(val) {
+        // this.branch = val;
+        // console.log(val);
+        this.initBranch(val);
+      },
+      immediate: true,
+    },
+    // branch: {
+    //   handler(val) {
+    //     this.$emit("input", val);
+    //   },
+    //   deep: true,
+    // },
+  },
   data() {
     return {
+      belongedNodeId: "",
       branch: [
-        {
-          id: UUID(),
-          label: "分支1",
-          editable: true,
-          editInputIsShow: false,
-          status: true,
-          leftBorderColor: "#67cb8a",
-          rules: {
-            logic: [],
-            condition: [{ id: UUID(), a: "1", b: "2", c: "3" }],
-          },
-        },
-        {
-          id: UUID(),
-          label: "其他",
-          editable: false,
-          status: true,
-          leftBorderColor: "#a5a9bc",
-        },
+        // {
+        //   id: UUID(),
+        //   label: "分支1",
+        //   editable: true,
+        //   editInputIsShow: false,
+        //   status: true,
+        //   leftBorderColor: "#67cb8a",
+        //   rules: {
+        //     logic: [],
+        //     condition: [{ id: UUID(), a: "1", b: "2", c: "3" }],
+        //   },
+        // },
+        // {
+        //   id: UUID(),
+        //   label: "其他",
+        //   editable: false,
+        //   status: true,
+        //   leftBorderColor: "#a5a9bc",
+        // },
       ],
       count: 2,
     };
   },
   methods: {
+    initBranch(val) {
+      this.branch = [];
+      val.forEach((item) => {
+        let obj = null;
+        if (item.text !== "其他") {
+          obj = {
+            id: item.id,
+            label: item.text,
+            editable: true,
+            editInputIsShow: false,
+            status: true,
+            leftBorderColor: item.color,
+            rules: {
+              logic: [],
+              condition: [{ id: UUID(), a: "1", b: "2", c: "3" }],
+            },
+          };
+        } else {
+          obj = {
+            id: item.id,
+            label: item.text,
+            editable: false,
+            status: true,
+            leftBorderColor: item.color,
+          };
+        }
+        this.branch.push(obj);
+      });
+    },
     branchLabelEdit(item) {
       item.editInputIsShow = true;
       this.$nextTick(() => {
