@@ -188,11 +188,15 @@ export default {
 .date {
   width: 100%;
   height: 40px;
-  line-height: 40px;
+  // line-height: 40px;
   box-sizing: border-box;
   background: #fff;
   text-align: center;
   border-bottom: 1px solid #dbdee6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
 }
 .day_names {
   display: grid;

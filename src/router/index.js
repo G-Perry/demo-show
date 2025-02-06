@@ -130,13 +130,13 @@ export const routes = [
         visible: true,
         meta: { label: "3D_Server_Room", icon: "el-icon-link", sort: 14 },
       },
-      {
-        path: "customForm",
-        name: "customForm",
-        component: () => import("../views/customForm/index.vue"),
-        visible: true,
-        meta: { label: "Custom_Form", icon: "el-icon-link", sort: 15 },
-      },
+      // {
+      //   path: "customForm",
+      //   name: "customForm",
+      //   component: () => import("../views/customForm/index.vue"),
+      //   visible: true,
+      //   meta: { label: "Custom_Form", icon: "el-icon-link", sort: 15 },
+      // },
       // {
       //   path: "flowChartTest",
       //   name: "flowChartTest",

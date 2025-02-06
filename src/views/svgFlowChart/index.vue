@@ -1,7 +1,6 @@
 <template>
   <section class="three_column">
     <div class="left">
-      <span>options</span>
       <node-options ref="leftOptions"></node-options>
     </div>
     <div class="middle">
@@ -15,11 +14,29 @@
       <button type="button" @click="handleExport">保存到缓存</button>
       <button type="button" @click="handleInport">从缓存读取</button>
       <button type="button" @click="handleClearStorage">清除缓存</button>
+      <button type="button" @click="handleProcessDeployment">流程部署</button>
+      <button type="button" @click="abcd">下载配置的JSON</button>
+      <button type="button">
+        <label for="fileInput" style="font-weight: 500">导入配置的JSON </label>
+      </button>
+      <input
+        type="file"
+        id="fileInput"
+        @change="handleFileUpload"
+        style="display: none"
+      />
     </div>
     <node-setting
       ref="nodeSettingDrawer"
       @settingSave="handleSettingSave"
     ></node-setting>
+    <ul
+      v-show="contextMenuVisible"
+      :style="{ left: menuInfo.left + 'px', top: menuInfo.top + 'px' }"
+      class="contextMenu"
+    >
+      <li @click.prevent="handleContextMenuDelete">{{ menuInfo.label }}</li>
+    </ul>
   </section>
 </template>
 
@@ -27,7 +44,14 @@
 import middleSvg from "./components/middleSvg.vue";
 import nodeOptions from "./components/leftFlowNodeOption.vue";
 import nodeSetting from "./components/nodeSettingDrawer.vue";
-import { UUID } from "@/utils/handleObjMethods";
+import {
+  UUID,
+  saveToStorage,
+  readFromStorage,
+  clearStorage,
+} from "@/utils/handleObjMethods";
+// import { flowDeploy } from "@/api/itsm/flowDefine.js";
+
 export default {
   components: { middleSvg, nodeOptions, nodeSetting },
   data() {
@@ -52,6 +76,16 @@ export default {
       eventOffsetTarget: null,
       // 用于打开设置drawer时禁止svg移动
       allowMove: true,
+      // 右键删除菜单
+      contextMenuVisible: false,
+      menuInfo: {
+        left: 0,
+        top: 0,
+        label: "",
+        actionType: "",
+        elementType: "",
+        actionId: "",
+      },
     };
   },
   methods: {
@@ -99,6 +133,14 @@ export default {
       }
     },
     handleMouseDown(event) {
+      if (event.button === 2) {
+        // 右键点击
+        return;
+      }
+      // 隐藏右键菜单
+      setTimeout(() => {
+        this.contextMenuVisible = false;
+      }, 200);
       // 先获取点击的区域
       this.mouseDownRegion = this.getMouseDownPosition(event);
       switch (this.mouseDownRegion) {
@@ -131,9 +173,7 @@ export default {
         case "svgRegion":
           this.svgMosueEvent = { x: event.clientX, y: event.clientY };
           document.querySelector("svg").style.cursor = "grabbing";
-
           break;
-
         default:
           break;
       }
@@ -264,6 +304,8 @@ export default {
             this.eventOffsetTarget = null;
             this.mouseDownRegion = null;
           }
+          // 初次摆放后向缓存存数据
+          this.handleExport();
           break;
         case "svgRegion":
           this.svgMosueEvent = null;
@@ -359,6 +401,8 @@ export default {
           SVG.savedTranslateX = SVG.translateX;
           SVG.savedTranslateY = SVG.translateY;
           SVG.$el.style.cursor = "grab";
+          // 移动节点或连线后向缓存存数据
+          this.handleExport();
           break;
 
         default:
@@ -438,7 +482,7 @@ export default {
         case "node_branch":
           createDotAndPush(1, "receive");
           createDotAndPush(2, "emit", ["#67cb8a", "#bcc0ce"], true, [
-            "分支一",
+            "分支1",
             "其他",
           ]);
           break;
@@ -477,31 +521,31 @@ export default {
       };
       SVG.connectionInfo = [];
       SVG.lines = [];
+      clearStorage();
     },
+    // 向缓存存入节点、连线的配置信息
     handleExport() {
       let SVG = this.$refs.middleSvg;
-
       let nodes = SVG.nodesCollection;
       let connectionInfo = SVG.connectionInfo;
-      localStorage.setItem("svgNodesInfo", JSON.stringify(nodes));
-      localStorage.setItem("svgLinesInfo", JSON.stringify(connectionInfo));
+      saveToStorage("svgNodesInfo", nodes);
+      saveToStorage("svgLinesInfo", connectionInfo);
     },
+    // 从缓存读取数据并渲染
     handleInport() {
       let SVG = this.$refs.middleSvg;
-      let nodes = localStorage.getItem("svgNodesInfo");
-      SVG.nodesCollection = nodes
-        ? JSON.parse(nodes)
-        : {
-            node_start: [],
-            node_branch: [],
-            node_examine: [],
-            node_manual: [],
-            node_auto: [],
-            node_end: [],
-          };
+      let nodes = readFromStorage("svgNodesInfo");
+      SVG.nodesCollection = nodes || {
+        node_start: [],
+        node_branch: [],
+        node_examine: [],
+        node_manual: [],
+        node_auto: [],
+        node_end: [],
+      };
 
-      let connectionInfo = localStorage.getItem("svgLinesInfo");
-      SVG.connectionInfo = connectionInfo ? JSON.parse(connectionInfo) : [];
+      let connectionInfo = readFromStorage("svgLinesInfo");
+      SVG.connectionInfo = connectionInfo || [];
       SVG.connectionInfo.forEach((item) => {
         SVG.arrowMarkerColor.push({
           id: UUID("arrorColor"),
@@ -513,7 +557,9 @@ export default {
       });
     },
     handleClearStorage() {
-      localStorage.clear();
+      // localStorage.clear();
+      // sessionStorage.clear();
+      clearStorage();
       alert("Local Storage cleared!");
     },
     openNodeSetting(node) {
@@ -526,6 +572,259 @@ export default {
         (item) => item.id == nodeInfo.id
       );
       node.text = nodeInfo.text;
+      node.points = nodeInfo.points;
+      if (nodeInfo.nodeType == "node_branch") {
+        SVG.connectionInfo = readFromStorage("svgLinesInfo") || [];
+        SVG.connectionInfo.forEach((item) => {
+          SVG.arrowMarkerColor.push({
+            id: UUID("arrorColor"),
+            color: item.color,
+          });
+        });
+        SVG.$nextTick(() => {
+          SVG.drawLinesByIds();
+        });
+      }
+    },
+    // 右键删除节点或边
+    handleContextMenuDelete() {
+      let SVG = this.$refs.middleSvg;
+      switch (this.menuInfo.actionType) {
+        case "delLine":
+          //删除SVG.connectionInfo中的连线信息
+          SVG.connectionInfo = SVG.connectionInfo.filter(
+            (item) => item.id != this.menuInfo.actionId
+          );
+          saveToStorage("svgLinesInfo", SVG.connectionInfo);
+          break;
+        case "delNode":
+          let nodeType = this.menuInfo.elementType;
+          // 删除节点
+          SVG.nodesCollection[nodeType] = SVG.nodesCollection[nodeType].filter(
+            (item) => item.id != this.menuInfo.actionId
+          );
+          //删除SVG.connectionInfo中的连线信息
+          SVG.connectionInfo = SVG.connectionInfo.filter(
+            (item) =>
+              item.srcNodeId != this.menuInfo.actionId &&
+              item.tarNodeId != this.menuInfo.actionId
+          );
+          // 删除节点设置以及缓存中的信息
+          // let settingDrawer = this.$refs.nodeSettingDrawer;
+          // delete settingDrawer.nodeSettings[this.menuInfo.actionId];
+          saveToStorage("svgNodesInfo", SVG.nodesCollection);
+          saveToStorage("svgLinesInfo", SVG.connectionInfo);
+
+          let nodeSettings = readFromStorage("nodeSettings") || {};
+          delete nodeSettings[this.menuInfo.actionId];
+          saveToStorage("nodeSettings", nodeSettings);
+
+          let formInfo = readFromStorage("formInfo") || {};
+          delete formInfo[this.menuInfo.actionId];
+          saveToStorage("formInfo", formInfo);
+
+          break;
+        default:
+          break;
+      }
+      SVG.drawLinesByIds();
+    },
+    // 流程部署(保存到后端)
+    handleProcessDeployment() {
+      const nodeTypeMapping = {
+        node_start: "startEvent",
+        node_branch: "chooseEvent",
+        node_examine: "approveTask",
+        node_manual: "userTask",
+        node_auto: "autoTask",
+        node_end: "endEvent",
+      };
+      let obj = {
+        defId: "",
+        processNodes: [],
+        sequenceNodes: [],
+        userTaskNodes: [],
+        approvalNodes: [],
+        autoNodes: [],
+        chooseNodes: [],
+        linesInfo: "",
+        nodesInfo: "",
+        settingInfo: "",
+        formInfo: "",
+      };
+      // 节点信息
+      let nodesCollection = readFromStorage("svgNodesInfo") || {
+        node_start: [],
+        node_branch: [],
+        node_examine: [],
+        node_manual: [],
+        node_auto: [],
+        node_end: [],
+      };
+      obj.nodesInfo = JSON.stringify(nodesCollection);
+      // 连线信息
+      let connectionInfo = readFromStorage("svgLinesInfo") || [];
+      obj.linesInfo = JSON.stringify(connectionInfo);
+
+      // 设置信息
+      let nodeSettings = readFromStorage("nodeSettings") || {};
+      obj.settingInfo = JSON.stringify(nodeSettings);
+
+      // 表单信息
+      let formInfo = readFromStorage("formInfo") || [];
+      obj.formInfo = JSON.stringify(formInfo);
+
+      let nodesArr = [];
+      for (let key in nodesCollection) {
+        nodesArr = nodesArr.concat(nodesCollection[key]);
+      }
+      obj.defId = this.$route.params.id;
+      obj.processNodes = nodesArr.map((item) => {
+        let node = {
+          nodedefId: item.id,
+          actName: item.text,
+          actType: nodeTypeMapping[item.nodeType],
+        };
+        if (item.nodeType == "node_manual") {
+          node.formContent = JSON.stringify(formInfo[item.id]) || "";
+        }
+
+        return node;
+      });
+      obj.sequenceNodes = connectionInfo.map((item) => {
+        return {
+          sequenceId: item.id,
+          startNodedefId: item.srcNodeId,
+          endNodedefId: item.tarNodeId,
+          sequenceName: item.lineText,
+        };
+      });
+      nodesCollection.node_manual.forEach((item) => {
+        let cell = nodeSettings[item.id];
+        if (cell) {
+          // console.log(cell, 333);
+
+          cell.assigneeId = cell.assigneeId.join(",");
+          cell.assigneeGroup = cell.assigneeGroup.join(",");
+          cell.assigneeDept = cell.assigneeDept.join(",");
+          obj.userTaskNodes.push({
+            nodedefId: item.id,
+            ...cell,
+          });
+        }
+      });
+      nodesCollection.node_examine.forEach((item) => {
+        let a = connectionInfo.find((i) => {
+          return i.srcNodeId == item.id && i.lineText == "通过";
+        })?.tarNodeId;
+        let b = connectionInfo.find((i) => {
+          return i.srcNodeId == item.id && i.lineText == "拒绝";
+        })?.tarNodeId;
+        let cell = nodeSettings[item.id];
+        cell.approvalAssigneeId = cell.approvalAssigneeId.join(",");
+        obj.approvalNodes.push({
+          nodedefId: item.id,
+          nextNodeDefIdY: a,
+          nextNodeDefIdN: b,
+          ...cell,
+        });
+      });
+      nodesCollection.node_auto.forEach((item) => {
+        let cell = nodeSettings[item.id];
+        if (cell) {
+          if (cell.invokeParam.filteringModelField.subConditions.length == 1) {
+            cell.invokeParam.filteringModelField =
+              cell.invokeParam.filteringModelField.subConditions[0];
+          }
+
+          cell.invokeParam = JSON.stringify(cell.invokeParam);
+          obj.autoNodes.push({
+            nodedefId: item.id,
+            ...cell,
+          });
+        }
+      });
+      nodesCollection.node_branch.forEach((item) => {
+        let arr = nodeSettings[item.id]?.branches || [];
+        let cell;
+        arr.forEach((element) => {
+          // console.log(element);
+
+          let rules = element.rules;
+          if (rules?.conditions.length == 1) {
+            rules = rules.conditions[0];
+          }
+          cell = {
+            nodedefId: item.id,
+            // conditionId: element.id,
+            conditionName: element.label,
+            nextNodedefId: connectionInfo.find((i) => i.srcDotId == element.id)
+              ?.tarNodeId,
+            status: element.status,
+            // conditions: rules,
+            conditions: JSON.stringify(rules),
+          };
+          obj.chooseNodes.push(cell);
+        });
+      });
+
+      // console.log(obj);
+      // flowDeploy(obj).then((res) => {
+      //   if (res.code == 200) {
+      //     this.$message.success("流程部署成功");
+      //   }
+      // });
+    },
+    abcd() {
+      // 节点信息
+      let svgNodesInfo = readFromStorage("svgNodesInfo") || {
+        node_start: [],
+        node_branch: [],
+        node_examine: [],
+        node_manual: [],
+        node_auto: [],
+        node_end: [],
+      };
+      // 连线信息
+      let svgLinesInfo = readFromStorage("svgLinesInfo") || [];
+      // 设置信息
+      let nodeSettings = readFromStorage("nodeSettings") || {};
+      // 表单信息
+      let formInfo = readFromStorage("formInfo") || [];
+      let obj = JSON.stringify({
+        svgNodesInfo,
+        svgLinesInfo,
+        nodeSettings,
+        formInfo,
+      });
+      const blob = new Blob([obj], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${UUID("JSON_Config")}.txt`;
+      a.click();
+
+      // 释放 URL 对象
+      URL.revokeObjectURL(url);
+    },
+    handleFileUpload(event) {
+      const reader = new FileReader();
+      const file = event.target.files[0];
+      if (file) {
+        reader.readAsText(file, "UTF-8");
+        reader.onload = (e) => {
+          let obj = JSON.parse(e.target.result);
+          localStorage.clear();
+          for (let key in obj) {
+            saveToStorage(key, obj[key]);
+          }
+          this.handleInport();
+        };
+        reader.onerror = (error) => {
+          console.error("读取文件时出错:", error);
+        };
+      }
     },
   },
   mounted() {
@@ -534,22 +833,32 @@ export default {
     window.addEventListener("mousedown", this.handleMouseDown);
     window.addEventListener("mousemove", this.handleMouseMove);
     window.addEventListener("mouseup", this.handleMouseUp);
+    this.$notify({
+      title: "提示",
+      type: "warning",
+      message:
+        "在未点保存前，所有配置信息只会暂存在本地，关闭页面所有配置会消失。",
+      duration: 0,
+    });
+    // // document.addEventListener("contextmenu", this.rightClick);
   },
   beforeDestroy() {
     window.removeEventListener("resize", this.handleWindowResize);
     window.removeEventListener("mousedown", this.handleMouseDown);
     window.removeEventListener("mousemove", this.handleMouseMove);
     window.removeEventListener("mouseup", this.handleMouseUp);
+    // window.removeEventListener("contextmenu", this.rightClick);
   },
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .three_column {
   width: 100%;
   height: 100%;
   display: flex;
   background: #fff;
+  position: relative;
 }
 .left,
 .right {
@@ -568,5 +877,26 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+.contextMenu {
+  margin: 0;
+  background: #fff;
+  z-index: 3000;
+  position: absolute;
+  list-style-type: none;
+  padding: 5px 0;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 400;
+  color: #333;
+  box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.3);
+  li {
+    margin: 0;
+    padding: 7px 16px;
+    cursor: pointer;
+    &:hover {
+      background: #eee;
+    }
+  }
 }
 </style>

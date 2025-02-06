@@ -9,6 +9,7 @@
     width="100%"
     height="100%"
     ref="svg"
+    @contextmenu.prevent="rightClick"
   >
     <defs>
       <marker
@@ -44,13 +45,28 @@
       <g v-for="line in lines" :key="line.id" :id="line.id">
         <path
           :d="`M ${line.srcX} ${line.srcY} L ${line.tarX} ${line.tarY}`"
+          stroke="transparent"
+          stroke-width="15"
+          fill="none"
+          :class="{ showReceiveDot: showReceiveDot }"
+          stroke-linejoin="round"
+          stroke-linecap="round"
+          cursor="pointer"
+          self-attr-type="relatedLine"
+          :self-attr-id="line.id"
+        />
+        <path
+          :d="`M ${line.srcX} ${line.srcY} L ${line.tarX} ${line.tarY}`"
           :stroke="line.color"
           stroke-width="2"
           fill="none"
           :marker-end="`url(#${line.markerId})`"
           :class="{ showReceiveDot: showReceiveDot }"
+          cursor="pointer"
+          self-attr-type="relatedLine"
+          :self-attr-id="line.id"
         />
-        <template v-if="line.lineHaveText">
+        <g v-if="line.lineHaveText">
           <rect
             v-if="line.textRectIsShow"
             :x="line.lineText.x - line.lineText.textWidth / 2"
@@ -60,6 +76,8 @@
             fill="#fff"
             stroke="none"
             stroke-width="0"
+            self-attr-type="relatedLine"
+            :self-attr-id="line.id"
           ></rect>
           <text
             :x="line.lineText.x"
@@ -68,10 +86,13 @@
             fill="#9094a6"
             text-anchor="middle"
             transform="translate(0, 4.8)"
+            cursor="pointer"
+            self-attr-type="relatedLine"
+            :self-attr-id="line.id"
           >
             {{ line.lineText.text }}
           </text>
-        </template>
+        </g>
       </g>
       <template v-for="nodeClassification in nodesCollection">
         <g
@@ -88,8 +109,21 @@
             :height="node.height"
             v-html="$options.filters.htmlFilter(node)"
             @click="(event) => handleNodeSettingOpen(event, node)"
+            @contextmenu.prevent.stop="(event) => rightClick(event, node)"
           >
           </foreignObject>
+          <!-- <text
+            :x="50"
+            :y="50"
+            font-size="12"
+            fill="#9094a6"
+            text-anchor="middle"
+            transform="translate(0, 4.8)"
+            cursor="pointer"
+            self-attr-type="relatedLine"
+          >
+            {{ node.id }}
+          </text> -->
           <circle
             r="4"
             v-for="(dot, index) in node.points"
@@ -158,6 +192,64 @@ export default {
     transformDotPosition(dot, index, node) {
       let nodeType = node.nodeType;
       let dotCount = node.points.length;
+      function setBranchDot(count, index) {
+        switch (count) {
+          case 1:
+            return "matrix(1, 0, 0, 1, 83, 95)";
+          case 2:
+            if (index == 1) return "matrix(1, 0, 0, 1, 0, 44)";
+            if (index == 2) return "matrix(1, 0, 0, 1, 168, 44)";
+            break;
+          case 3:
+            if (index == 1) return "matrix(1, 0, 0, 1, 0, 44)";
+            if (index == 2) return "matrix(1, 0, 0, 1, 83, 95)";
+            if (index == 3) return "matrix(1, 0, 0, 1, 168, 44)";
+            break;
+          case 4:
+            if (index == 1) return "matrix(1, 0, 0, 1, 0, 44)";
+            if (index == 2) return "matrix(1, 0, 0, 1, 44, 72)";
+            if (index == 3) return "matrix(1, 0, 0, 1, 124, 72)";
+            if (index == 4) return "matrix(1, 0, 0, 1, 168, 44)";
+            break;
+          case 5:
+            if (index == 1) return "matrix(1, 0, 0, 1, 0, 44)";
+            if (index == 2) return "matrix(1, 0, 0, 1, 44, 72)";
+            if (index == 3) return "matrix(1, 0, 0, 1, 83, 95)";
+            if (index == 4) return "matrix(1, 0, 0, 1, 124, 72)";
+            if (index == 5) return "matrix(1, 0, 0, 1, 168, 44)";
+            break;
+          case 6:
+            if (index == 1) return "matrix(1, 0, 0, 1, 0, 44)";
+            if (index == 2) return "matrix(1, 0, 0, 1, 33, 66)";
+            if (index == 3) return "matrix(1, 0, 0, 1, 66, 85)";
+            if (index == 4) return "matrix(1, 0, 0, 1, 102, 85)";
+            if (index == 5) return "matrix(1, 0, 0, 1, 135, 66)";
+            if (index == 6) return "matrix(1, 0, 0, 1, 168, 44)";
+            break;
+          case 7:
+            if (index == 1) return "matrix(1, 0, 0, 1, 0, 44)";
+            if (index == 2) return "matrix(1, 0, 0, 1, 25, 63)";
+            if (index == 3) return "matrix(1, 0, 0, 1, 53, 80)";
+            if (index == 4) return "matrix(1, 0, 0, 1, 83, 95)";
+            if (index == 5) return "matrix(1, 0, 0, 1, 113, 80)";
+            if (index == 6) return "matrix(1, 0, 0, 1, 143, 63)";
+            if (index == 7) return "matrix(1, 0, 0, 1, 168, 44)";
+            break;
+          case 8:
+            if (index == 1) return "matrix(1, 0, 0, 1, 0, 44)";
+            if (index == 2) return "matrix(1, 0, 0, 1, 24, 62)";
+            if (index == 3) return "matrix(1, 0, 0, 1, 48, 76)";
+            if (index == 4) return "matrix(1, 0, 0, 1, 72, 88)";
+            if (index == 5) return "matrix(1, 0, 0, 1, 96, 88)";
+            if (index == 6) return "matrix(1, 0, 0, 1, 120, 76)";
+            if (index == 7) return "matrix(1, 0, 0, 1, 144, 62)";
+            if (index == 8) return "matrix(1, 0, 0, 1, 168, 44)";
+            break;
+
+          default:
+            break;
+        }
+      }
 
       switch (dot.attribute) {
         case "receive":
@@ -167,10 +259,7 @@ export default {
             if (index == 1) return "matrix(1, 0, 0, 1, 50, 63)";
             if (index == 2) return "matrix(1, 0, 0, 1, 116, 63)";
           } else if (nodeType == "node_branch") {
-            if (index == 1) return "matrix(1, 0, 0, 1, 0, 44)";
-            if (index == 2) return "matrix(1, 0, 0, 1, 168, 44)";
-            if (dotCount > 3) {
-            }
+            return setBranchDot(dotCount - 1, index);
           } else {
             return "matrix(1, 0, 0, 1, 83, 63)";
           }
@@ -200,6 +289,10 @@ export default {
     },
     // 用于节点的移动
     handleFlowNodeMouseDown(event, sign, item) {
+      if (event.button === 2) {
+        // 右键点击
+        return;
+      }
       let that = this.$parent;
       that.svgFlowNodeEvent = { x: event.clientX, y: event.clientY };
       that.mouseDownRegion = "svgRegion";
@@ -227,6 +320,10 @@ export default {
     },
     // 用于连线设置临时的连线信息
     handleNodeDotMouseDown(event, dot, node) {
+      if (event.button === 2) {
+        // 右键点击
+        return;
+      }
       this.showReceiveDot = true;
       node.focus = true;
       let that = this.$parent;
@@ -306,7 +403,49 @@ export default {
         this.$emit("openNodeSetting", node);
         this.$parent.allowMove = false;
       }
+      // 关闭右键菜单
+      let that = this.$parent;
+      that.contextMenuVisible = false;
       event.stopPropagation();
+    },
+    // 打开右键菜单并配置字段信息
+    rightClick(event, node) {
+      let that = this.$parent;
+      // that.contextMenuVisible = false;
+      // that.menuInfo = {
+      //   left: 0,
+      //   top: 0,
+      //   label: "",
+      //   actionType: "",
+      //   elementType: "",
+      //   actionId: "",
+      // };
+      let rect = this.$el.getBoundingClientRect();
+      let thatRect = that.$el.getBoundingClientRect();
+      let left = event.clientX - rect.left + thatRect.left + 20;
+      let top = event.clientY - rect.top;
+      let maxLeft = rect.right - rect.left + thatRect.left - 75;
+      let maxTop = rect.bottom - rect.top - 45;
+      that.menuInfo.left = left > maxLeft ? maxLeft : left;
+      that.menuInfo.top = top > maxTop ? maxTop : top;
+      if (node) {
+        that.menuInfo.label = "删除节点";
+        that.menuInfo.actionType = "delNode";
+        that.menuInfo.actionId = node.id;
+        that.menuInfo.elementType = node.nodeType;
+        that.contextMenuVisible = true;
+      } else {
+        let element = document.elementFromPoint(event.clientX, event.clientY);
+        let type = element.getAttribute("self-attr-type");
+        let id = element.getAttribute("self-attr-id");
+        if (type == "relatedLine") {
+          that.menuInfo.label = "删除连线";
+          that.menuInfo.actionType = "delLine";
+          that.menuInfo.actionId = id;
+          that.menuInfo.elementType = "line";
+          that.contextMenuVisible = true;
+        }
+      }
     },
   },
   mounted() {},

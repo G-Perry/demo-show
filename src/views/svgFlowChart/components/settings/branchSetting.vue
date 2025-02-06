@@ -38,9 +38,9 @@
               v-model="item.status"
               active-color="#2f54eb"
               inactive-color="#bfbfbf"
+              :active-value="1"
+              :inactive-value="0"
             >
-              <!-- active-value="1"
-            inactive-value="0" -->
             </el-switch>
             <i
               class="el-icon-delete branch_delete"
@@ -50,116 +50,105 @@
           </div>
         </div>
         <div class="middle" v-if="item.editable">
-          <div class="logic">
-            <div v-for="e in item.rules.logic" :key="e.id" class="logic_item">
-              {{ e.a }}
-            </div>
-          </div>
-          <div class="condition">
-            <div
-              v-for="(e, index) in item.rules.condition"
-              :key="e.id"
-              class="condition_item"
-            >
-              {{ e.a }}
-              <i
-                class="el-icon-remove-outline condition_delete"
-                @click="conditionDelete(item, index)"
-              ></i>
-            </div>
-          </div>
-        </div>
-        <div class="bottom" v-if="item.editable">
-          <el-button type="text" size="mini" @click="conditionAdd(item)"
-            >添加</el-button
-          >
+          <condition-unit
+            v-model="item.rules"
+            :leftTreeData="leftTreeData"
+            :middleTreeData="middleTreeData"
+            type="node_branch"
+          ></condition-unit>
         </div>
       </div>
     </transition-group>
   </section>
 </template>
 <script>
-import { UUID } from "@/utils/handleObjMethods";
-
+import { UUID, readFromStorage } from "@/utils/handleObjMethods";
+import {
+  branchOriginalConditionInfo,
+  getNowSettingNode,
+  getTreeSelectOptions,
+  compareOptions,
+  normalizer,
+} from "../confg";
+import conditionUnit from "./conditionsUnit.vue";
 export default {
+  components: {
+    conditionUnit,
+  },
   props: {
-    value: {
+    settingInfo: {
       type: Array,
       default: [],
     },
   },
   watch: {
-    value: {
+    settingInfo: {
       handler(val) {
-        // this.branch = val;
-        // console.log(val);
         this.initBranch(val);
       },
       immediate: true,
     },
-    // branch: {
-    //   handler(val) {
-    //     this.$emit("input", val);
-    //   },
-    //   deep: true,
-    // },
+    branch: {
+      handler(val) {
+        this.$emit("settingChange", {
+          nodeType: "branch",
+          data: { branches: val },
+        });
+      },
+      immediate: true,
+      deep: true,
+    },
   },
   data() {
     return {
-      belongedNodeId: "",
-      branch: [
-        // {
-        //   id: UUID(),
-        //   label: "分支1",
-        //   editable: true,
-        //   editInputIsShow: false,
-        //   status: true,
-        //   leftBorderColor: "#67cb8a",
-        //   rules: {
-        //     logic: [],
-        //     condition: [{ id: UUID(), a: "1", b: "2", c: "3" }],
-        //   },
-        // },
-        // {
-        //   id: UUID(),
-        //   label: "其他",
-        //   editable: false,
-        //   status: true,
-        //   leftBorderColor: "#a5a9bc",
-        // },
-      ],
-      count: 2,
+      branch: [],
+      leftTreeData: {
+        data: getTreeSelectOptions(),
+        normalizer: (node) => normalizer(node, "propName", "name"),
+      },
+      middleTreeData: {
+        data: compareOptions,
+        normalizer: (node) => normalizer(node, "propName", "name"),
+      },
     };
   },
   methods: {
     initBranch(val) {
+      // console.log(val, 121212);
+      // console.log(val[0].belongedNodeId === getNowSettingNode().id);
       this.branch = [];
-      val.forEach((item) => {
-        let obj = null;
-        if (item.text !== "其他") {
-          obj = {
-            id: item.id,
-            label: item.text,
-            editable: true,
-            editInputIsShow: false,
-            status: true,
-            leftBorderColor: item.color,
-            rules: {
-              logic: [],
-              condition: [{ id: UUID(), a: "1", b: "2", c: "3" }],
-            },
-          };
-        } else {
-          obj = {
-            id: item.id,
-            label: item.text,
-            editable: false,
-            status: true,
-            leftBorderColor: item.color,
-          };
-        }
-        this.branch.push(obj);
-      });
+      // let nodeSettings = JSON.parse(sessionStorage.getItem("nodeSettings"));
+      let nodeSettings = readFromStorage("nodeSettings");
+      // let belongedNodeId = val[0].belongedNodeId;
+      let id = getNowSettingNode().id;
+      if (nodeSettings && nodeSettings[id]) {
+        this.branch = nodeSettings[id].branches;
+        // console.log(this.branch, 3333);
+      } else {
+        val.forEach((item) => {
+          let obj = null;
+          if (item.text !== "其他") {
+            obj = {
+              id: item.id,
+              label: item.text,
+              leftBorderColor: item.color,
+              editable: true,
+              editInputIsShow: false,
+              status: 1,
+              rules: branchOriginalConditionInfo,
+            };
+          } else {
+            obj = {
+              id: item.id,
+              label: item.text,
+              leftBorderColor: item.color,
+              editable: false,
+              status: 1,
+            };
+          }
+          this.branch.push(obj);
+        });
+      }
     },
     branchLabelEdit(item) {
       item.editInputIsShow = true;
@@ -172,49 +161,26 @@ export default {
     },
     branchAdd() {
       function randomColor() {
-        return "#" + Math.floor(Math.random() * 16777215).toString(16);
+        return "#" + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
       }
       let length = this.branch.length;
       let obj = {
-        id: UUID(),
+        id: UUID("dot"),
         label: `分支${length}`,
         editable: true,
         editInputIsShow: false,
-        status: true,
+        status: 1,
         leftBorderColor: randomColor(),
-        rules: {
-          logic: [],
-          condition: [{ id: UUID(), a: "1", b: "2", c: "3" }],
-        },
+        rules: branchOriginalConditionInfo,
       };
       this.branch.splice(-1, 0, obj);
     },
     branchDelete(item) {
+      this.$emit("deleteBranch", item.id);
       let index = this.branch.indexOf(item);
       if (index !== -1) {
         this.branch.splice(index, 1);
       }
-    },
-    conditionAdd(item) {
-      item.rules.condition.push({
-        id: UUID(),
-        a: this.count,
-        b: "",
-        c: "",
-      });
-      if (item.rules.condition.length > 1) {
-        item.rules.logic.push({
-          id: UUID(),
-          a: this.count,
-          b: "",
-          c: "",
-        });
-      }
-      this.count++;
-    },
-    conditionDelete(item, index) {
-      item.rules.logic.splice(index - 1, 1);
-      item.rules.condition.splice(index, 1);
     },
   },
 };
@@ -267,11 +233,13 @@ export default {
   color: #4465ed;
 }
 .branch_item .middle {
-  display: flex;
-  position: relative;
-  gap: 40px;
+  /* display: flex; */
+  /* position: relative; */
+  /* gap: 40px; */
+  padding-left: 20px;
+  overflow: auto;
 }
-.logic {
+/* .logic {
   width: 40px;
 }
 .condition {
@@ -323,7 +291,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-}
+} */
 ::v-deep .el-switch__core {
   width: 30px !important;
   height: 16px;

@@ -82,11 +82,11 @@
 <script>
 import draggable from "vuedraggable";
 import { inputComponents, selectComponents } from "./config";
-// import { deepClone } from "@/utils/index";
+import { deepClone } from "@/utils/index";
 import DraggableItem from "./DraggableItem.vue";
 import formItemConfig from "./formItemConfig.vue";
 import formPreview from "./formPreview/index.vue";
-import { UUID,deepClone } from "@/utils/handleObjMethods";
+import { UUID } from "@/utils/handleObjMethods";
 // let activedItemId = null;
 export default {
   name: "customForm",

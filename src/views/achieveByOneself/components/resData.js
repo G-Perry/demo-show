@@ -1321,7 +1321,7 @@ let thisMonth = new Date().getMonth() + 1;
 //用于日历的task数组
 export let tasks = [
   {
-    date: `2024-${thisMonth - 1}-3`,
+    date: `2025-${thisMonth - 1}-3`,
     tasks: [
       {
         id: 1,
@@ -1336,7 +1336,7 @@ export let tasks = [
     ],
   },
   {
-    date: `2024-${thisMonth - 2}-10`,
+    date: `2025-${thisMonth - 2}-10`,
     tasks: [
       {
         id: 1,
@@ -1361,7 +1361,7 @@ export let tasks = [
     ],
   },
   {
-    date: `2024-${thisMonth}-11`,
+    date: `2025-${thisMonth}-11`,
     tasks: [
       {
         id: 1,
@@ -1381,7 +1381,7 @@ export let tasks = [
     ],
   },
   {
-    date: `2024-${thisMonth - 1}-28`,
+    date: `2025-${thisMonth - 1}-28`,
     tasks: [
       {
         id: 1,
@@ -1401,7 +1401,7 @@ export let tasks = [
     ],
   },
   {
-    date: `2024-${thisMonth}-12`,
+    date: `2025-${thisMonth}-12`,
     tasks: [
       {
         id: 1,
@@ -1421,7 +1421,7 @@ export let tasks = [
     ],
   },
   {
-    date: `2024-${thisMonth}-22`,
+    date: `2025-${thisMonth}-22`,
     tasks: [
       {
         id: 1,
@@ -1436,7 +1436,7 @@ export let tasks = [
     ],
   },
   {
-    date: `2024-${thisMonth}-27`,
+    date: `2025-${thisMonth}-27`,
     tasks: [
       {
         id: 1,
