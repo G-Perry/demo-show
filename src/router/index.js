@@ -130,6 +130,13 @@ export const routes = [
         visible: true,
         meta: { label: "3D_Server_Room", icon: "el-icon-link", sort: 14 },
       },
+      {
+        path: "serverBox",
+        name: "serverBox",
+        component: () => import("../views/serverBox/index.vue"),
+        visible: true,
+        meta: { label: "3D_Server_Box", icon: "el-icon-link", sort: 15 },
+      },
       // {
       //   path: "customForm",
       //   name: "customForm",
